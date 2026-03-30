@@ -158,7 +158,7 @@ class TestCountTree:
 
 class TestCliInfo:
     def test_info_returns_metadata(self):
-        doc = FakeLinesDocument(
+        doc = LinesDocument(
             caption="Art",
             version="2.0",
             dpi=150,
@@ -183,7 +183,7 @@ class TestCliInfo:
         assert "error" in result
 
     def test_info_json_output(self, capsys):
-        doc = FakeLinesDocument(groups=[])
+        doc = LinesDocument(groups=[])
         with patch("vexy_lines_cli.__main__.parse_lines", return_value=doc):
             cli = VexyLinesCLI()
             cli.info("fake.lines", json_output=True)
@@ -200,7 +200,7 @@ class TestCliInfo:
 class TestCliFileTree:
     def test_file_tree_text_output(self):
         layer = _make_layer(caption="BG")
-        doc = FakeLinesDocument(groups=[layer])
+        doc = LinesDocument(groups=[layer])
         with patch("vexy_lines_cli.__main__.parse_lines", return_value=doc):
             cli = VexyLinesCLI()
             result = cli.file_tree("fake.lines")

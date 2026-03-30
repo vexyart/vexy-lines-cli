@@ -93,10 +93,17 @@ def _count_tree(nodes: list[GroupInfo | LayerInfo]) -> tuple[int, int, int]:
 
 
 class VexyLinesCLI:
-    """Vexy Lines command-line interface.
+    """Command-line interface for Vexy Lines.
 
-    Subcommands for parsing .lines files, applying styles via MCP,
-    batch exporting, and controlling the Vexy Lines application.
+    Subcommands fall into three groups:
+
+    **Parser** (no app needed): info, file-tree, extract-source, extract-preview, batch-convert
+    **Style / MCP** (app must be running): style-transfer, style-video, tree, new-document,
+        open, add-fill, render, mcp-status
+    **Export** (app auto-launched): export
+    **Bridge**: mcp-serve, gui
+
+    Run ``vexy-lines <subcommand> --help`` for per-command options.
     """
 
     MIN_TIMEOUT_MULTIPLIER = 0.1
@@ -106,11 +113,19 @@ class VexyLinesCLI:
     # -- Parser subcommands (no app/MCP needed) ----------------------------
 
     def info(self, input: str, *, json_output: bool = False) -> dict[str, object]:  # noqa: A002
-        """Show metadata for a .lines file.
+        """Show metadata for a .lines file without opening the app.
+
+        Prints caption, version, DPI, dimensions, layer/fill counts, and
+        whether source or preview images are embedded.
 
         Args:
             input: Path to the .lines file.
-            json_output: Output as JSON.
+            json_output: Print result as JSON instead of the default repr.
+
+        Returns:
+            Dict with keys: caption, version, dpi, width_mm, height_mm,
+            groups, layers, fills, has_source_image, has_preview_image.
+            On parse failure, returns ``{"error": "<message>"}``.
         """
         try:
             doc = parse_lines(input)
@@ -137,11 +152,17 @@ class VexyLinesCLI:
         return result
 
     def file_tree(self, input: str, *, json_output: bool = False) -> str:  # noqa: A002
-        """Print the layer tree from a .lines file (no MCP required).
+        """Print the layer/group/fill tree from a .lines file without opening the app.
+
+        Each node is indented to show nesting. Hidden layers are marked ``[hidden]``.
 
         Args:
             input: Path to the .lines file.
-            json_output: Output as JSON.
+            json_output: Emit the tree as a JSON array of dataclass dicts.
+
+        Returns:
+            Indented text tree, or JSON string when ``--json-output`` is set.
+            On parse failure, returns an error string (or JSON error object).
         """
         try:
             doc = parse_lines(input)
@@ -163,12 +184,20 @@ class VexyLinesCLI:
         output: str | None = None,
         format: str = ".jpg",  # noqa: A002
     ) -> dict[str, object]:
-        """Extract source image from a .lines file.
+        """Extract the embedded source image from a .lines file.
+
+        The source image is the raster original that fills were applied to.
+        Does not require the app to be running.
 
         Args:
             input: Path to the .lines file.
-            output: Output file path. If omitted, derives from input name.
-            format: Output format (.jpg, .png).
+            output: Destination file path. Defaults to ``<stem>-src<format>``
+                in the same directory as the input.
+            format: Image format extension, e.g. ``.jpg`` or ``.png``.
+
+        Returns:
+            ``{"status": "ok", "output": "<path>"}`` on success,
+            or ``{"error": "<message>"}`` on failure.
         """
         input_path = Path(input)
         output_path = input_path.with_name(f"{input_path.stem}-src{format}") if output is None else Path(output)
@@ -186,12 +215,20 @@ class VexyLinesCLI:
         output: str | None = None,
         format: str = ".png",  # noqa: A002
     ) -> dict[str, object]:
-        """Extract preview image from a .lines file.
+        """Extract the embedded preview image from a .lines file.
+
+        The preview is the rendered thumbnail stored inside the document.
+        Does not require the app to be running.
 
         Args:
             input: Path to the .lines file.
-            output: Output file path. If omitted, derives from input name.
-            format: Output format (.jpg, .png).
+            output: Destination file path. Defaults to ``<stem>-preview<format>``
+                in the same directory as the input.
+            format: Image format extension, e.g. ``.jpg`` or ``.png``.
+
+        Returns:
+            ``{"status": "ok", "output": "<path>"}`` on success,
+            or ``{"error": "<message>"}`` on failure.
         """
         input_path = Path(input)
         output_path = input_path.with_name(f"{input_path.stem}-preview{format}") if output is None else Path(output)
@@ -216,23 +253,43 @@ class VexyLinesCLI:
         dpi: int = 72,
         host: str = "127.0.0.1",
         port: int = 47384,
+        relative_style: bool = False,
         verbose: bool = False,
     ) -> dict[str, object]:
-        """Apply style from a .lines file to images.
+        """Apply a .lines style to one or more images via the MCP API.
 
-        With --end-style, interpolates between the two styles across the image sequence.
+        Reads fill parameters from ``--style``, opens each image in a new
+        document via MCP, applies the style, then saves the rendered output.
+        Requires the Vexy Lines app to be running.
+
+        With ``--end-style``, linearly interpolates fill parameters between
+        the two styles across the image sequence (useful for animations).
+
+        Examples::
+
+            vexy-lines style-transfer --style art.lines --input-dir ./photos/
+            vexy-lines style-transfer --style a.lines --end-style b.lines --images 1.jpg 2.jpg
+            vexy-lines style-transfer --style art.lines --relative-style --input-dir ./photos/
 
         Args:
-            style: Path to the style .lines file.
-            end_style: Optional end style for interpolation.
-            images: List of image paths.
-            input_dir: Directory of images (alternative to --images).
-            output_dir: Output directory.
-            format: Output format (svg, png, jpg).
-            dpi: Document DPI for MCP rendering.
-            host: MCP server address.
-            port: MCP server port.
-            verbose: Show detailed progress.
+            style: Path to the source style .lines file.
+            end_style: Optional end style for interpolation across the sequence.
+            images: Explicit list of image file paths to process.
+            input_dir: Directory of images (``*.jpg``, ``*.jpeg``, ``*.png``).
+                Use this or ``--images``, not both.
+            output_dir: Where to write output files (created if absent).
+            format: Output format: ``svg`` (default), ``png``, or ``jpg``.
+                Raster formats require ``vexy-lines-run[video]``.
+            dpi: Document DPI passed to the MCP renderer (default 72).
+            host: MCP server address (default 127.0.0.1).
+            port: MCP server port (default 47384).
+            relative_style: Scale spatial fill parameters to match the target
+                image dimensions.  Default ``False`` (absolute mode).
+            verbose: Enable debug logging.
+
+        Returns:
+            Dict with keys: total, successes, failures, output_dir.
+            On connection failure, returns ``{"error": "<message>"}``.
         """
         if verbose:
             logger.enable("vexy_lines_cli")
@@ -276,7 +333,7 @@ class VexyLinesCLI:
                         else:
                             current_style = start_style
 
-                        svg_string = apply_style(client, current_style, img_path, dpi=dpi)
+                        svg_string = apply_style(client, current_style, img_path, dpi=dpi, relative=relative_style)
 
                         # Save output
                         stem = img_path.stem
@@ -284,8 +341,10 @@ class VexyLinesCLI:
                             out_file = out / f"{stem}.svg"
                             out_file.write_text(svg_string, encoding="utf-8")
                         else:
-                            from vexy_lines_api.video import _svg_to_pil  # noqa: PLC0415
-
+                            try:
+                                from vexy_lines_run.video import _svg_to_pil  # noqa: PLC0415
+                            except ImportError:
+                                return {"error": "raster output requires vexy-lines-run[video]: pip install vexy-lines-run[video]"}
                             pil_img = _svg_to_pil(svg_string, 1920, 1080)
                             out_file = out / f"{stem}.{format}"
                             pil_img.save(str(out_file))
@@ -317,29 +376,45 @@ class VexyLinesCLI:
         dpi: int = 72,
         host: str = "127.0.0.1",
         port: int = 47384,
+        relative_style: bool = False,
         verbose: bool = False,
     ) -> dict[str, object]:
-        """Apply style to a video, frame by frame.
+        """Apply a .lines style to every frame of a video file.
 
-        With --end-style, interpolates between two styles across frames.
-        Requires the Vexy Lines app and av/resvg-py packages.
+        Decodes the video, renders each frame through the MCP API with the
+        given style, then re-encodes to a new video. Requires the Vexy Lines
+        app to be running and the ``vexy-lines-run[video]`` extra installed
+        (``pip install vexy-lines-run[video]``).
+
+        With ``--end-style``, interpolates fill parameters between the two
+        styles across frames — the first frame uses ``--style``, the last
+        uses ``--end-style``.
 
         Args:
-            style: Path to the style .lines file.
-            input: Path to the input video file.
-            output: Output video file path.
-            end_style: Optional end style for interpolation.
-            start_frame: First frame to process (1-based).
-            end_frame: Last frame to process (None = all).
-            dpi: Document DPI for MCP rendering.
-            host: MCP server address.
-            port: MCP server port.
-            verbose: Show detailed progress.
+            style: Path to the source style .lines file.
+            input: Path to the input video (MP4, MOV, etc.).
+            output: Output video path (default ``output.mp4``).
+            end_style: Optional end style for per-frame interpolation.
+            start_frame: First frame to render (1-based, currently unused).
+            end_frame: Last frame to render inclusive; ``None`` renders all.
+            dpi: Document DPI passed to the MCP renderer (default 72).
+            host: MCP server address (default 127.0.0.1).
+            port: MCP server port (default 47384).
+            relative_style: Scale spatial fill parameters to match the target
+                video frame dimensions.  Default ``False`` (absolute mode).
+            verbose: Enable debug logging.
+
+        Returns:
+            Dict with keys: status, input, output, width, height, fps,
+            total_frames. On failure, returns ``{"error": "<message>"}``.
         """
         if verbose:
             logger.enable("vexy_lines_cli")
 
-        from vexy_lines_api.video import process_video  # noqa: PLC0415
+        try:
+            from vexy_lines_run.video import process_video  # noqa: PLC0415
+        except ImportError:
+            return {"error": "video processing requires vexy-lines-run[video]: pip install vexy-lines-run[video]"}
 
         try:
             start_style_obj = extract_style(style)
@@ -411,16 +486,22 @@ class VexyLinesCLI:
         what: str = "preview",
         verbose: bool = False,
     ) -> dict[str, object]:
-        """Batch convert .lines files to images.
+        """Extract images from all .lines files in a directory.
 
-        Extracts source or preview images from .lines files without the app.
+        Pulls either the embedded preview or source image from each file.
+        Does not require the app to be running.
 
         Args:
-            input_dir: Directory containing .lines files.
-            output_dir: Output directory.
-            format: Output format (png, jpg).
-            what: What to extract -- "preview" or "source".
-            verbose: Show detailed progress.
+            input_dir: Directory containing ``.lines`` files.
+            output_dir: Where to write extracted images (created if absent).
+            format: Image format: ``png`` (default) or ``jpg``.
+            what: Which image to extract: ``preview`` (rendered thumbnail)
+                or ``source`` (original raster input).
+            verbose: Enable debug logging.
+
+        Returns:
+            Dict with keys: total, successes, failures, output_dir.
+            On invalid ``--what``, returns ``{"error": "invalid what: ..."}``.
         """
         if verbose:
             logger.enable("vexy_lines_cli")
@@ -474,24 +555,35 @@ class VexyLinesCLI:
         timeout_multiplier: float = 1.0,
         max_retries: int = 3,
     ) -> dict[str, object]:
-        """Export .lines documents to PDF or SVG.
+        """Export .lines documents to PDF or SVG without save dialogs.
 
-        Uses dialog-less export via plist configuration: quits the app, sets
-        export preferences, launches the app, opens each file, triggers the
-        File > Export menu item, then restores original preferences on exit.
+        Quits the app, injects export preferences into macOS defaults, relaunches
+        the app, opens each file, triggers File > Export, then restores the
+        original preferences on exit — no save dialog interaction required.
+
+        Examples::
+
+            vexy-lines export artwork.lines
+            vexy-lines export ./my-art/ --format svg --output ./exports/
+            vexy-lines export artwork.lines --dry-run
 
         Args:
-            input: Path to a .lines file or directory to search for .lines files.
-            output: Destination file (when input is a file) or directory (when
-                input is a directory).  Defaults to the same folder as each
-                input file.
-            format: Export format -- 'pdf' (default) or 'svg'.
-            verbose: Show detailed progress messages.
-            dry_run: Preview files that would be processed without exporting.
-            force: Re-export even if the output file already exists.
-            say_summary: Announce completion via text-to-speech.
-            timeout_multiplier: Scale all timeouts (2.0 = double all timeouts).
-            max_retries: Maximum retry attempts for transient failures (0-10).
+            input: A single ``.lines`` file or directory to search recursively.
+            output: Destination file (single input) or directory (multiple
+                inputs). Defaults to the same folder as each source file.
+            format: Export format: ``pdf`` (default) or ``svg``.
+            verbose: Enable debug logging.
+            dry_run: List files that would be exported without exporting them.
+            force: Re-export files even if the output already exists.
+            say_summary: Announce the result via macOS text-to-speech.
+            timeout_multiplier: Scale all internal timeouts (e.g. 2.0 = double).
+                Range: 0.1–10.
+            max_retries: Retry attempts per file on transient failures. Range: 0–10.
+
+        Returns:
+            Dict with keys: processed, success, skipped, failed, failures,
+            validation_failed, validation_failures, dry_run, total_time,
+            average_time.
         """
         if verbose:
             logger.enable("vexy_lines_cli")
@@ -527,11 +619,18 @@ class VexyLinesCLI:
         host: str = "127.0.0.1",
         port: int = 47384,
     ) -> dict[str, object]:
-        """Check if the MCP server is reachable.
+        """Check whether the Vexy Lines MCP server is reachable.
+
+        Connects to the TCP server and calls ``get_document_info``. Use this
+        to confirm the app is running before issuing MCP commands.
 
         Args:
-            host: Server address.
-            port: Server port.
+            host: TCP server address (default 127.0.0.1).
+            port: TCP server port (default 47384).
+
+        Returns:
+            ``{"status": "ok", "server_info": {...}}`` on success,
+            or ``{"error": "<message>"}`` if the server is unreachable.
         """
         try:
             with MCPClient(host=host, port=port) as client:
@@ -664,6 +763,28 @@ class VexyLinesCLI:
             return {"status": "ok", "result": result}
         except MCPError as exc:
             return {"error": str(exc)}
+
+    # -- MCP bridge --------------------------------------------------------
+
+    def mcp_serve(
+        self,
+        *,
+        host: str = "127.0.0.1",
+        port: int = 47384,
+        no_launch: bool = False,
+    ) -> None:
+        """Start the MCP passthrough server (stdio <-> TCP bridge).
+
+        Bridges Claude Desktop / Cursor to the Vexy Lines TCP MCP server.
+
+        Args:
+            host: TCP server address.
+            port: TCP server port.
+            no_launch: Don't auto-launch the app on connection failure.
+        """
+        from vexy_lines_cli.mcp_server import serve  # noqa: PLC0415
+
+        serve(host=host, port=port, auto_launch=not no_launch)
 
     # -- GUI launcher ------------------------------------------------------
 
