@@ -7,7 +7,10 @@
 
 Command-line interface and MCP bridge for [Vexy Lines](https://vexy.art).
 
-Parse `.lines` files, batch export to PDF/SVG, apply styles to images and video, and connect Claude Desktop or Cursor directly to the Vexy Lines MCP API -- all from the terminal.
+Parse `.lines` files, batch export to PDF/SVG, apply styles to images and video, and connect Claude Desktop or Cursor directly to the Vexy Lines MCP API — all from the terminal.
+
+- [On Github](https://github.com/vexyart/vexy-lines-cli)
+- [On PyPI](https://pypi.org/project/vexy-lines-cli/)
 
 ## What you can do
 
