@@ -3,7 +3,7 @@
 ## Inspect a .lines file
 
 ```bash
-$ vexy-lines info artwork.lines
+$ vexy-lines-cli info artwork.lines
 {'caption': 'Landscape', 'version': '4.0', 'dpi': 300,
  'width_mm': 210.0, 'height_mm': 148.0,
  'groups': 2, 'layers': 5, 'fills': 8,
@@ -13,7 +13,7 @@ $ vexy-lines info artwork.lines
 JSON output for scripting:
 
 ```bash
-$ vexy-lines info artwork.lines --json-output
+$ vexy-lines-cli info artwork.lines --json-output
 {
   "caption": "Landscape",
   "version": "4.0",
@@ -25,7 +25,7 @@ $ vexy-lines info artwork.lines --json-output
 ## Browse the layer tree
 
 ```bash
-$ vexy-lines file-tree artwork.lines
+$ vexy-lines-cli file-tree artwork.lines
 group: Background
   layer: Sky
     fill: Blue gradient [linear]
@@ -42,18 +42,18 @@ group: Foreground
 
 ```bash
 # Source image (the original photo)
-$ vexy-lines extract-source artwork.lines
+$ vexy-lines-cli extract-source artwork.lines
 {'status': 'ok', 'output': 'artwork-src.jpg'}
 
 # Preview image (the rendered thumbnail)
-$ vexy-lines extract-preview artwork.lines
+$ vexy-lines-cli extract-preview artwork.lines
 {'status': 'ok', 'output': 'artwork-preview.png'}
 ```
 
 ## Batch extract previews
 
 ```bash
-$ vexy-lines batch-convert --input-dir ./artwork/ --output-dir ./thumbnails/ --what preview --format jpg
+$ vexy-lines-cli batch-convert --input-dir ./artwork/ --output-dir ./thumbnails/ --what preview --format jpg
 {'total': 42, 'successes': 40, 'failures': 2, 'output_dir': './thumbnails/'}
 ```
 
@@ -62,25 +62,25 @@ $ vexy-lines batch-convert --input-dir ./artwork/ --output-dir ./thumbnails/ --w
 Single file:
 
 ```bash
-$ vexy-lines export artwork.lines --format pdf
+$ vexy-lines-cli export artwork.lines --format pdf
 ```
 
 Entire directory:
 
 ```bash
-$ vexy-lines export ./artwork/ --format svg --output ./exports/
+$ vexy-lines-cli export ./artwork/ --format svg --output ./exports/
 ```
 
 Preview without exporting:
 
 ```bash
-$ vexy-lines export ./artwork/ --dry-run
+$ vexy-lines-cli export ./artwork/ --dry-run
 ```
 
 Force re-export with longer timeouts:
 
 ```bash
-$ vexy-lines export ./artwork/ --force --timeout-multiplier 2.5
+$ vexy-lines-cli export ./artwork/ --force --timeout-multiplier 2.5
 ```
 
 ## Style transfer
@@ -88,14 +88,14 @@ $ vexy-lines export ./artwork/ --force --timeout-multiplier 2.5
 Apply one style to a folder of photos:
 
 ```bash
-$ vexy-lines style-transfer --style watercolor.lines --input-dir ./photos/ --output-dir ./styled/
+$ vexy-lines-cli style-transfer --style watercolor.lines --input-dir ./photos/ --output-dir ./styled/
 {'total': 10, 'successes': 10, 'failures': 0, 'output_dir': './styled/'}
 ```
 
 Interpolate between two styles across the sequence:
 
 ```bash
-$ vexy-lines style-transfer \
+$ vexy-lines-cli style-transfer \
     --style soft.lines --end-style bold.lines \
     --input-dir ./frames/ --output-dir ./animated/
 ```
@@ -105,7 +105,7 @@ The first image gets `soft.lines`, the last gets `bold.lines`, and everything in
 ## Style video
 
 ```bash
-$ vexy-lines style-video --style sketch.lines --input clip.mp4 --output styled.mp4
+$ vexy-lines-cli style-video --style sketch.lines --input clip.mp4 --output styled.mp4
 {'status': 'ok', 'input': 'clip.mp4', 'output': 'styled.mp4',
  'width': 1920, 'height': 1080, 'fps': 30.0, 'total_frames': 150}
 ```
@@ -113,7 +113,7 @@ $ vexy-lines style-video --style sketch.lines --input clip.mp4 --output styled.m
 With style interpolation across the video:
 
 ```bash
-$ vexy-lines style-video \
+$ vexy-lines-cli style-video \
     --style start.lines --end-style end.lines \
     --input clip.mp4 --output morphing.mp4
 ```
@@ -121,7 +121,7 @@ $ vexy-lines style-video \
 ## MCP status check
 
 ```bash
-$ vexy-lines mcp-status
+$ vexy-lines-cli mcp-status
 {'status': 'ok', 'server_info': {'width_mm': 210.0, ...}}
 ```
 
@@ -132,7 +132,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "vexy-lines": {
+    "vexy-lines-cli": {
       "command": "vexy-lines-mcp"
     }
   }

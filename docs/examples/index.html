@@ -736,14 +736,14 @@
 
 <h1 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h1>
 <h2 id="inspect-a-lines-file">Inspect a .lines file<a class="headerlink" href="#inspect-a-lines-file" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>info<span class="w"> </span>artwork.lines
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines
 <span class="o">{</span><span class="s1">&#39;caption&#39;</span>:<span class="w"> </span><span class="s1">&#39;Landscape&#39;</span>,<span class="w"> </span><span class="s1">&#39;version&#39;</span>:<span class="w"> </span><span class="s1">&#39;4.0&#39;</span>,<span class="w"> </span><span class="s1">&#39;dpi&#39;</span>:<span class="w"> </span><span class="m">300</span>,
 <span class="w"> </span><span class="s1">&#39;width_mm&#39;</span>:<span class="w"> </span><span class="m">210</span>.0,<span class="w"> </span><span class="s1">&#39;height_mm&#39;</span>:<span class="w"> </span><span class="m">148</span>.0,
 <span class="w"> </span><span class="s1">&#39;groups&#39;</span>:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="s1">&#39;layers&#39;</span>:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span><span class="s1">&#39;fills&#39;</span>:<span class="w"> </span><span class="m">8</span>,
 <span class="w"> </span><span class="s1">&#39;has_source_image&#39;</span>:<span class="w"> </span>True,<span class="w"> </span><span class="s1">&#39;has_preview_image&#39;</span>:<span class="w"> </span>True<span class="o">}</span>
 </code></pre></div>
 <p>JSON output for scripting:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>info<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
 <span class="o">{</span>
 <span class="w">  </span><span class="s2">&quot;caption&quot;</span>:<span class="w"> </span><span class="s2">&quot;Landscape&quot;</span>,
 <span class="w">  </span><span class="s2">&quot;version&quot;</span>:<span class="w"> </span><span class="s2">&quot;4.0&quot;</span>,
@@ -752,7 +752,7 @@
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="browse-the-layer-tree">Browse the layer tree<a class="headerlink" href="#browse-the-layer-tree" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
 group:<span class="w"> </span>Background
 <span class="w">  </span>layer:<span class="w"> </span>Sky
 <span class="w">    </span>fill:<span class="w"> </span>Blue<span class="w"> </span>gradient<span class="w"> </span><span class="o">[</span>linear<span class="o">]</span>
@@ -766,60 +766,60 @@ group:<span class="w"> </span>Foreground
 </code></pre></div>
 <h2 id="extract-embedded-images">Extract embedded images<a class="headerlink" href="#extract-embedded-images" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Source image (the original photo)</span>
-$<span class="w"> </span>vexy-lines<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines
+$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines
 <span class="o">{</span><span class="s1">&#39;status&#39;</span>:<span class="w"> </span><span class="s1">&#39;ok&#39;</span>,<span class="w"> </span><span class="s1">&#39;output&#39;</span>:<span class="w"> </span><span class="s1">&#39;artwork-src.jpg&#39;</span><span class="o">}</span>
 
 <span class="c1"># Preview image (the rendered thumbnail)</span>
-$<span class="w"> </span>vexy-lines<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines
+$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines
 <span class="o">{</span><span class="s1">&#39;status&#39;</span>:<span class="w"> </span><span class="s1">&#39;ok&#39;</span>,<span class="w"> </span><span class="s1">&#39;output&#39;</span>:<span class="w"> </span><span class="s1">&#39;artwork-preview.png&#39;</span><span class="o">}</span>
 </code></pre></div>
 <h2 id="batch-extract-previews">Batch extract previews<a class="headerlink" href="#batch-extract-previews" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./artwork/<span class="w"> </span>--output-dir<span class="w"> </span>./thumbnails/<span class="w"> </span>--what<span class="w"> </span>preview<span class="w"> </span>--format<span class="w"> </span>jpg
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./artwork/<span class="w"> </span>--output-dir<span class="w"> </span>./thumbnails/<span class="w"> </span>--what<span class="w"> </span>preview<span class="w"> </span>--format<span class="w"> </span>jpg
 <span class="o">{</span><span class="s1">&#39;total&#39;</span>:<span class="w"> </span><span class="m">42</span>,<span class="w"> </span><span class="s1">&#39;successes&#39;</span>:<span class="w"> </span><span class="m">40</span>,<span class="w"> </span><span class="s1">&#39;failures&#39;</span>:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="s1">&#39;output_dir&#39;</span>:<span class="w"> </span><span class="s1">&#39;./thumbnails/&#39;</span><span class="o">}</span>
 </code></pre></div>
 <h2 id="export-to-pdf">Export to PDF<a class="headerlink" href="#export-to-pdf" title="Permanent link">&para;</a></h2>
 <p>Single file:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines<span class="w"> </span>--format<span class="w"> </span>pdf
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines<span class="w"> </span>--format<span class="w"> </span>pdf
 </code></pre></div>
 <p>Entire directory:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--format<span class="w"> </span>svg<span class="w"> </span>--output<span class="w"> </span>./exports/
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--format<span class="w"> </span>svg<span class="w"> </span>--output<span class="w"> </span>./exports/
 </code></pre></div>
 <p>Preview without exporting:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--dry-run
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--dry-run
 </code></pre></div>
 <p>Force re-export with longer timeouts:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--force<span class="w"> </span>--timeout-multiplier<span class="w"> </span><span class="m">2</span>.5
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--force<span class="w"> </span>--timeout-multiplier<span class="w"> </span><span class="m">2</span>.5
 </code></pre></div>
 <h2 id="style-transfer">Style transfer<a class="headerlink" href="#style-transfer" title="Permanent link">&para;</a></h2>
 <p>Apply one style to a folder of photos:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>watercolor.lines<span class="w"> </span>--input-dir<span class="w"> </span>./photos/<span class="w"> </span>--output-dir<span class="w"> </span>./styled/
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>watercolor.lines<span class="w"> </span>--input-dir<span class="w"> </span>./photos/<span class="w"> </span>--output-dir<span class="w"> </span>./styled/
 <span class="o">{</span><span class="s1">&#39;total&#39;</span>:<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="s1">&#39;successes&#39;</span>:<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="s1">&#39;failures&#39;</span>:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span><span class="s1">&#39;output_dir&#39;</span>:<span class="w"> </span><span class="s1">&#39;./styled/&#39;</span><span class="o">}</span>
 </code></pre></div>
 <p>Interpolate between two styles across the sequence:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>style-transfer<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--style<span class="w"> </span>soft.lines<span class="w"> </span>--end-style<span class="w"> </span>bold.lines<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--input-dir<span class="w"> </span>./frames/<span class="w"> </span>--output-dir<span class="w"> </span>./animated/
 </code></pre></div>
 <p>The first image gets <code>soft.lines</code>, the last gets <code>bold.lines</code>, and everything in between is a linear blend.</p>
 <h2 id="style-video">Style video<a class="headerlink" href="#style-video" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>sketch.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>styled.mp4
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>sketch.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>styled.mp4
 <span class="o">{</span><span class="s1">&#39;status&#39;</span>:<span class="w"> </span><span class="s1">&#39;ok&#39;</span>,<span class="w"> </span><span class="s1">&#39;input&#39;</span>:<span class="w"> </span><span class="s1">&#39;clip.mp4&#39;</span>,<span class="w"> </span><span class="s1">&#39;output&#39;</span>:<span class="w"> </span><span class="s1">&#39;styled.mp4&#39;</span>,
 <span class="w"> </span><span class="s1">&#39;width&#39;</span>:<span class="w"> </span><span class="m">1920</span>,<span class="w"> </span><span class="s1">&#39;height&#39;</span>:<span class="w"> </span><span class="m">1080</span>,<span class="w"> </span><span class="s1">&#39;fps&#39;</span>:<span class="w"> </span><span class="m">30</span>.0,<span class="w"> </span><span class="s1">&#39;total_frames&#39;</span>:<span class="w"> </span><span class="m">150</span><span class="o">}</span>
 </code></pre></div>
 <p>With style interpolation across the video:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>style-video<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>morphing.mp4
 </code></pre></div>
 <h2 id="mcp-status-check">MCP status check<a class="headerlink" href="#mcp-status-check" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines<span class="w"> </span>mcp-status
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>mcp-status
 <span class="o">{</span><span class="s1">&#39;status&#39;</span>:<span class="w"> </span><span class="s1">&#39;ok&#39;</span>,<span class="w"> </span><span class="s1">&#39;server_info&#39;</span>:<span class="w"> </span><span class="o">{</span><span class="s1">&#39;width_mm&#39;</span>:<span class="w"> </span><span class="m">210</span>.0,<span class="w"> </span>...<span class="o">}}</span>
 </code></pre></div>
 <h2 id="mcp-bridge-for-claude-desktop">MCP bridge for Claude Desktop<a class="headerlink" href="#mcp-bridge-for-claude-desktop" title="Permanent link">&para;</a></h2>
 <p>Add to <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;vexy-lines&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;vexy-lines-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vexy-lines-mcp&quot;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>

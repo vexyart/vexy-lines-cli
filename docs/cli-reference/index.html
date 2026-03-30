@@ -580,15 +580,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bridge-and-gui" class="md-nav__link">
+  <a href="#bridge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bridge and GUI
+        Bridge
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bridge and GUI">
+    <nav class="md-nav" aria-label="Bridge">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -596,17 +596,6 @@
     <span class="md-ellipsis">
       
         mcp-serve
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gui" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gui
       
     </span>
   </a>
@@ -994,15 +983,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bridge-and-gui" class="md-nav__link">
+  <a href="#bridge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bridge and GUI
+        Bridge
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bridge and GUI">
+    <nav class="md-nav" aria-label="Bridge">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1010,17 +999,6 @@
     <span class="md-ellipsis">
       
         mcp-serve
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gui" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gui
       
     </span>
   </a>
@@ -1059,38 +1037,38 @@
                   
 
 <h1 id="cli-reference">CLI Reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h1>
-<p>All commands use <code>vexy-lines &lt;subcommand&gt;</code>. Add <code>--help</code> to any subcommand for usage details.</p>
+<p>All commands use <code>vexy-lines-cli &lt;subcommand&gt;</code>. Add <code>--help</code> to any subcommand for usage details.</p>
 <h2 id="parser-commands-no-app-required">Parser commands (no app required)<a class="headerlink" href="#parser-commands-no-app-required" title="Permanent link">&para;</a></h2>
 <p>These work offline -- they parse <code>.lines</code> XML directly.</p>
 <h3 id="info"><code>info</code><a class="headerlink" href="#info" title="Permanent link">&para;</a></h3>
 <p>Show metadata for a <code>.lines</code> file.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>info<span class="w"> </span>artwork.lines
-vexy-lines<span class="w"> </span>info<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
 </code></pre></div>
 <p>Returns: caption, version, DPI, dimensions, group/layer/fill counts, embedded image flags.</p>
 <h3 id="file-tree"><code>file-tree</code><a class="headerlink" href="#file-tree" title="Permanent link">&para;</a></h3>
 <p>Print the layer/group/fill hierarchy.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
-vexy-lines<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
 </code></pre></div>
 <p>Output shows nesting with indentation. Hidden layers are marked <code>[hidden]</code>. Fills show their algorithm in brackets.</p>
 <h3 id="extract-source"><code>extract-source</code><a class="headerlink" href="#extract-source" title="Permanent link">&para;</a></h3>
 <p>Save the embedded JPEG source image to disk.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines
-vexy-lines<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines<span class="w"> </span>--output<span class="w"> </span>photo.jpg
-vexy-lines<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines<span class="w"> </span>--format<span class="w"> </span>.png
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines<span class="w"> </span>--output<span class="w"> </span>photo.jpg
+vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines<span class="w"> </span>--format<span class="w"> </span>.png
 </code></pre></div>
 <p>Default output: <code>&lt;stem&gt;-src.jpg</code> in the same directory.</p>
 <h3 id="extract-preview"><code>extract-preview</code><a class="headerlink" href="#extract-preview" title="Permanent link">&para;</a></h3>
 <p>Save the embedded PNG preview image to disk.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines
-vexy-lines<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines<span class="w"> </span>--output<span class="w"> </span>thumb.png
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines<span class="w"> </span>--output<span class="w"> </span>thumb.png
 </code></pre></div>
 <p>Default output: <code>&lt;stem&gt;-preview.png</code> in the same directory.</p>
 <h3 id="batch-convert"><code>batch-convert</code><a class="headerlink" href="#batch-convert" title="Permanent link">&para;</a></h3>
 <p>Extract preview or source images from all <code>.lines</code> files in a directory.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./art/<span class="w"> </span>--output-dir<span class="w"> </span>./thumbs/
-vexy-lines<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./art/<span class="w"> </span>--what<span class="w"> </span><span class="nb">source</span><span class="w"> </span>--format<span class="w"> </span>jpg
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./art/<span class="w"> </span>--output-dir<span class="w"> </span>./thumbs/
+vexy-lines-cli<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./art/<span class="w"> </span>--what<span class="w"> </span><span class="nb">source</span><span class="w"> </span>--format<span class="w"> </span>jpg
 </code></pre></div>
 <p>Options:</p>
 <table>
@@ -1127,10 +1105,10 @@ vexy-lines<span class="w"> </span>batch-convert<span class="w"> </span>--input-d
 <h2 id="export-command-auto-launches-app">Export command (auto-launches app)<a class="headerlink" href="#export-command-auto-launches-app" title="Permanent link">&para;</a></h2>
 <h3 id="export"><code>export</code><a class="headerlink" href="#export" title="Permanent link">&para;</a></h3>
 <p>Export <code>.lines</code> files to PDF or SVG without save dialogs. Works on a single file or a directory (recursive).</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines
-vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./my-art/<span class="w"> </span>--format<span class="w"> </span>svg<span class="w"> </span>--output<span class="w"> </span>./exports/
-vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines<span class="w"> </span>--dry-run
-vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./art/<span class="w"> </span>--force<span class="w"> </span>--timeout-multiplier<span class="w"> </span><span class="m">2</span>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./my-art/<span class="w"> </span>--format<span class="w"> </span>svg<span class="w"> </span>--output<span class="w"> </span>./exports/
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines<span class="w"> </span>--dry-run
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./art/<span class="w"> </span>--force<span class="w"> </span>--timeout-multiplier<span class="w"> </span><span class="m">2</span>
 </code></pre></div>
 <p>The pipeline: quits the app, injects export preferences into macOS defaults, relaunches, opens each file, triggers File &gt; Export, restores original preferences.</p>
 <p>Options:</p>
@@ -1189,14 +1167,14 @@ vexy-lines<span class="w"> </span><span class="nb">export</span><span class="w">
 <h3 id="style-transfer"><code>style-transfer</code><a class="headerlink" href="#style-transfer" title="Permanent link">&para;</a></h3>
 <p>Apply a <code>.lines</code> style to images.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Single style across all images</span>
-vexy-lines<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--input-dir<span class="w"> </span>./frames/
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--input-dir<span class="w"> </span>./frames/
 
 <span class="c1"># Interpolate between two styles</span>
-vexy-lines<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span><span class="se">\</span>
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--input-dir<span class="w"> </span>./frames/<span class="w"> </span>--output-dir<span class="w"> </span>./out/
 
 <span class="c1"># Explicit image list</span>
-vexy-lines<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--images<span class="w"> </span>a.jpg<span class="w"> </span>b.jpg<span class="w"> </span>c.jpg
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--images<span class="w"> </span>a.jpg<span class="w"> </span>b.jpg<span class="w"> </span>c.jpg
 </code></pre></div>
 <p>Options:</p>
 <table>
@@ -1257,49 +1235,45 @@ vexy-lines<span class="w"> </span>style-transfer<span class="w"> </span>--style<
 </table>
 <h3 id="style-video"><code>style-video</code><a class="headerlink" href="#style-video" title="Permanent link">&para;</a></h3>
 <p>Apply a style to every frame of a video.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>result.mp4
-vexy-lines<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>result.mp4
+vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4
 </code></pre></div>
-<p>Requires <code>vexy-lines-run[video]</code> for PyAV, OpenCV, and resvg.</p>
+<p>Requires <code>vexy-lines-run</code> (includes PyAV, OpenCV, and resvg).</p>
 <h2 id="mcp-commands-app-must-be-running">MCP commands (app must be running)<a class="headerlink" href="#mcp-commands-app-must-be-running" title="Permanent link">&para;</a></h2>
 <h3 id="mcp-status"><code>mcp-status</code><a class="headerlink" href="#mcp-status" title="Permanent link">&para;</a></h3>
 <p>Check MCP server connectivity.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>mcp-status
-vexy-lines<span class="w"> </span>mcp-status<span class="w"> </span>--host<span class="w"> </span><span class="m">192</span>.168.1.10<span class="w"> </span>--port<span class="w"> </span><span class="m">47384</span>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>mcp-status
+vexy-lines-cli<span class="w"> </span>mcp-status<span class="w"> </span>--host<span class="w"> </span><span class="m">192</span>.168.1.10<span class="w"> </span>--port<span class="w"> </span><span class="m">47384</span>
 </code></pre></div>
 <h3 id="tree"><code>tree</code><a class="headerlink" href="#tree" title="Permanent link">&para;</a></h3>
 <p>Print the live document layer tree.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>tree
-vexy-lines<span class="w"> </span>tree<span class="w"> </span>--json-output
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>tree
+vexy-lines-cli<span class="w"> </span>tree<span class="w"> </span>--json-output
 </code></pre></div>
 <h3 id="new-document"><code>new-document</code><a class="headerlink" href="#new-document" title="Permanent link">&para;</a></h3>
 <p>Create a new document.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>new-document<span class="w"> </span>--width<span class="w"> </span><span class="m">210</span><span class="w"> </span>--height<span class="w"> </span><span class="m">297</span><span class="w"> </span>--dpi<span class="w"> </span><span class="m">300</span>
-vexy-lines<span class="w"> </span>new-document<span class="w"> </span>--source-image<span class="w"> </span>photo.jpg
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>new-document<span class="w"> </span>--width<span class="w"> </span><span class="m">210</span><span class="w"> </span>--height<span class="w"> </span><span class="m">297</span><span class="w"> </span>--dpi<span class="w"> </span><span class="m">300</span>
+vexy-lines-cli<span class="w"> </span>new-document<span class="w"> </span>--source-image<span class="w"> </span>photo.jpg
 </code></pre></div>
 <h3 id="open"><code>open</code><a class="headerlink" href="#open" title="Permanent link">&para;</a></h3>
 <p>Open a <code>.lines</code> file.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>open<span class="w"> </span>artwork.lines
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>open<span class="w"> </span>artwork.lines
 </code></pre></div>
 <h3 id="add-fill"><code>add-fill</code><a class="headerlink" href="#add-fill" title="Permanent link">&para;</a></h3>
 <p>Add a fill to a layer.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>add-fill<span class="w"> </span><span class="m">42</span><span class="w"> </span>linear<span class="w"> </span>--color<span class="w"> </span><span class="s2">&quot;#ff0000&quot;</span>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>add-fill<span class="w"> </span><span class="m">42</span><span class="w"> </span>linear<span class="w"> </span>--color<span class="w"> </span><span class="s2">&quot;#ff0000&quot;</span>
 </code></pre></div>
 <h3 id="render"><code>render</code><a class="headerlink" href="#render" title="Permanent link">&para;</a></h3>
 <p>Trigger a full render.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>render
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>render
 </code></pre></div>
 <p>All MCP commands accept <code>--host</code> and <code>--port</code> (defaults: <code>127.0.0.1:47384</code>).</p>
-<h2 id="bridge-and-gui">Bridge and GUI<a class="headerlink" href="#bridge-and-gui" title="Permanent link">&para;</a></h2>
+<h2 id="bridge">Bridge<a class="headerlink" href="#bridge" title="Permanent link">&para;</a></h2>
 <h3 id="mcp-serve"><code>mcp-serve</code><a class="headerlink" href="#mcp-serve" title="Permanent link">&para;</a></h3>
 <p>Start the stdio-to-TCP bridge for Claude Desktop / Cursor.</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>mcp-serve
-vexy-lines<span class="w"> </span>mcp-serve<span class="w"> </span>--no-launch
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>mcp-serve
+vexy-lines-cli<span class="w"> </span>mcp-serve<span class="w"> </span>--no-launch
 vexy-lines-mcp<span class="w">   </span><span class="c1"># same thing, as an installed script</span>
-</code></pre></div>
-<h3 id="gui"><code>gui</code><a class="headerlink" href="#gui" title="Permanent link">&para;</a></h3>
-<p>Launch the Vexy Lines Run (requires <code>vexy-lines-run</code>).</p>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>gui
 </code></pre></div>
 <h2 id="global-flags">Global flags<a class="headerlink" href="#global-flags" title="Permanent link">&para;</a></h2>
 <p>All commands support <code>--verbose</code> for debug logging.</p>

@@ -353,10 +353,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-extras" class="md-nav__link">
+  <a href="#additional-packages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Additional extras
+        Additional packages
       
     </span>
   </a>
@@ -599,10 +599,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-extras" class="md-nav__link">
+  <a href="#additional-packages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Additional extras
+        Additional packages
       
     </span>
   </a>
@@ -682,13 +682,11 @@
 <p>Or with <code>uv</code>:</p>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span>vexy-lines-cli
 </code></pre></div>
-<h2 id="additional-extras">Additional extras<a class="headerlink" href="#additional-extras" title="Permanent link">&para;</a></h2>
-<p>For video processing:</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;vexy-lines-run[video]&quot;</span>
-</code></pre></div>
-<p>For the GUI:</p>
+<h2 id="additional-packages">Additional packages<a class="headerlink" href="#additional-packages" title="Permanent link">&para;</a></h2>
+<p>For video processing and the GUI, install the companion app:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>vexy-lines-run
 </code></pre></div>
+<p>Video dependencies (PyAV, OpenCV, resvg-py) are included in the base <code>vexy-lines-run</code> install.</p>
 <h2 id="installed-commands">Installed commands<a class="headerlink" href="#installed-commands" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -699,8 +697,8 @@
 </thead>
 <tbody>
 <tr>
-<td><code>vexy-lines</code></td>
-<td>CLI (with args) or GUI (without args)</td>
+<td><code>vexy-lines-cli</code></td>
+<td>CLI interface</td>
 </tr>
 <tr>
 <td><code>vexy-lines-mcp</code></td>
@@ -732,7 +730,7 @@
 </tbody>
 </table>
 <h2 id="verify-the-install">Verify the install<a class="headerlink" href="#verify-the-install" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>vexy-lines<span class="w"> </span>--help
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>--help
 </code></pre></div>
 <h2 id="development-install">Development install<a class="headerlink" href="#development-install" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/vexyart/vexy-lines.git

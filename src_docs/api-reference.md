@@ -45,7 +45,7 @@ Apply a `.lines` style to images via MCP. See [CLI Reference](cli-reference.md#s
 
 #### `style_video(style, input, output="output.mp4", ...) -> dict`
 
-Apply a style to video frames. Requires `vexy-lines-run[video]`.
+Apply a style to video frames. Requires `vexy-lines-run`.
 
 ### Export methods
 
@@ -79,15 +79,11 @@ Add a fill to a layer via MCP.
 
 Trigger a full render via MCP.
 
-### Bridge and GUI
+### Bridge
 
 #### `mcp_serve(host, port, no_launch=False) -> None`
 
 Start the stdio-to-TCP MCP bridge.
-
-#### `gui() -> None`
-
-Launch the GUI (requires `vexy-lines-run`).
 
 ---
 

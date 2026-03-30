@@ -37,22 +37,22 @@ Parse `.lines` files, batch export to PDF/SVG, apply styles to images and video,
 
 ```bash
 # Inspect a file (no app needed)
-vexy-lines info artwork.lines
+vexy-lines-cli info artwork.lines
 
 # Show the layer tree
-vexy-lines file-tree artwork.lines
+vexy-lines-cli file-tree artwork.lines
 
 # Export a folder to PDF (auto-launches the app)
-vexy-lines export ./my-art/ --format pdf
+vexy-lines-cli export ./my-art/ --format pdf
 
 # Apply a style to photos
-vexy-lines style-transfer --style template.lines --input-dir ./photos/
+vexy-lines-cli style-transfer --style template.lines --input-dir ./photos/
 
 # Check MCP connectivity
-vexy-lines mcp-status
+vexy-lines-cli mcp-status
 ```
 
-Running `vexy-lines` with no arguments launches the GUI (requires `vexy-lines-run`).
+Run `vexy-lines-cli --help` to see all available subcommands.
 
 ## Next steps
 

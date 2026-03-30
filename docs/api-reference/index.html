@@ -646,15 +646,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#bridge-and-gui" class="md-nav__link">
+  <a href="#bridge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bridge and GUI
+        Bridge
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bridge and GUI">
+    <nav class="md-nav" aria-label="Bridge">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -662,17 +662,6 @@
     <span class="md-ellipsis">
       
         mcp_serve(host, port, no_launch=False) -&gt; None
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gui-none" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gui() -&gt; None
       
     </span>
   </a>
@@ -1179,15 +1168,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#bridge-and-gui" class="md-nav__link">
+  <a href="#bridge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bridge and GUI
+        Bridge
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Bridge and GUI">
+    <nav class="md-nav" aria-label="Bridge">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1195,17 +1184,6 @@
     <span class="md-ellipsis">
       
         mcp_serve(host, port, no_launch=False) -&gt; None
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gui-none" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        gui() -&gt; None
       
     </span>
   </a>
@@ -1429,7 +1407,7 @@
 <h4 id="style_transferstyle-dict"><code>style_transfer(style, ...) -&gt; dict</code><a class="headerlink" href="#style_transferstyle-dict" title="Permanent link">&para;</a></h4>
 <p>Apply a <code>.lines</code> style to images via MCP. See <a href="../cli-reference/#style-transfer">CLI Reference</a> for all options.</p>
 <h4 id="style_videostyle-input-outputoutputmp4-dict"><code>style_video(style, input, output="output.mp4", ...) -&gt; dict</code><a class="headerlink" href="#style_videostyle-input-outputoutputmp4-dict" title="Permanent link">&para;</a></h4>
-<p>Apply a style to video frames. Requires <code>vexy-lines-run[video]</code>.</p>
+<p>Apply a style to video frames. Requires <code>vexy-lines-run</code>.</p>
 <h3 id="export-methods">Export methods<a class="headerlink" href="#export-methods" title="Permanent link">&para;</a></h3>
 <h4 id="exportinput-outputnone-formatpdf-dict"><code>export(input, output=None, format="pdf", ...) -&gt; dict</code><a class="headerlink" href="#exportinput-outputnone-formatpdf-dict" title="Permanent link">&para;</a></h4>
 <p>Export <code>.lines</code> files to PDF/SVG via the plist injection pipeline.</p>
@@ -1446,11 +1424,9 @@
 <p>Add a fill to a layer via MCP.</p>
 <h4 id="renderhost-port-dict"><code>render(host, port) -&gt; dict</code><a class="headerlink" href="#renderhost-port-dict" title="Permanent link">&para;</a></h4>
 <p>Trigger a full render via MCP.</p>
-<h3 id="bridge-and-gui">Bridge and GUI<a class="headerlink" href="#bridge-and-gui" title="Permanent link">&para;</a></h3>
+<h3 id="bridge">Bridge<a class="headerlink" href="#bridge" title="Permanent link">&para;</a></h3>
 <h4 id="mcp_servehost-port-no_launchfalse-none"><code>mcp_serve(host, port, no_launch=False) -&gt; None</code><a class="headerlink" href="#mcp_servehost-port-no_launchfalse-none" title="Permanent link">&para;</a></h4>
 <p>Start the stdio-to-TCP MCP bridge.</p>
-<h4 id="gui-none"><code>gui() -&gt; None</code><a class="headerlink" href="#gui-none" title="Permanent link">&para;</a></h4>
-<p>Launch the GUI (requires <code>vexy-lines-run</code>).</p>
 <hr />
 <h2 id="export-module">Export module<a class="headerlink" href="#export-module" title="Permanent link">&para;</a></h2>
 <h3 id="exportconfig">ExportConfig<a class="headerlink" href="#exportconfig" title="Permanent link">&para;</a></h3>

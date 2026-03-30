@@ -1,6 +1,6 @@
 # Export Pipeline
 
-The `vexy-lines export` command exports `.lines` files to PDF or SVG without interacting with save dialogs. This page explains how it works under the hood.
+The `vexy-lines-cli export` command exports `.lines` files to PDF or SVG without interacting with save dialogs. This page explains how it works under the hood.
 
 ## The problem
 

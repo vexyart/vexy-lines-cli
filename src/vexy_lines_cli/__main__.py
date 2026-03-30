@@ -100,9 +100,9 @@ class VexyLinesCLI:
     **Style / MCP** (app must be running): style-transfer, style-video, tree, new-document,
         open, add-fill, render, mcp-status
     **Export** (app auto-launched): export
-    **Bridge**: mcp-serve, gui
+    **Bridge**: mcp-serve
 
-    Run ``vexy-lines <subcommand> --help`` for per-command options.
+    Run ``vexy-lines-cli <subcommand> --help`` for per-command options.
     """
 
     MIN_TIMEOUT_MULTIPLIER = 0.1
@@ -278,7 +278,7 @@ class VexyLinesCLI:
                 Use this or ``--images``, not both.
             output_dir: Where to write output files (created if absent).
             format: Output format: ``svg`` (default), ``png``, or ``jpg``.
-                Raster formats require ``vexy-lines-run[video]``.
+                Raster formats require ``vexy-lines-run``.
             dpi: Document DPI passed to the MCP renderer (default 72).
             host: MCP server address (default 127.0.0.1).
             port: MCP server port (default 47384).
@@ -384,8 +384,8 @@ class VexyLinesCLI:
 
         Decodes the video, renders each frame through the MCP API with the
         given style, then re-encodes to a new video. Requires the Vexy Lines
-        app to be running and the ``vexy-lines-run[video]`` extra installed
-        (``pip install vexy-lines-run[video]``).
+        app to be running and ``vexy-lines-run`` installed
+        (``pip install vexy-lines-run``).
 
         With ``--end-style``, interpolates fill parameters between the two
         styles across frames — the first frame uses ``--style``, the last

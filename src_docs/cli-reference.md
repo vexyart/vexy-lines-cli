@@ -1,6 +1,6 @@
 # CLI Reference
 
-All commands use `vexy-lines <subcommand>`. Add `--help` to any subcommand for usage details.
+All commands use `vexy-lines-cli <subcommand>`. Add `--help` to any subcommand for usage details.
 
 ## Parser commands (no app required)
 
@@ -11,8 +11,8 @@ These work offline -- they parse `.lines` XML directly.
 Show metadata for a `.lines` file.
 
 ```bash
-vexy-lines info artwork.lines
-vexy-lines info artwork.lines --json-output
+vexy-lines-cli info artwork.lines
+vexy-lines-cli info artwork.lines --json-output
 ```
 
 Returns: caption, version, DPI, dimensions, group/layer/fill counts, embedded image flags.
@@ -22,8 +22,8 @@ Returns: caption, version, DPI, dimensions, group/layer/fill counts, embedded im
 Print the layer/group/fill hierarchy.
 
 ```bash
-vexy-lines file-tree artwork.lines
-vexy-lines file-tree artwork.lines --json-output
+vexy-lines-cli file-tree artwork.lines
+vexy-lines-cli file-tree artwork.lines --json-output
 ```
 
 Output shows nesting with indentation. Hidden layers are marked `[hidden]`. Fills show their algorithm in brackets.
@@ -33,9 +33,9 @@ Output shows nesting with indentation. Hidden layers are marked `[hidden]`. Fill
 Save the embedded JPEG source image to disk.
 
 ```bash
-vexy-lines extract-source artwork.lines
-vexy-lines extract-source artwork.lines --output photo.jpg
-vexy-lines extract-source artwork.lines --format .png
+vexy-lines-cli extract-source artwork.lines
+vexy-lines-cli extract-source artwork.lines --output photo.jpg
+vexy-lines-cli extract-source artwork.lines --format .png
 ```
 
 Default output: `<stem>-src.jpg` in the same directory.
@@ -45,8 +45,8 @@ Default output: `<stem>-src.jpg` in the same directory.
 Save the embedded PNG preview image to disk.
 
 ```bash
-vexy-lines extract-preview artwork.lines
-vexy-lines extract-preview artwork.lines --output thumb.png
+vexy-lines-cli extract-preview artwork.lines
+vexy-lines-cli extract-preview artwork.lines --output thumb.png
 ```
 
 Default output: `<stem>-preview.png` in the same directory.
@@ -56,8 +56,8 @@ Default output: `<stem>-preview.png` in the same directory.
 Extract preview or source images from all `.lines` files in a directory.
 
 ```bash
-vexy-lines batch-convert --input-dir ./art/ --output-dir ./thumbs/
-vexy-lines batch-convert --input-dir ./art/ --what source --format jpg
+vexy-lines-cli batch-convert --input-dir ./art/ --output-dir ./thumbs/
+vexy-lines-cli batch-convert --input-dir ./art/ --what source --format jpg
 ```
 
 Options:
@@ -76,10 +76,10 @@ Options:
 Export `.lines` files to PDF or SVG without save dialogs. Works on a single file or a directory (recursive).
 
 ```bash
-vexy-lines export artwork.lines
-vexy-lines export ./my-art/ --format svg --output ./exports/
-vexy-lines export artwork.lines --dry-run
-vexy-lines export ./art/ --force --timeout-multiplier 2
+vexy-lines-cli export artwork.lines
+vexy-lines-cli export ./my-art/ --format svg --output ./exports/
+vexy-lines-cli export artwork.lines --dry-run
+vexy-lines-cli export ./art/ --force --timeout-multiplier 2
 ```
 
 The pipeline: quits the app, injects export preferences into macOS defaults, relaunches, opens each file, triggers File > Export, restores original preferences.
@@ -105,14 +105,14 @@ Apply a `.lines` style to images.
 
 ```bash
 # Single style across all images
-vexy-lines style-transfer --style look.lines --input-dir ./frames/
+vexy-lines-cli style-transfer --style look.lines --input-dir ./frames/
 
 # Interpolate between two styles
-vexy-lines style-transfer --style start.lines --end-style end.lines \
+vexy-lines-cli style-transfer --style start.lines --end-style end.lines \
     --input-dir ./frames/ --output-dir ./out/
 
 # Explicit image list
-vexy-lines style-transfer --style look.lines --images a.jpg b.jpg c.jpg
+vexy-lines-cli style-transfer --style look.lines --images a.jpg b.jpg c.jpg
 ```
 
 Options:
@@ -134,11 +134,11 @@ Options:
 Apply a style to every frame of a video.
 
 ```bash
-vexy-lines style-video --style look.lines --input clip.mp4 --output result.mp4
-vexy-lines style-video --style start.lines --end-style end.lines --input clip.mp4
+vexy-lines-cli style-video --style look.lines --input clip.mp4 --output result.mp4
+vexy-lines-cli style-video --style start.lines --end-style end.lines --input clip.mp4
 ```
 
-Requires `vexy-lines-run[video]` for PyAV, OpenCV, and resvg.
+Requires `vexy-lines-run` (includes PyAV, OpenCV, and resvg).
 
 ## MCP commands (app must be running)
 
@@ -147,8 +147,8 @@ Requires `vexy-lines-run[video]` for PyAV, OpenCV, and resvg.
 Check MCP server connectivity.
 
 ```bash
-vexy-lines mcp-status
-vexy-lines mcp-status --host 192.168.1.10 --port 47384
+vexy-lines-cli mcp-status
+vexy-lines-cli mcp-status --host 192.168.1.10 --port 47384
 ```
 
 ### `tree`
@@ -156,8 +156,8 @@ vexy-lines mcp-status --host 192.168.1.10 --port 47384
 Print the live document layer tree.
 
 ```bash
-vexy-lines tree
-vexy-lines tree --json-output
+vexy-lines-cli tree
+vexy-lines-cli tree --json-output
 ```
 
 ### `new-document`
@@ -165,8 +165,8 @@ vexy-lines tree --json-output
 Create a new document.
 
 ```bash
-vexy-lines new-document --width 210 --height 297 --dpi 300
-vexy-lines new-document --source-image photo.jpg
+vexy-lines-cli new-document --width 210 --height 297 --dpi 300
+vexy-lines-cli new-document --source-image photo.jpg
 ```
 
 ### `open`
@@ -174,7 +174,7 @@ vexy-lines new-document --source-image photo.jpg
 Open a `.lines` file.
 
 ```bash
-vexy-lines open artwork.lines
+vexy-lines-cli open artwork.lines
 ```
 
 ### `add-fill`
@@ -182,7 +182,7 @@ vexy-lines open artwork.lines
 Add a fill to a layer.
 
 ```bash
-vexy-lines add-fill 42 linear --color "#ff0000"
+vexy-lines-cli add-fill 42 linear --color "#ff0000"
 ```
 
 ### `render`
@@ -190,29 +190,21 @@ vexy-lines add-fill 42 linear --color "#ff0000"
 Trigger a full render.
 
 ```bash
-vexy-lines render
+vexy-lines-cli render
 ```
 
 All MCP commands accept `--host` and `--port` (defaults: `127.0.0.1:47384`).
 
-## Bridge and GUI
+## Bridge
 
 ### `mcp-serve`
 
 Start the stdio-to-TCP bridge for Claude Desktop / Cursor.
 
 ```bash
-vexy-lines mcp-serve
-vexy-lines mcp-serve --no-launch
+vexy-lines-cli mcp-serve
+vexy-lines-cli mcp-serve --no-launch
 vexy-lines-mcp   # same thing, as an installed script
-```
-
-### `gui`
-
-Launch the Vexy Lines Run (requires `vexy-lines-run`).
-
-```bash
-vexy-lines gui
 ```
 
 ## Global flags

@@ -20,25 +20,21 @@ Or with `uv`:
 uv add vexy-lines-cli
 ```
 
-## Additional extras
+## Additional packages
 
-For video processing:
-
-```bash
-pip install "vexy-lines-run[video]"
-```
-
-For the GUI:
+For video processing and the GUI, install the companion app:
 
 ```bash
 pip install vexy-lines-run
 ```
 
+Video dependencies (PyAV, OpenCV, resvg-py) are included in the base `vexy-lines-run` install.
+
 ## Installed commands
 
 | Command | What it runs |
 |---------|-------------|
-| `vexy-lines` | CLI (with args) or GUI (without args) |
+| `vexy-lines-cli` | CLI interface |
 | `vexy-lines-mcp` | MCP stdio-to-TCP bridge server |
 
 ## Runtime dependencies
@@ -52,7 +48,7 @@ pip install vexy-lines-run
 ## Verify the install
 
 ```bash
-vexy-lines --help
+vexy-lines-cli --help
 ```
 
 ## Development install

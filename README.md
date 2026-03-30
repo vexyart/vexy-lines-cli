@@ -12,28 +12,26 @@ pip install vexy-lines-cli
 
 Requires Python 3.11+. Pulls in `vexy-lines-apy` (MCP client, style engine) and `vexy-lines-py` (parser) automatically.
 
-For video processing: `pip install vexy-lines-run[video]`. For the GUI: `pip install vexy-lines-run`.
+For video processing and the GUI: `pip install vexy-lines-run` (all dependencies are included).
 
 ## Quick start
 
 ```bash
 # Inspect a file without opening the app
-vexy-lines info artwork.lines
+vexy-lines-cli info artwork.lines
 
 # Show the layer/group/fill tree
-vexy-lines file-tree artwork.lines
+vexy-lines-cli file-tree artwork.lines
 
 # Export a folder of .lines files to PDF (auto-launches the app)
-vexy-lines export ./my-art/ --format pdf
+vexy-lines-cli export ./my-art/ --format pdf
 
 # Apply a style template to a folder of photos
-vexy-lines style-transfer --style template.lines --input-dir ./photos/ --output-dir ./out/
+vexy-lines-cli style-transfer --style template.lines --input-dir ./photos/ --output-dir ./out/
 
 # Check MCP connectivity
-vexy-lines mcp-status
+vexy-lines-cli mcp-status
 ```
-
-Running `vexy-lines` with no arguments launches the GUI (requires `vexy-lines-run`).
 
 ## Subcommand reference
 
@@ -50,8 +48,8 @@ Running `vexy-lines` with no arguments launches the GUI (requires `vexy-lines-ru
 All parser commands accept `--json-output` for machine-readable output.
 
 ```bash
-vexy-lines info artwork.lines --json-output
-vexy-lines batch-convert --input-dir ./art/ --output-dir ./thumbs/ --what preview --format jpg
+vexy-lines-cli info artwork.lines --json-output
+vexy-lines-cli batch-convert --input-dir ./art/ --output-dir ./thumbs/ --what preview --format jpg
 ```
 
 ### Export — auto-launches app
@@ -59,9 +57,9 @@ vexy-lines batch-convert --input-dir ./art/ --output-dir ./thumbs/ --what previe
 Uses dialog-less export: injects settings into macOS preferences, triggers `File > Export`, then restores original prefs. Input can be a single file or a directory.
 
 ```bash
-vexy-lines export ./art/ --format svg --output ./svg-out/
-vexy-lines export artwork.lines --format pdf --dry-run   # preview without exporting
-vexy-lines export ./art/ --force --timeout-multiplier 2
+vexy-lines-cli export ./art/ --format svg --output ./svg-out/
+vexy-lines-cli export artwork.lines --format pdf --dry-run   # preview without exporting
+vexy-lines-cli export ./art/ --force --timeout-multiplier 2
 ```
 
 Options: `--format` (`pdf`/`svg`), `--force`, `--dry-run`, `--timeout-multiplier` (0.1–10.0), `--max-retries` (0–10), `--say-summary`.
@@ -70,14 +68,14 @@ Options: `--format` (`pdf`/`svg`), `--force`, `--dry-run`, `--timeout-multiplier
 
 ```bash
 # Single style across all images
-vexy-lines style-transfer --style look.lines --input-dir ./frames/ --format svg
+vexy-lines-cli style-transfer --style look.lines --input-dir ./frames/ --format svg
 
 # Interpolate between two styles across the sequence
-vexy-lines style-transfer --style start.lines --end-style end.lines \
+vexy-lines-cli style-transfer --style start.lines --end-style end.lines \
     --input-dir ./frames/ --output-dir ./out/
 
 # Apply style to video
-vexy-lines style-video --style look.lines --input clip.mp4 --output result.mp4
+vexy-lines-cli style-video --style look.lines --input clip.mp4 --output result.mp4
 ```
 
 ### MCP — app must be running
@@ -94,20 +92,19 @@ Direct JSON-RPC calls to the Vexy Lines embedded server (`localhost:47384`).
 | `render` | Trigger a full render |
 
 ```bash
-vexy-lines mcp-status
-vexy-lines tree --json-output
-vexy-lines new-document --width 210 --height 297 --dpi 300
-vexy-lines add-fill 42 linear --color "#ff0000"
+vexy-lines-cli mcp-status
+vexy-lines-cli tree --json-output
+vexy-lines-cli new-document --width 210 --height 297 --dpi 300
+vexy-lines-cli add-fill 42 linear --color "#ff0000"
 ```
 
 All MCP commands accept `--host` and `--port` (defaults: `127.0.0.1:47384`).
 
-### Bridge and GUI
+### MCP bridge
 
 | Command | What it does |
 |---|---|
 | `mcp-serve` | Start the stdio-to-TCP bridge (same as running `vexy-lines-mcp`) |
-| `gui` | Launch the Vexy Lines Run (requires `vexy-lines-run`) |
 
 ## MCP server setup
 
@@ -130,8 +127,8 @@ For Cursor, add the same block under `mcp.servers` in `.cursor/mcp.json`.
 The bridge auto-launches the Vexy Lines app on first connection. Pass `--no-launch` to disable:
 
 ```bash
-vexy-lines mcp-serve --no-launch
-vexy-lines mcp-serve --host 127.0.0.1 --port 47384
+vexy-lines-cli mcp-serve --no-launch
+vexy-lines-cli mcp-serve --host 127.0.0.1 --port 47384
 ```
 
 ## Full documentation
