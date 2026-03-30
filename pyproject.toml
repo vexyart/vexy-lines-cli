@@ -83,7 +83,7 @@ packages = ["src/vexy_lines_cli"]
 reproducible = true
 
 [tool.hatch.build.hooks.vcs]
-version-file = "src/vexy_lines_cli/__version__.py"
+version-file = "src/vexy_lines_cli/_version.py"
 
 [tool.hatch.version]
 source = "vcs"
