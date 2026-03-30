@@ -117,6 +117,7 @@ def serve(
                 sock.sendall((line + "\n").encode("utf-8"))
 
             # Read response from TCP
+            response_line: str | None = None
             while True:
                 newline_pos = tcp_buffer.find(b"\n")
                 if newline_pos != -1:
@@ -136,8 +137,9 @@ def serve(
                 continue
 
             # Forward TCP response to stdout
-            stdout.write(response_line + "\n")
-            stdout.flush()
+            if response_line is not None:
+                stdout.write(response_line + "\n")
+                stdout.flush()
 
     except KeyboardInterrupt:
         logger.info("Shutting down MCP bridge")

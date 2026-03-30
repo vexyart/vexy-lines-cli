@@ -315,7 +315,9 @@ class VexyLinesCLI:
             return {"error": str(exc)}
 
         if end_style_obj and not styles_compatible(start_style, end_style_obj):
-            pass
+            logger.warning(
+                "Start and end styles are incompatible (different fill structure). Interpolation may produce unexpected results."
+            )
 
         n = len(image_paths)
         successes = 0
@@ -341,10 +343,10 @@ class VexyLinesCLI:
                             out_file.write_text(svg_string, encoding="utf-8")
                         else:
                             try:
-                                from vexy_lines_api.video import _svg_to_pil  # noqa: PLC0415
+                                from vexy_lines_api.video import svg_to_pil  # noqa: PLC0415
                             except ImportError:
                                 return {"error": "raster output requires: pip install av resvg-py Pillow"}
-                            pil_img = _svg_to_pil(svg_string, 1920, 1080)
+                            pil_img = svg_to_pil(svg_string, 1920, 1080)
                             out_file = out / f"{stem}.{format}"
                             pil_img.save(str(out_file))
 
@@ -784,6 +786,7 @@ class VexyLinesCLI:
         from vexy_lines_cli.mcp_server import serve  # noqa: PLC0415
 
         serve(host=host, port=port, auto_launch=not no_launch)
+
 
 def main() -> None:
     """Entry point: dispatch subcommands via Fire."""
