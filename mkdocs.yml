@@ -1,18 +1,19 @@
 site_name: "vexy-lines-cli"
 site_description: "CLI tool and MCP passthrough server for Vexy Lines"
 theme:
+  custom_dir: overrides
   name: materialx
   features:
     - content.code.copy
     - navigation.sections
   palette:
     - scheme: slate
-      primary: deep purple
+      primary: indigo
       toggle:
         icon: material/brightness-7
         name: Light mode
     - scheme: default
-      primary: deep purple
+      primary: indigo
       toggle:
         icon: material/brightness-4
         name: Dark mode
