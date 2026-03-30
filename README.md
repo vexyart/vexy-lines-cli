@@ -10,7 +10,7 @@ Parse `.lines` files, batch export to PDF/SVG, apply styles to images and video,
 pip install vexy-lines-cli
 ```
 
-Requires Python 3.10+. Pulls in `vexy-lines-apy` (MCP client, style engine) and `vexy-lines-py` (parser) automatically.
+Requires Python 3.11+. Pulls in `vexy-lines-apy` (MCP client, style engine) and `vexy-lines-py` (parser) automatically.
 
 For video processing: `pip install vexy-lines-run[video]`. For the GUI: `pip install vexy-lines-run`.
 

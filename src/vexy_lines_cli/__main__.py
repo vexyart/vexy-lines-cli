@@ -341,9 +341,9 @@ class VexyLinesCLI:
                             out_file.write_text(svg_string, encoding="utf-8")
                         else:
                             try:
-                                from vexy_lines_run.video import _svg_to_pil  # noqa: PLC0415
+                                from vexy_lines_api.video import _svg_to_pil  # noqa: PLC0415
                             except ImportError:
-                                return {"error": "raster output requires vexy-lines-run[video]: pip install vexy-lines-run[video]"}
+                                return {"error": "raster output requires: pip install av resvg-py Pillow"}
                             pil_img = _svg_to_pil(svg_string, 1920, 1080)
                             out_file = out / f"{stem}.{format}"
                             pil_img.save(str(out_file))
@@ -411,9 +411,9 @@ class VexyLinesCLI:
             logger.enable("vexy_lines_cli")
 
         try:
-            from vexy_lines_run.video import process_video  # noqa: PLC0415
+            from vexy_lines_api.video import process_video  # noqa: PLC0415
         except ImportError:
-            return {"error": "video processing requires vexy-lines-run[video]: pip install vexy-lines-run[video]"}
+            return {"error": "video processing requires: pip install av resvg-py Pillow"}
 
         try:
             start_style_obj = extract_style(style)

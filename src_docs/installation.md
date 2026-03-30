@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Python 3.10 or newer
+- Python 3.11 or newer
 - The [Vexy Lines](https://vexy.art) desktop app for MCP and export commands
 - macOS for the dialog-less export pipeline (uses AppleScript and `defaults write`)
 
