@@ -107,7 +107,7 @@ All MCP commands accept `--host` and `--port` (defaults: `127.0.0.1:47384`).
 | Command | What it does |
 |---|---|
 | `mcp-serve` | Start the stdio-to-TCP bridge (same as running `vexy-lines-mcp`) |
-| `gui` | Launch the Vexy Lines GUI (requires `vexy-lines-run`) |
+| `gui` | Launch the Vexy Lines Run (requires `vexy-lines-run`) |
 
 ## MCP server setup
 

@@ -209,7 +209,7 @@ vexy-lines-mcp   # same thing, as an installed script
 
 ### `gui`
 
-Launch the Vexy Lines GUI (requires `vexy-lines-run`).
+Launch the Vexy Lines Run (requires `vexy-lines-run`).
 
 ```bash
 vexy-lines gui
