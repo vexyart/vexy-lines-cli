@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import json as _json
-import sys
 from dataclasses import asdict
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -786,41 +785,9 @@ class VexyLinesCLI:
 
         serve(host=host, port=port, auto_launch=not no_launch)
 
-    # -- GUI launcher ------------------------------------------------------
-
-    def gui(self) -> None:
-        """Launch the Vexy Lines GUI.
-
-        Requires the vexy-lines-run package to be installed.
-        """
-        try:
-            from vexy_lines_run import launch  # noqa: PLC0415
-
-            launch()
-        except ImportError:
-            print(  # noqa: T201
-                "GUI package not installed. Install with: pip install vexy-lines-run\n"
-                "Or use a subcommand: vexy-lines --help"
-            )
-            sys.exit(1)
-
-
 def main() -> None:
-    """Entry point: launch GUI if no args, otherwise dispatch via Fire."""
-    if len(sys.argv) <= 1:
-        # No subcommand given -- try to launch the GUI
-        try:
-            from vexy_lines_run import launch  # noqa: PLC0415
-
-            launch()
-        except ImportError:
-            print(  # noqa: T201
-                "GUI package not installed. Install with: pip install vexy-lines-run\n"
-                "Or use a subcommand: vexy-lines --help"
-            )
-            sys.exit(1)
-    else:
-        fire.Fire(VexyLinesCLI)
+    """Entry point: dispatch subcommands via Fire."""
+    fire.Fire(VexyLinesCLI)
 
 
 if __name__ == "__main__":
