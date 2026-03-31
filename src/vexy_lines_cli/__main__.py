@@ -269,6 +269,8 @@ class VexyLinesCLI:
         verbose: bool = False,
         size: str = "1x",
         style_mode: str = "fast",
+        force: bool = False,
+        cleanup: bool = False,
     ) -> dict[str, object]:
         """Apply a .lines style to one or more images via the shared export pipeline.
 
@@ -302,6 +304,10 @@ class VexyLinesCLI:
             verbose: Enable debug logging.
             size: Output scale multiplier (e.g. "1x", "2x"). Default "1x".
             style_mode: Style interpolation mode (default ``auto``).
+            force: Delete existing job folder and start fresh. Default ``False``
+                (resume from existing progress).
+            cleanup: Delete the job folder after final assets are copied to output.
+                Default ``False`` (keep for potential re-runs).
 
         Returns:
             Dict with keys: total, successes, failures, output_dir.
@@ -347,6 +353,8 @@ class VexyLinesCLI:
             size=size,
             relative_style=relative_style,
             style_mode=style_mode,
+            force=force,
+            cleanup=cleanup,
         )
 
         n = len(str_paths)
@@ -405,6 +413,8 @@ class VexyLinesCLI:
         style_mode: str = "fast",
         audio: bool = True,
         size: str = "1x",
+        force: bool = False,
+        cleanup: bool = False,
     ) -> dict[str, object]:
         """Apply a .lines style to every frame of a video via the shared export pipeline.
 
@@ -433,6 +443,10 @@ class VexyLinesCLI:
             style_mode: Style interpolation mode (default ``auto``).
             audio: Include audio in the output video (default ``True``).
             size: Output scale multiplier (e.g. "1x", "2x"). Default "1x".
+            force: Delete existing job folder and start fresh. Default ``False``
+                (resume from existing progress).
+            cleanup: Delete the job folder after final assets are copied to output.
+                Default ``False`` (keep for potential re-runs).
 
         Returns:
             Dict with keys: status, input, output. On failure, returns
@@ -468,6 +482,8 @@ class VexyLinesCLI:
             audio=audio,
             frame_range=frame_range,
             style_mode=style_mode,
+            force=force,
+            cleanup=cleanup,
         )
 
         errors: list[str] = []
