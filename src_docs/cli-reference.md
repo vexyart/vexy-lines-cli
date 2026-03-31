@@ -128,6 +128,8 @@ Options:
 | `--dpi` | `72` | Document DPI for rendering |
 | `--host` | `127.0.0.1` | MCP server address |
 | `--port` | `47384` | MCP server port |
+| `--force` | `False` | Delete existing job folder and start fresh |
+| `--cleanup` | `False` | Delete job folder after export completes |
 
 ### `style-video`
 
@@ -139,6 +141,19 @@ vexy-lines-cli style-video --style start.lines --end-style end.lines --input cli
 ```
 
 Requires `vexy-lines-run` (includes PyAV, OpenCV, and resvg).
+
+Options:
+
+| Flag | Type | Default | Description |
+|------|------|---------|-------------|
+| `--style` | `str` | (required) | Source style `.lines` file |
+| `--end-style` | `str` | (none) | End style for interpolation |
+| `--input` | `str` | (required) | Input video path |
+| `--output` | `str` | (none) | Output video path |
+| `--host` | `str` | `127.0.0.1` | MCP server address |
+| `--port` | `int` | `47384` | MCP server port |
+| `--force` | `bool` | `False` | Delete existing job folder and start fresh |
+| `--cleanup` | `bool` | `False` | Delete job folder after export completes |
 
 ## MCP commands (app must be running)
 

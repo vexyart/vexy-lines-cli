@@ -533,6 +533,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#style-export-pipeline-job-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Style export pipeline (job folders)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Style export pipeline (job folders)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#job-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -797,6 +858,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#style-export-pipeline-job-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Style export pipeline (job folders)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Style export pipeline (job folders)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#job-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -902,6 +1024,83 @@
 <li>The Vexy Lines macOS app</li>
 </ul>
 <p>It does not work on Windows or Linux. For cross-platform export, use the MCP API directly via <code>MCPClient.export_document()</code>.</p>
+<h2 id="style-export-pipeline-job-folders">Style export pipeline (job folders)<a class="headerlink" href="#style-export-pipeline-job-folders" title="Permanent link">&para;</a></h2>
+<p>The <code>style-transfer</code> and <code>style-video</code> commands use a different pipeline from <code>export</code>. Instead of plist injection, they use the MCP API to apply styles programmatically.</p>
+<h3 id="job-folder">Job folder<a class="headerlink" href="#job-folder" title="Permanent link">&para;</a></h3>
+<p>Every style export creates a persistent <strong>job folder</strong> alongside the output:</p>
+<table>
+<thead>
+<tr>
+<th>Output type</th>
+<th>Output path</th>
+<th>Job folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Video</td>
+<td><code>./06/styled.mp4</code></td>
+<td><code>./06/styled-vljob/</code></td>
+</tr>
+<tr>
+<td>Frames</td>
+<td><code>./output/</code></td>
+<td><code>./output-vljob/</code></td>
+</tr>
+<tr>
+<td>Images</td>
+<td><code>./results/</code></td>
+<td><code>./results-vljob/</code></td>
+</tr>
+</tbody>
+</table>
+<p>The job folder stores the complete artifact chain for each processed item:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>File pattern</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>src--{stem}--{N}.png</code></td>
+<td>Raw decoded video frame (video only)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>{stem}--{N}.lines</code></td>
+<td>Styled <code>.lines</code> document from Vexy Lines</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>{stem}--{N}.svg</code></td>
+<td>SVG export</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>{stem}--{N}.png</code></td>
+<td>Rasterized output</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>{stem}.mp4</code></td>
+<td>Assembled video (MP4 only)</td>
+</tr>
+</tbody>
+</table>
+<p>Frame numbers are 1-based and not zero-padded.</p>
+<h3 id="resume">Resume<a class="headerlink" href="#resume" title="Permanent link">&para;</a></h3>
+<p>Re-running the same command skips items whose final output already exists in the job folder. This makes long video jobs crash-safe — a 4-hour render that fails at frame 147/192 resumes from frame 148.</p>
+<h3 id="flags">Flags<a class="headerlink" href="#flags" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>--force</code>: Delete the job folder and start from scratch.</li>
+<li><code>--cleanup</code>: Delete the job folder after the final output is copied to its destination.</li>
+</ul>
+<h3 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h3>
+<p>Set <code>VEXY_LINES_JOB_FOLDER</code> to override the computed job folder path.</p>
 
 
 

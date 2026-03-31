@@ -92,3 +92,42 @@ The export pipeline depends on:
 - The Vexy Lines macOS app
 
 It does not work on Windows or Linux. For cross-platform export, use the MCP API directly via `MCPClient.export_document()`.
+
+## Style export pipeline (job folders)
+
+The `style-transfer` and `style-video` commands use a different pipeline from `export`. Instead of plist injection, they use the MCP API to apply styles programmatically.
+
+### Job folder
+
+Every style export creates a persistent **job folder** alongside the output:
+
+| Output type | Output path | Job folder |
+|-------------|-------------|------------|
+| Video | `./06/styled.mp4` | `./06/styled-vljob/` |
+| Frames | `./output/` | `./output-vljob/` |
+| Images | `./results/` | `./results-vljob/` |
+
+The job folder stores the complete artifact chain for each processed item:
+
+| Step | File pattern | Description |
+|------|-------------|-------------|
+| 1 | `src--{stem}--{N}.png` | Raw decoded video frame (video only) |
+| 2 | `{stem}--{N}.lines` | Styled `.lines` document from Vexy Lines |
+| 3 | `{stem}--{N}.svg` | SVG export |
+| 4 | `{stem}--{N}.png` | Rasterized output |
+| 5 | `{stem}.mp4` | Assembled video (MP4 only) |
+
+Frame numbers are 1-based and not zero-padded.
+
+### Resume
+
+Re-running the same command skips items whose final output already exists in the job folder. This makes long video jobs crash-safe — a 4-hour render that fails at frame 147/192 resumes from frame 148.
+
+### Flags
+
+- `--force`: Delete the job folder and start from scratch.
+- `--cleanup`: Delete the job folder after the final output is copied to its destination.
+
+### Environment
+
+Set `VEXY_LINES_JOB_FOLDER` to override the computed job folder path.

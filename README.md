@@ -76,7 +76,18 @@ vexy-lines-cli style-transfer --style start.lines --end-style end.lines \
 
 # Apply style to video
 vexy-lines-cli style-video --style look.lines --input clip.mp4 --output result.mp4
+
+# Resume an interrupted video job (automatic — just re-run the same command)
+vexy-lines-cli style-video --style look.lines --input clip.mp4 --output result.mp4
+
+# Force restart (discard cached frames)
+vexy-lines-cli style-video --style look.lines --input clip.mp4 --output result.mp4 --force
+
+# Auto-clean job folder after completion
+vexy-lines-cli style-transfer --style look.lines --input-dir ./frames/ --cleanup
 ```
+
+All style commands create a **job folder** (`{output}-vljob/`) that stores intermediate `.lines`, `.svg`, and raster files. If the process is interrupted, re-running the same command skips already-completed items. Use `--force` to start fresh or `--cleanup` to remove the job folder after completion.
 
 ### MCP — app must be running
 
