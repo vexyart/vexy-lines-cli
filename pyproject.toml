@@ -37,7 +37,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "vexy-lines-apy @ file:///Users/adam/Developer/vcs3/github.vexyart/vexy-lines/vexy-lines-apy",
+    "vexy-lines-apy>=1.0.20",
     "fire>=0.6.0",
     "loguru>=0.7.2",
 ]
