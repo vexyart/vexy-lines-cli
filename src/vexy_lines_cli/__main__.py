@@ -20,7 +20,8 @@ from vexy_lines import (
 from vexy_lines import (
     parse as parse_lines,
 )
-from vexy_lines_api import MCPClient, MCPError, apply_style, extract_style, interpolate_style, styles_compatible
+from vexy_lines_api import MCPClient, MCPError
+from vexy_lines_api.export import ExportRequest, process_export
 from vexy_lines_cli.export.config import ExportConfig
 from vexy_lines_cli.export.exporter import VexyLinesExporter
 from vexy_lines_cli.utils.system import speak
@@ -108,6 +109,18 @@ class VexyLinesCLI:
     MIN_TIMEOUT_MULTIPLIER = 0.1
     MAX_TIMEOUT_MULTIPLIER = 10
     MAX_RETRY_LIMIT = 10
+
+    @staticmethod
+    def _normalize_export_format(fmt: str) -> str | None:
+        format_map = {
+            "svg": "SVG",
+            "png": "PNG",
+            "jpg": "JPG",
+            "jpeg": "JPG",
+            "mp4": "MP4",
+            "lines": "LINES",
+        }
+        return format_map.get(fmt.lower())
 
     # -- Parser subcommands (no app/MCP needed) ----------------------------
 
@@ -254,8 +267,9 @@ class VexyLinesCLI:
         port: int = 47384,
         relative_style: bool = False,
         verbose: bool = False,
+        size: str = "1x",
     ) -> dict[str, object]:
-        """Apply a .lines style to one or more images via the MCP API.
+        """Apply a .lines style to one or more images via the shared export pipeline.
 
         Reads fill parameters from ``--style``, opens each image in a new
         document via MCP, applies the style, then saves the rendered output.
@@ -279,12 +293,13 @@ class VexyLinesCLI:
             output_dir: Where to write output files (created if absent).
             format: Output format: ``svg`` (default), ``png``, or ``jpg``.
                 Raster formats require ``vexy-lines-run``.
-            dpi: Document DPI passed to the MCP renderer (default 72).
-            host: MCP server address (default 127.0.0.1).
-            port: MCP server port (default 47384).
+            dpi: Deprecated compatibility arg; ignored by the shared export pipeline.
+            host: Deprecated compatibility arg; ignored by the shared export pipeline.
+            port: Deprecated compatibility arg; ignored by the shared export pipeline.
             relative_style: Scale spatial fill parameters to match the target
                 image dimensions.  Default ``False`` (absolute mode).
             verbose: Enable debug logging.
+            size: Output scale multiplier (e.g. "1x", "2x"). Default "1x".
 
         Returns:
             Dict with keys: total, successes, failures, output_dir.
@@ -292,6 +307,8 @@ class VexyLinesCLI:
         """
         if verbose:
             logger.enable("vexy_lines_cli")
+
+        _ = (dpi, host, port)
 
         # Collect images
         image_paths: list[Path] = []
@@ -307,60 +324,58 @@ class VexyLinesCLI:
         out = Path(output_dir)
         out.mkdir(parents=True, exist_ok=True)
 
-        # Extract style(s)
-        try:
-            start_style = extract_style(style)
-            end_style_obj = extract_style(end_style) if end_style else None
-        except (FileNotFoundError, Exception) as exc:
-            return {"error": str(exc)}
+        export_format = self._normalize_export_format(format)
+        if export_format not in ("SVG", "PNG", "JPG"):
+            return {"error": f"unsupported format for style_transfer: {format}"}
 
-        if end_style_obj and not styles_compatible(start_style, end_style_obj):
-            logger.warning(
-                "Start and end styles are incompatible (different fill structure). Interpolation may produce unexpected results."
+        str_paths = [str(p) for p in image_paths]
+
+        request = ExportRequest(
+            mode="images",
+            input_paths=str_paths,
+            style_path=style,
+            end_style_path=end_style,
+            output_path=output_dir,
+            format=export_format,
+            size=size,
+            relative_style=relative_style,
+        )
+
+        n = len(str_paths)
+        errors: list[str] = []
+
+        def _on_progress(idx: int, total: int, msg: str) -> None:
+            print(f"[{idx}/{total}] {msg}")  # noqa: T201
+
+        def _on_error(msg: str) -> None:
+            errors.append(msg)
+            print(msg)  # noqa: T201
+
+        def _on_preview(_img_bytes: bytes) -> None:
+            pass
+
+        def _on_complete(msg: str) -> None:
+            print(msg)  # noqa: T201
+
+        try:
+            process_export(
+                request=request,
+                abort_event=None,
+                on_progress=_on_progress,
+                on_complete=_on_complete,
+                on_error=_on_error,
+                on_preview=_on_preview,
             )
-
-        n = len(image_paths)
-        successes = 0
-        failures = 0
-
-        try:
-            with MCPClient(host=host, port=port) as client:
-                for i, img_path in enumerate(image_paths):
-                    try:
-                        # Determine style for this frame
-                        if end_style_obj and n > 1:
-                            t = i / (n - 1)
-                            current_style = interpolate_style(start_style, end_style_obj, t)
-                        else:
-                            current_style = start_style
-
-                        svg_string = apply_style(client, current_style, img_path, dpi=dpi, relative=relative_style)
-
-                        # Save output
-                        stem = img_path.stem
-                        if format == "svg":
-                            out_file = out / f"{stem}.svg"
-                            out_file.write_text(svg_string, encoding="utf-8")
-                        else:
-                            try:
-                                from vexy_lines_api.video import svg_to_pil  # noqa: PLC0415
-                            except ImportError:
-                                return {"error": "raster output requires: pip install av resvg-py Pillow"}
-                            pil_img = svg_to_pil(svg_string, 1920, 1080)
-                            out_file = out / f"{stem}.{format}"
-                            pil_img.save(str(out_file))
-
-                        successes += 1
-                    except Exception:
-                        failures += 1
-                        logger.exception("Failed to process {}", img_path)
-        except MCPError as exc:
+        except Exception as exc:
             return {"error": str(exc)}
+
+        if errors:
+            return {"error": errors[-1]}
 
         result: dict[str, object] = {
             "total": n,
-            "successes": successes,
-            "failures": failures,
+            "successes": n,
+            "failures": 0,
             "output_dir": str(out),
         }
         return result
@@ -380,7 +395,7 @@ class VexyLinesCLI:
         relative_style: bool = False,
         verbose: bool = False,
     ) -> dict[str, object]:
-        """Apply a .lines style to every frame of a video file.
+        """Apply a .lines style to every frame of a video via the shared export pipeline.
 
         Decodes the video, renders each frame through the MCP API with the
         given style, then re-encodes to a new video. Requires the Vexy Lines
@@ -398,81 +413,81 @@ class VexyLinesCLI:
             end_style: Optional end style for per-frame interpolation.
             start_frame: First frame to render (1-based, currently unused).
             end_frame: Last frame to render inclusive; ``None`` renders all.
-            dpi: Document DPI passed to the MCP renderer (default 72).
-            host: MCP server address (default 127.0.0.1).
-            port: MCP server port (default 47384).
+            dpi: Deprecated compatibility arg; ignored by the shared export pipeline.
+            host: Deprecated compatibility arg; ignored by the shared export pipeline.
+            port: Deprecated compatibility arg; ignored by the shared export pipeline.
             relative_style: Scale spatial fill parameters to match the target
                 video frame dimensions.  Default ``False`` (absolute mode).
             verbose: Enable debug logging.
 
         Returns:
-            Dict with keys: status, input, output, width, height, fps,
-            total_frames. On failure, returns ``{"error": "<message>"}``.
+            Dict with keys: status, input, output. On failure, returns
+            ``{"error": "<message>"}``.
         """
         if verbose:
             logger.enable("vexy_lines_cli")
 
-        try:
-            from vexy_lines_api.video import process_video  # noqa: PLC0415
-        except ImportError:
-            return {"error": "video processing requires: pip install av resvg-py Pillow"}
+        _ = (dpi, host, port)
+
+        output_format = self._normalize_export_format(Path(output).suffix.lstrip(".") or "mp4")
+        if output_format not in ("MP4", "PNG", "JPG"):
+            return {"error": f"unsupported output format for style_video: {Path(output).suffix or output}"}
+
+        if end_frame is not None and end_frame < start_frame:
+            return {"error": "end_frame must be greater than or equal to start_frame"}
+
+        frame_range: tuple[int, int] | None = None
+        if end_frame is not None:
+            frame_range = (max(start_frame - 1, 0), end_frame - 1)
+
+        request = ExportRequest(
+            mode="video",
+            input_paths=[input],
+            style_path=style,
+            end_style_path=end_style,
+            output_path=output,
+            format=output_format,
+            size="1x",
+            relative_style=relative_style,
+            audio=True,
+            frame_range=frame_range,
+        )
+
+        errors: list[str] = []
+
+        def _on_progress(idx: int, total: int, msg: str) -> None:
+            print(f"[{idx}/{total}] {msg}")  # noqa: T201
+
+        def _on_error(msg: str) -> None:
+            errors.append(msg)
+            print(msg)  # noqa: T201
+
+        def _on_preview(_img_bytes: bytes) -> None:
+            pass
+
+        def _on_complete(msg: str) -> None:
+            print(msg)  # noqa: T201
 
         try:
-            start_style_obj = extract_style(style)
-            end_style_obj = extract_style(end_style) if end_style else None
-        except (FileNotFoundError, Exception) as exc:
-            return {"error": str(exc)}
-
-        # Build frame_params callback using the style engine
-        def _style_frame_params(frame_index: int, total_frames: int) -> dict:  # type: ignore[type-arg]
-            """Per-frame callback that interpolates style and returns fill params."""
-            if end_style_obj and total_frames > 1:
-                t = frame_index / max(total_frames - 1, 1)
-                current = interpolate_style(start_style_obj, end_style_obj, t)
-            else:
-                current = start_style_obj
-            # Extract the first fill's numeric params as the frame override
-            for node in current.groups:
-                if isinstance(node, LayerInfo):
-                    if node.fills:
-                        p = node.fills[0].params
-                        return {"angle": p.angle, "interval": p.interval}
-                elif isinstance(node, GroupInfo):
-                    for child in node.children:
-                        if isinstance(child, LayerInfo) and child.fills:
-                            p = child.fills[0].params
-                            return {"angle": p.angle, "interval": p.interval}
-            return {}
-
-        max_frames = end_frame if end_frame else None
-
-        def _on_progress(frame_idx: int, total: int) -> None:
-            if verbose or frame_idx % 10 == 0 or frame_idx == total:
-                pass
-
-        try:
-            info = process_video(
-                input_path=input,
-                output_path=output,
-                frame_params=_style_frame_params,
-                max_frames=max_frames,
+            process_export(
+                request=request,
+                abort_event=None,
                 on_progress=_on_progress,
-                host=host,
-                port=port,
-                dpi=dpi,
+                on_complete=_on_complete,
+                on_error=_on_error,
+                on_preview=_on_preview,
             )
+
+            if errors:
+                return {"error": errors[-1]}
+
             result: dict[str, object] = {
                 "status": "ok",
                 "input": input,
                 "output": output,
-                "width": info.width,
-                "height": info.height,
-                "fps": info.fps,
-                "total_frames": info.total_frames,
+                "format": output_format,
             }
             return result
-        except ImportError as exc:
-            return {"error": str(exc)}
         except Exception as exc:
             return {"error": str(exc)}
 
