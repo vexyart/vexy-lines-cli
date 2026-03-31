@@ -318,7 +318,7 @@ class VexyLinesCLI:
             image_paths = [Path(p) for p in images]
         elif input_dir:
             src_dir = Path(input_dir)
-            for ext in ("*.jpg", "*.jpeg", "*.png"):
+            for ext in ("*.jpg", "*.jpeg", "*.png", "*.lines"):
                 image_paths.extend(sorted(src_dir.glob(ext)))
         if not image_paths:
             return {"error": "no images found"}
@@ -326,14 +326,19 @@ class VexyLinesCLI:
         out = Path(output_dir)
         out.mkdir(parents=True, exist_ok=True)
 
-        export_format = self._normalize_export_format(format)
-        if export_format not in ("SVG", "PNG", "JPG"):
-            return {"error": f"unsupported format for style_transfer: {format}"}
-
         str_paths = [str(p) for p in image_paths]
+        all_lines = all(p.lower().endswith(".lines") for p in str_paths)
+        mode = "lines" if all_lines else "images"
+
+        export_format = self._normalize_export_format(format)
+        valid_formats_lines = {"SVG", "PNG", "JPG", "LINES"}
+        valid_formats_images = {"SVG", "PNG", "JPG"}
+        valid = valid_formats_lines if mode == "lines" else valid_formats_images
+        if export_format not in valid:
+            return {"error": f"Unsupported format: {format}. Use one of: {', '.join(sorted(valid))}"}
 
         request = ExportRequest(
-            mode="images",
+            mode=mode,
             input_paths=str_paths,
             style_path=style,
             end_style_path=end_style,
@@ -390,7 +395,7 @@ class VexyLinesCLI:
         input: str,  # noqa: A002
         output: str = "output.mp4",
         end_style: str | None = None,
-        start_frame: int = 1,  # noqa: ARG002
+        start_frame: int = 1,
         end_frame: int | None = None,
         dpi: int = 72,
         host: str = "127.0.0.1",
@@ -398,6 +403,8 @@ class VexyLinesCLI:
         relative_style: bool = False,
         verbose: bool = False,
         style_mode: str = "fast",
+        audio: bool = True,
+        size: str = "1x",
     ) -> dict[str, object]:
         """Apply a .lines style to every frame of a video via the shared export pipeline.
 
@@ -415,7 +422,7 @@ class VexyLinesCLI:
             input: Path to the input video (MP4, MOV, etc.).
             output: Output video path (default ``output.mp4``).
             end_style: Optional end style for per-frame interpolation.
-            start_frame: First frame to render (1-based, currently unused).
+            start_frame: First frame to render (1-based).
             end_frame: Last frame to render inclusive; ``None`` renders all.
             dpi: Deprecated compatibility arg; ignored by the shared export pipeline.
             host: Deprecated compatibility arg; ignored by the shared export pipeline.
@@ -424,6 +431,8 @@ class VexyLinesCLI:
                 video frame dimensions.  Default ``False`` (absolute mode).
             verbose: Enable debug logging.
             style_mode: Style interpolation mode (default ``auto``).
+            audio: Include audio in the output video (default ``True``).
+            size: Output scale multiplier (e.g. "1x", "2x"). Default "1x".
 
         Returns:
             Dict with keys: status, input, output. On failure, returns
@@ -442,8 +451,10 @@ class VexyLinesCLI:
             return {"error": "end_frame must be greater than or equal to start_frame"}
 
         frame_range: tuple[int, int] | None = None
-        if end_frame is not None:
-            frame_range = (max(start_frame - 1, 0), end_frame - 1)
+        if start_frame > 1 or end_frame is not None:
+            start_idx = max(start_frame - 1, 0)
+            end_idx = (end_frame - 1) if end_frame is not None else start_idx + 999_999
+            frame_range = (start_idx, end_idx)
 
         request = ExportRequest(
             mode="video",
@@ -452,9 +463,9 @@ class VexyLinesCLI:
             end_style_path=end_style,
             output_path=output,
             format=output_format,
-            size="1x",
+            size=size,
             relative_style=relative_style,
-            audio=True,
+            audio=audio,
             frame_range=frame_range,
             style_mode=style_mode,
         )
