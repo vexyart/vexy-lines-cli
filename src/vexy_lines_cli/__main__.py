@@ -268,6 +268,7 @@ class VexyLinesCLI:
         relative_style: bool = False,
         verbose: bool = False,
         size: str = "1x",
+        style_mode: str = "auto",
     ) -> dict[str, object]:
         """Apply a .lines style to one or more images via the shared export pipeline.
 
@@ -300,6 +301,7 @@ class VexyLinesCLI:
                 image dimensions.  Default ``False`` (absolute mode).
             verbose: Enable debug logging.
             size: Output scale multiplier (e.g. "1x", "2x"). Default "1x".
+            style_mode: Style interpolation mode (default ``auto``).
 
         Returns:
             Dict with keys: total, successes, failures, output_dir.
@@ -339,6 +341,7 @@ class VexyLinesCLI:
             format=export_format,
             size=size,
             relative_style=relative_style,
+            style_mode=style_mode,
         )
 
         n = len(str_paths)
@@ -394,6 +397,7 @@ class VexyLinesCLI:
         port: int = 47384,
         relative_style: bool = False,
         verbose: bool = False,
+        style_mode: str = "auto",
     ) -> dict[str, object]:
         """Apply a .lines style to every frame of a video via the shared export pipeline.
 
