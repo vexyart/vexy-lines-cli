@@ -27,7 +27,9 @@ from vexy_lines import (
 
 
 def _make_fill(caption: str = "Fill 1", fill_type: str = "linear") -> FillNode:
-    return FillNode(xml_tag="LinearStrokesTmpl", caption=caption, params=FillParams(fill_type=fill_type, color="#000000"))
+    return FillNode(
+        xml_tag="LinearStrokesTmpl", caption=caption, params=FillParams(fill_type=fill_type, color="#000000")
+    )
 
 
 def _make_layer(caption: str = "Layer 1", visible: bool = True, fills: list | None = None) -> LayerInfo:
@@ -293,6 +295,7 @@ class TestCliBatchConvert:
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 class _noop:
     """No-op context manager for conditional patching."""

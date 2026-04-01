@@ -1054,7 +1054,7 @@
 </tr>
 </tbody>
 </table>
-<p>The job folder stores the complete artifact chain for each processed item:</p>
+<p>For video exports, the job folder stores the cached artifact chain used to render frames:</p>
 <table>
 <thead>
 <tr>
@@ -1066,32 +1066,27 @@
 <tbody>
 <tr>
 <td>1</td>
-<td><code>src--{stem}--{N}.png</code></td>
+<td><code>src/src--{stem}--{NNN}.png</code></td>
 <td>Raw decoded video frame (video only)</td>
 </tr>
 <tr>
 <td>2</td>
-<td><code>{stem}--{N}.lines</code></td>
+<td><code>{stem}--{NNN}.lines</code></td>
 <td>Styled <code>.lines</code> document from Vexy Lines</td>
 </tr>
 <tr>
 <td>3</td>
-<td><code>{stem}--{N}.svg</code></td>
+<td><code>{stem}--{NNN}.svg</code></td>
 <td>SVG export</td>
 </tr>
 <tr>
 <td>4</td>
-<td><code>{stem}--{N}.png</code></td>
+<td><code>{stem}--{NNN}.png</code></td>
 <td>Rasterized output</td>
-</tr>
-<tr>
-<td>5</td>
-<td><code>{stem}.mp4</code></td>
-<td>Assembled video (MP4 only)</td>
 </tr>
 </tbody>
 </table>
-<p>Frame numbers are 1-based and not zero-padded.</p>
+<p>Video exports first extract all requested raw frames into the job folder, then style or assemble from that cached source set. Frame numbers are 1-based and zero-padded from the source video's total frame count. For MP4 output, the cached PNG frames are assembled into the requested output path after step 4 rather than stored as <code>{stem}.mp4</code> inside the job folder.</p>
 <h3 id="resume">Resume<a class="headerlink" href="#resume" title="Permanent link">&para;</a></h3>
 <p>Re-running the same command skips items whose final output already exists in the job folder. This makes long video jobs crash-safe — a 4-hour render that fails at frame 147/192 resumes from frame 148.</p>
 <h3 id="flags">Flags<a class="headerlink" href="#flags" title="Permanent link">&para;</a></h3>

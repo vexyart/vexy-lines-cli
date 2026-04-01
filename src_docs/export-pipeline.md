@@ -107,17 +107,16 @@ Every style export creates a persistent **job folder** alongside the output:
 | Frames | `./output/` | `./output-vljob/` |
 | Images | `./results/` | `./results-vljob/` |
 
-The job folder stores the complete artifact chain for each processed item:
+For video exports, the job folder stores the cached artifact chain used to render frames:
 
 | Step | File pattern | Description |
 |------|-------------|-------------|
-| 1 | `src--{stem}--{N}.png` | Raw decoded video frame (video only) |
-| 2 | `{stem}--{N}.lines` | Styled `.lines` document from Vexy Lines |
-| 3 | `{stem}--{N}.svg` | SVG export |
-| 4 | `{stem}--{N}.png` | Rasterized output |
-| 5 | `{stem}.mp4` | Assembled video (MP4 only) |
+| 1 | `src/src--{stem}--{NNN}.png` | Raw decoded video frame (video only) |
+| 2 | `{stem}--{NNN}.lines` | Styled `.lines` document from Vexy Lines |
+| 3 | `{stem}--{NNN}.svg` | SVG export |
+| 4 | `{stem}--{NNN}.png` | Rasterized output |
 
-Frame numbers are 1-based and not zero-padded.
+Video exports first extract all requested raw frames into the job folder, then style or assemble from that cached source set. Frame numbers are 1-based and zero-padded from the source video's total frame count. For MP4 output, the cached PNG frames are assembled into the requested output path after step 4 rather than stored as `{stem}.mp4` inside the job folder.
 
 ### Resume
 
