@@ -338,7 +338,7 @@ class VexyLinesCLI:
 
         export_format = self._normalize_export_format(format)
         valid_formats_lines = {"SVG", "PNG", "JPG", "LINES"}
-        valid_formats_images = {"SVG", "PNG", "JPG"}
+        valid_formats_images = {"SVG", "PNG", "JPG", "LINES"}
         valid = valid_formats_lines if mode == "lines" else valid_formats_images
         if export_format not in valid:
             return {"error": f"Unsupported format: {format}. Use one of: {', '.join(sorted(valid))}"}

@@ -676,16 +676,16 @@
 <li>macOS for the dialog-less export pipeline (uses AppleScript and <code>defaults write</code>)</li>
 </ul>
 <h2 id="install-from-pypi">Install from PyPI<a class="headerlink" href="#install-from-pypi" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>vexy-lines-cli
-</code></pre></div>
+<p><code>bash
+pip install vexy-lines-cli</code></p>
 <p>This pulls in <code>vexy-lines-apy</code> (MCP client, style engine) and <code>vexy-lines-py</code> (parser) automatically.</p>
 <p>Or with <code>uv</code>:</p>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span>vexy-lines-cli
-</code></pre></div>
+<p><code>bash
+uv add vexy-lines-cli</code></p>
 <h2 id="additional-packages">Additional packages<a class="headerlink" href="#additional-packages" title="Permanent link">&para;</a></h2>
 <p>For video processing and the GUI, install the companion app:</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>vexy-lines-run
-</code></pre></div>
+<p><code>bash
+pip install vexy-lines-run</code></p>
 <p>Video dependencies (PyAV, OpenCV, resvg-py) are included in the base <code>vexy-lines-run</code> install.</p>
 <h2 id="installed-commands">Installed commands<a class="headerlink" href="#installed-commands" title="Permanent link">&para;</a></h2>
 <table>
@@ -730,17 +730,17 @@
 </tbody>
 </table>
 <h2 id="verify-the-install">Verify the install<a class="headerlink" href="#verify-the-install" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>--help
-</code></pre></div>
+<p><code>bash
+vexy-lines-cli --help</code></p>
 <h2 id="development-install">Development install<a class="headerlink" href="#development-install" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/vexyart/vexy-lines.git
-<span class="nb">cd</span><span class="w"> </span>vexy-lines/vexy-lines-cli
-uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
-uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-</code></pre></div>
+<p><code>bash
+git clone https://github.com/vexyart/vexy-lines.git
+cd vexy-lines/vexy-lines-cli
+uv venv --python 3.12
+uv pip install -e ".[dev]"</code></p>
 <p>Run tests:</p>
-<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>hatch<span class="w"> </span><span class="nb">test</span>
-</code></pre></div>
+<p><code>bash
+uvx hatch test</code></p>
 
 
 
