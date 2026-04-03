@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -19,6 +18,7 @@ from vexy_lines import (
     LayerInfo,
     LinesDocument,
 )
+from vexy_lines_api.types import LayerNode
 
 
 # ---------------------------------------------------------------------------
@@ -40,16 +40,6 @@ def _make_group(caption: str = "Group 1", children: list | None = None) -> Group
     return GroupInfo(caption=caption, children=children or [])
 
 
-@dataclass
-class FakeLayerNode:
-    type: str = "layer"
-    caption: str = "Layer"
-    id: int = 1
-    fill_type: str | None = None
-    visible: bool = True
-    children: list = field(default_factory=list)
-
-
 # ---------------------------------------------------------------------------
 # _format_tree tests
 # ---------------------------------------------------------------------------
@@ -57,23 +47,23 @@ class FakeLayerNode:
 
 class TestFormatTree:
     def test_format_tree_single_node(self):
-        node = FakeLayerNode(type="layer", caption="BG", id=1, fill_type=None, visible=True)
+        node = LayerNode(type="layer", caption="BG", id=1, fill_type=None, visible=True)
         result = _format_tree(node)
         assert "layer: BG (id=1)" in result
 
     def test_format_tree_with_fill_type(self):
-        node = FakeLayerNode(type="fill", caption="Fill", id=2, fill_type="linear")
+        node = LayerNode(type="fill", caption="Fill", id=2, fill_type="linear", visible=True)
         result = _format_tree(node)
         assert "[linear]" in result
 
     def test_format_tree_hidden_node(self):
-        node = FakeLayerNode(type="layer", caption="Hidden", id=3, visible=False)
+        node = LayerNode(type="layer", caption="Hidden", id=3, visible=False)
         result = _format_tree(node)
         assert "[hidden]" in result
 
     def test_format_tree_nested_children(self):
-        child = FakeLayerNode(type="fill", caption="Child", id=10)
-        parent = FakeLayerNode(type="group", caption="Parent", id=5, children=[child])
+        child = LayerNode(type="fill", caption="Child", id=10, visible=True)
+        parent = LayerNode(type="group", caption="Parent", id=5, visible=True, children=[child])
         result = _format_tree(parent)
         lines = result.split("\n")
         assert len(lines) == 2
@@ -214,6 +204,12 @@ class TestCliFileTree:
             result = cli.file_tree("bad.lines")
         assert "bad" in result
 
+    def test_file_tree_json_error_returns_json_string(self):
+        with patch("vexy_lines_cli.__main__.parse_lines", side_effect=ValueError("bad json")):
+            cli = VexyLinesCLI()
+            result = cli.file_tree("bad.lines", json_output=True)
+        assert json.loads(result) == {"error": "bad json"}
+
 
 # ---------------------------------------------------------------------------
 # VexyLinesCLI.extract_source / extract_preview tests
@@ -228,6 +224,14 @@ class TestCliExtract:
             result = cli.extract_source(str(tmp_path / "in.lines"))
         assert result["status"] == "ok"
 
+    def test_extract_source_uses_default_src_output_path(self, tmp_path):
+        expected = tmp_path / "sample-src.jpg"
+        with patch("vexy_lines_cli.__main__.extract_source_image", return_value=expected) as extractor:
+            cli = VexyLinesCLI()
+            result = cli.extract_source(str(tmp_path / "sample.lines"))
+        assert result == {"status": "ok", "output": str(expected)}
+        extractor.assert_called_once_with(tmp_path / "sample.lines", expected)
+
     def test_extract_source_error(self):
         with patch("vexy_lines_cli.__main__.extract_source_image", side_effect=FileNotFoundError("nope")):
             cli = VexyLinesCLI()
@@ -240,6 +244,14 @@ class TestCliExtract:
             cli = VexyLinesCLI()
             result = cli.extract_preview(str(tmp_path / "in.lines"))
         assert result["status"] == "ok"
+
+    def test_extract_preview_uses_default_preview_output_path(self, tmp_path):
+        expected = tmp_path / "sample-preview.png"
+        with patch("vexy_lines_cli.__main__.extract_preview_image", return_value=expected) as extractor:
+            cli = VexyLinesCLI()
+            result = cli.extract_preview(str(tmp_path / "sample.lines"))
+        assert result == {"status": "ok", "output": str(expected)}
+        extractor.assert_called_once_with(tmp_path / "sample.lines", expected)
 
     def test_extract_preview_error(self):
         with patch("vexy_lines_cli.__main__.extract_preview_image", side_effect=ValueError("no preview")):
@@ -289,7 +301,7 @@ class TestCliBatchConvert:
     def test_batch_convert_no_files(self, tmp_path):
         cli = VexyLinesCLI()
         result = cli.batch_convert(input_dir=str(tmp_path))
-        assert "no .lines files found" in result["error"]
+        assert result == {"error": "no .lines files found"}
 
 
 # ---------------------------------------------------------------------------

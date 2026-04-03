@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 import json as _json
 from dataclasses import asdict
 from pathlib import Path
@@ -12,6 +13,7 @@ import fire
 from loguru import logger
 
 from vexy_lines import (
+    LinesDocument,
     GroupInfo,
     LayerInfo,
     extract_preview_image,
@@ -21,7 +23,7 @@ from vexy_lines import (
     parse as parse_lines,
 )
 from vexy_lines_api import MCPClient, MCPError
-from vexy_lines_api.export import ExportRequest, process_export
+from vexy_lines_api.export import ExportFormat, ExportRequest, process_export
 from vexy_lines_cli.export.config import ExportConfig
 from vexy_lines_cli.export.exporter import VexyLinesExporter
 from vexy_lines_cli.utils.system import speak
@@ -92,6 +94,50 @@ def _count_tree(nodes: list[GroupInfo | LayerInfo]) -> tuple[int, int, int]:
     return n_groups, n_layers, n_fills
 
 
+def _parse_lines_document(input: str) -> tuple[LinesDocument | None, str | None]:  # noqa: A002
+    try:
+        return parse_lines(input), None
+    except (FileNotFoundError, Exception) as exc:
+        return None, str(exc)
+
+
+def _build_info_result(doc: LinesDocument) -> dict[str, object]:
+    n_groups, n_layers, n_fills = _count_tree(doc.groups)
+    return {
+        "caption": doc.caption,
+        "version": doc.version,
+        "dpi": doc.dpi,
+        "width_mm": doc.props.width_mm,
+        "height_mm": doc.props.height_mm,
+        "groups": n_groups,
+        "layers": n_layers,
+        "fills": n_fills,
+        "has_source_image": doc.source_image_data is not None,
+        "has_preview_image": doc.preview_image_data is not None,
+    }
+
+
+def _run_extract_command(
+    input: str,  # noqa: A002
+    *,
+    output: str | None,
+    format: str,  # noqa: A002
+    stem_suffix: str,
+    extractor: Callable[[str | Path, str | Path], Path],
+) -> dict[str, object]:
+    input_path = Path(input)
+    output_path = (
+        Path(output) if output is not None else input_path.with_name(f"{input_path.stem}-{stem_suffix}{format}")
+    )
+
+    try:
+        result_path = extractor(input_path, output_path)
+    except (FileNotFoundError, ValueError) as exc:
+        return {"error": str(exc)}
+
+    return {"status": "ok", "output": str(result_path)}
+
+
 class VexyLinesCLI:
     """Command-line interface for Vexy Lines.
 
@@ -111,8 +157,8 @@ class VexyLinesCLI:
     MAX_RETRY_LIMIT = 10
 
     @staticmethod
-    def _normalize_export_format(fmt: str) -> str | None:
-        format_map = {
+    def _normalize_export_format(fmt: str) -> ExportFormat | None:
+        format_map: dict[str, ExportFormat] = {
             "svg": "SVG",
             "png": "PNG",
             "jpg": "JPG",
@@ -139,24 +185,12 @@ class VexyLinesCLI:
             groups, layers, fills, has_source_image, has_preview_image.
             On parse failure, returns ``{"error": "<message>"}``.
         """
-        try:
-            doc = parse_lines(input)
-        except (FileNotFoundError, Exception) as exc:
-            return {"error": str(exc)}
+        doc, error = _parse_lines_document(input)
+        if error is not None:
+            return {"error": error}
 
-        n_groups, n_layers, n_fills = _count_tree(doc.groups)
-        result: dict[str, object] = {
-            "caption": doc.caption,
-            "version": doc.version,
-            "dpi": doc.dpi,
-            "width_mm": doc.props.width_mm,
-            "height_mm": doc.props.height_mm,
-            "groups": n_groups,
-            "layers": n_layers,
-            "fills": n_fills,
-            "has_source_image": doc.source_image_data is not None,
-            "has_preview_image": doc.preview_image_data is not None,
-        }
+        assert doc is not None
+        result = _build_info_result(doc)
 
         if json_output:
             print(_json.dumps(result, indent=2))  # noqa: T201
@@ -176,15 +210,14 @@ class VexyLinesCLI:
             Indented text tree, or JSON string when ``--json-output`` is set.
             On parse failure, returns an error string (or JSON error object).
         """
-        try:
-            doc = parse_lines(input)
-        except (FileNotFoundError, Exception) as exc:
-            return _json.dumps({"error": str(exc)}) if json_output else str(exc)
+        doc, error = _parse_lines_document(input)
+        if error is not None:
+            return _json.dumps({"error": error}) if json_output else error
+
+        assert doc is not None
 
         if json_output:
-            from dataclasses import asdict as _asdict  # noqa: PLC0415
-
-            tree_data = [_asdict(g) for g in doc.groups]
+            tree_data = [asdict(group) for group in doc.groups]
             return _json.dumps(tree_data, indent=2)
 
         return _format_file_tree(doc.groups)
@@ -211,14 +244,13 @@ class VexyLinesCLI:
             ``{"status": "ok", "output": "<path>"}`` on success,
             or ``{"error": "<message>"}`` on failure.
         """
-        input_path = Path(input)
-        output_path = input_path.with_name(f"{input_path.stem}-src{format}") if output is None else Path(output)
-
-        try:
-            result_path = extract_source_image(input_path, output_path)
-            return {"status": "ok", "output": str(result_path)}
-        except (FileNotFoundError, ValueError) as exc:
-            return {"error": str(exc)}
+        return _run_extract_command(
+            input,
+            output=output,
+            format=format,
+            stem_suffix="src",
+            extractor=extract_source_image,
+        )
 
     def extract_preview(
         self,
@@ -242,14 +274,13 @@ class VexyLinesCLI:
             ``{"status": "ok", "output": "<path>"}`` on success,
             or ``{"error": "<message>"}`` on failure.
         """
-        input_path = Path(input)
-        output_path = input_path.with_name(f"{input_path.stem}-preview{format}") if output is None else Path(output)
-
-        try:
-            result_path = extract_preview_image(input_path, output_path)
-            return {"status": "ok", "output": str(result_path)}
-        except (FileNotFoundError, ValueError) as exc:
-            return {"error": str(exc)}
+        return _run_extract_command(
+            input,
+            output=output,
+            format=format,
+            stem_suffix="preview",
+            extractor=extract_preview_image,
+        )
 
     # -- Style subcommands (require MCP for apply) -------------------------
 
@@ -342,6 +373,7 @@ class VexyLinesCLI:
         valid = valid_formats_lines if mode == "lines" else valid_formats_images
         if export_format not in valid:
             return {"error": f"Unsupported format: {format}. Use one of: {', '.join(sorted(valid))}"}
+        assert export_format is not None
 
         request = ExportRequest(
             mode=mode,
@@ -460,6 +492,7 @@ class VexyLinesCLI:
         output_format = self._normalize_export_format(Path(output).suffix.lstrip(".") or "mp4")
         if output_format not in ("MP4", "PNG", "JPG"):
             return {"error": f"unsupported output format for style_video: {Path(output).suffix or output}"}
+        assert output_format is not None
 
         if end_frame is not None and end_frame < start_frame:
             return {"error": "end_frame must be greater than or equal to start_frame"}
