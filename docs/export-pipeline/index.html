@@ -522,6 +522,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#macos-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#style-export-pipeline-job-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Style export pipeline (job folders)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Style export pipeline (job folders)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#job-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -775,6 +847,78 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#macos-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS only
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#style-export-pipeline-job-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Style export pipeline (job folders)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Style export pipeline (job folders)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#job-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -868,11 +1012,10 @@
 </ul>
 <h2 id="stats">Stats<a class="headerlink" href="#stats" title="Permanent link">&para;</a></h2>
 <p>The <code>ExportStats</code> dataclass tracks timing and counts:</p>
-<p>```python
-stats = exporter.export(Path("./art/"))
-print(stats.human_summary())</p>
-<h1 id="exported-42-files-3-skipped-1-failed-in-2m-15s">"Exported 42 files (3 skipped, 1 failed) in 2m 15s"<a class="headerlink" href="#exported-42-files-3-skipped-1-failed-in-2m-15s" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span class="n">stats</span> <span class="o">=</span> <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./art/&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">human_summary</span><span class="p">())</span>
+<span class="c1"># &quot;Exported 42 files (3 skipped, 1 failed) in 2m 15s&quot;</span>
+</code></pre></div>
 <h2 id="macos-only">macOS only<a class="headerlink" href="#macos-only" title="Permanent link">&para;</a></h2>
 <p>The export pipeline depends on:</p>
 <ul>
