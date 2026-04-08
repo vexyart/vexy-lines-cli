@@ -1,5 +1,10 @@
 # this_file: vexy-lines-cli/src/vexy_lines_cli/export/plist.py
-"""Plist preference injection for dialog-less export."""
+"""Inject preferences into the macOS defaults system to bypass the export dialog.
+
+The app normally asks the user how they want to export an image. We skip the conversation.
+By writing directly to the `com.fontlab.vexy-lines` domain, we set the format, scale,
+and anti-aliasing choices before the app even knows we want to export.
+"""
 
 from __future__ import annotations
 
@@ -41,7 +46,7 @@ _TYPE_FLAGS: dict[type, str] = {
 
 
 def _defaults(*args: str, input: bytes | None = None) -> subprocess.CompletedProcess[bytes]:  # noqa: A002
-    """Run `defaults` with the given arguments."""
+    """Execute the macOS `defaults` tool and return the byte output."""
     return subprocess.run(  # noqa: S603
         ["defaults", *args],  # noqa: S607
         capture_output=True,
@@ -73,7 +78,7 @@ class PlistManager:
         try:
             self._restore_originals()
         except Exception:
-            logger.warning("Failed to restore preferences -- manual cleanup may be needed")
+            logger.warning("Could not restore original preferences. Check defaults for 'com.fontlab.vexy-lines' manually.")
 
     def _quit_app(self) -> None:
         script = f'tell application "{self.app_name}" to quit'
@@ -104,16 +109,16 @@ class PlistManager:
     def _write_one(self, key: str, value: int | str) -> None:
         type_flag = _TYPE_FLAGS.get(type(value))
         if type_flag is None:
-            msg = f"Unsupported pref type {type(value).__name__!r} for key {key!r}"
+            msg = f"Cannot write {type(value).__name__} to defaults. We only support strings and integers."
             raise AutomationError(msg, "PLIST_ERROR")
         result = _defaults("write", APP_DOMAIN, key, type_flag, str(value))
         if result.returncode != 0:
-            msg = f"defaults write failed for {key!r}: {result.stderr.decode()}"
+            msg = f"Failed to write '{key}' to defaults. The system returned: {result.stderr.decode()}"
             raise AutomationError(msg, "PLIST_ERROR")
 
     def _restore_originals(self) -> None:
         if self._snapshot is None:
-            # Domain didn't exist before -- delete it entirely
+            # The user never ran the app before. Wipe the domain so we leave no trace.
             _defaults("delete", APP_DOMAIN)
             logger.debug(f"Deleted {APP_DOMAIN!r} (did not exist before export)")
         else:
