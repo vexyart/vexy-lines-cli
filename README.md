@@ -39,8 +39,8 @@ vexy-lines-cli mcp-status
 
 | Command | What it does |
 |---|---|
-| `info <file>` | Show caption, DPI, dimensions, layer/fill counts |
-| `file-tree <file>` | Print the layer/group/fill hierarchy |
+| `info <file>` | Show caption, DPI, dimensions, layer/fill/filter counts |
+| `file-tree <file>` | Print the layer/group/fill hierarchy, including image filters |
 | `extract-source <file>` | Save the embedded source image to disk |
 | `extract-preview <file>` | Save the embedded preview image to disk |
 | `batch-convert` | Extract preview or source images from a directory of `.lines` files |
@@ -100,6 +100,10 @@ Direct JSON-RPC calls to the Vexy Lines embedded server (`localhost:47384`).
 | `new-document` | Create a new document |
 | `open <file>` | Open a `.lines` file |
 | `add-fill <layer-id> <fill-type>` | Add a fill to a layer |
+| `get-image-filters <fill-id>` | Read a fill's image-filter chain |
+| `set-image-filters <fill-id> <filters-json>` | Replace a fill's image-filter chain |
+| `add-image-filter <fill-id> <filter-type>` | Add one image filter to a fill |
+| `remove-image-filter <fill-id> <index>` | Remove one image filter from a fill |
 | `render` | Trigger a full render |
 
 ```bash
@@ -107,6 +111,9 @@ vexy-lines-cli mcp-status
 vexy-lines-cli tree --json-output
 vexy-lines-cli new-document --width 210 --height 297 --dpi 300
 vexy-lines-cli add-fill 42 linear --color "#ff0000"
+vexy-lines-cli get-image-filters 99
+vexy-lines-cli set-image-filters 99 '[{"type":"brightness","params":{"value":25}}]'
+vexy-lines-cli add-image-filter 99 levels --params '{"left":10,"right":240}'
 ```
 
 All MCP commands accept `--host` and `--port` (defaults: `127.0.0.1:47384`).

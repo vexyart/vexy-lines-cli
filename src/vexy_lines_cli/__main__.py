@@ -3,8 +3,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 import json as _json
+from collections.abc import Callable
 from dataclasses import asdict
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -13,9 +13,9 @@ import fire
 from loguru import logger
 
 from vexy_lines import (
-    LinesDocument,
     GroupInfo,
     LayerInfo,
+    LinesDocument,
     extract_preview_image,
     extract_source_image,
 )
@@ -68,7 +68,10 @@ def _format_file_tree(nodes: list[GroupInfo | LayerInfo], indent: int = 0) -> st
             vis = "" if node.visible else " [hidden]"
             lines.append(f"{prefix}layer: {node.caption}{vis}")
             for fill in node.fills:
-                lines.append(f"{prefix}  fill: {fill.caption} [{fill.params.fill_type}]")
+                filters = ""
+                if fill.image_filters:
+                    filters = " filters=" + ",".join(filter_entry.name for filter_entry in fill.image_filters)
+                lines.append(f"{prefix}  fill: {fill.caption} [{fill.params.fill_type}]{filters}")
     return "\n".join(lines)
 
 
@@ -94,6 +97,42 @@ def _count_tree(nodes: list[GroupInfo | LayerInfo]) -> tuple[int, int, int]:
     return n_groups, n_layers, n_fills
 
 
+def _count_image_filters(nodes: list[GroupInfo | LayerInfo]) -> int:
+    """Count all image-filter entries in a parsed tree."""
+    total = 0
+    for node in nodes:
+        if isinstance(node, GroupInfo):
+            total += _count_image_filters(node.children)
+        elif isinstance(node, LayerInfo):
+            total += sum(len(fill.image_filters) for fill in node.fills)
+    return total
+
+
+def _parse_json_list_arg(value: str | list[dict[str, object]], name: str) -> list[dict[str, object]]:
+    """Parse a CLI JSON-list argument into a list of dicts."""
+    if isinstance(value, list):
+        parsed = value
+    else:
+        parsed = _json.loads(value)
+    if not isinstance(parsed, list) or any(not isinstance(item, dict) for item in parsed):
+        msg = f"{name} must be a JSON array of objects"
+        raise ValueError(msg)
+    return parsed
+
+
+def _parse_json_dict_arg(value: str | dict[str, object] | None, name: str) -> dict[str, object] | None:
+    """Parse a CLI JSON-object argument into a dict."""
+    if value is None:
+        return None
+    if isinstance(value, dict):
+        return value
+    parsed = _json.loads(value)
+    if not isinstance(parsed, dict):
+        msg = f"{name} must be a JSON object"
+        raise ValueError(msg)
+    return parsed
+
+
 def _parse_lines_document(input: str) -> tuple[LinesDocument | None, str | None]:  # noqa: A002
     try:
         return parse_lines(input), None
@@ -112,6 +151,7 @@ def _build_info_result(doc: LinesDocument) -> dict[str, object]:
         "groups": n_groups,
         "layers": n_layers,
         "fills": n_fills,
+        "image_filters": _count_image_filters(doc.groups),
         "has_source_image": doc.source_image_data is not None,
         "has_preview_image": doc.preview_image_data is not None,
     }
@@ -824,6 +864,98 @@ class VexyLinesCLI:
                     fill_type=fill_type,
                     color=color,
                 )
+        except MCPError as exc:
+            return {"error": str(exc)}
+
+    def get_image_filters(
+        self,
+        fill_id: int,
+        *,
+        host: str = "127.0.0.1",
+        port: int = 47384,
+    ) -> dict[str, object]:
+        """Get the image-filter chain attached to a fill.
+
+        Args:
+            fill_id: Target fill ID.
+            host: Server address.
+            port: Server port.
+        """
+        try:
+            with MCPClient(host=host, port=port) as client:
+                return client.get_image_filters(fill_id)
+        except MCPError as exc:
+            return {"error": str(exc)}
+
+    def set_image_filters(
+        self,
+        fill_id: int,
+        filters: str | list[dict[str, object]],
+        *,
+        host: str = "127.0.0.1",
+        port: int = 47384,
+    ) -> dict[str, object]:
+        """Replace the image-filter chain attached to a fill.
+
+        Args:
+            fill_id: Target fill ID.
+            filters: JSON array like ``[{"type":"brightness","params":{"value":25}}]``.
+            host: Server address.
+            port: Server port.
+        """
+        try:
+            filter_chain = _parse_json_list_arg(filters, "filters")
+            with MCPClient(host=host, port=port) as client:
+                return client.set_image_filters(fill_id, filter_chain)
+        except (MCPError, ValueError, _json.JSONDecodeError) as exc:
+            return {"error": str(exc)}
+
+    def add_image_filter(
+        self,
+        fill_id: int,
+        filter_type: str,
+        *,
+        params: str | dict[str, object] | None = None,
+        index: int | None = None,
+        host: str = "127.0.0.1",
+        port: int = 47384,
+    ) -> dict[str, object]:
+        """Add one image filter to a fill's filter chain.
+
+        Args:
+            fill_id: Target fill ID.
+            filter_type: Filter name, e.g. ``brightness`` or ``levels``.
+            params: Optional JSON object with filter parameters.
+            index: Optional insertion index; omitted appends.
+            host: Server address.
+            port: Server port.
+        """
+        try:
+            filter_params = _parse_json_dict_arg(params, "params")
+            with MCPClient(host=host, port=port) as client:
+                return client.add_image_filter(fill_id, filter_type, filter_params, index=index)
+        except (MCPError, ValueError, _json.JSONDecodeError) as exc:
+            return {"error": str(exc)}
+
+    def remove_image_filter(
+        self,
+        fill_id: int,
+        index: int,
+        *,
+        host: str = "127.0.0.1",
+        port: int = 47384,
+    ) -> dict[str, object]:
+        """Remove an image filter from a fill's filter chain.
+
+        Args:
+            fill_id: Target fill ID.
+            index: Zero-based filter-chain index to remove.
+            host: Server address.
+            port: Server port.
+        """
+        try:
+            with MCPClient(host=host, port=port) as client:
+                return client.remove_image_filter(fill_id, index)
         except MCPError as exc:
             return {"error": str(exc)}
 

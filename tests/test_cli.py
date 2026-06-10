@@ -9,17 +9,17 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from vexy_lines_cli.__main__ import VexyLinesCLI, _count_tree, _format_file_tree, _format_tree
 from vexy_lines import (
     DocumentProps,
     FillNode,
     FillParams,
     GroupInfo,
+    ImageFilterEntry,
     LayerInfo,
     LinesDocument,
 )
 from vexy_lines_api.types import LayerNode
-
+from vexy_lines_cli.__main__ import VexyLinesCLI, _count_tree, _format_file_tree, _format_tree
 
 # ---------------------------------------------------------------------------
 # Helper factories using real types from vexy_lines
@@ -98,6 +98,16 @@ class TestFormatFileTree:
         result = _format_file_tree([layer])
         assert "fill: Stripes [wave]" in result
 
+    def test_format_file_tree_with_image_filters(self):
+        fill = _make_fill(caption="Stripes", fill_type="wave")
+        fill.image_filters = [
+            ImageFilterEntry(type_id=0, name="brightness"),
+            ImageFilterEntry(type_id=6, name="invert"),
+        ]
+        layer = _make_layer(caption="Art", fills=[fill])
+        result = _format_file_tree([layer])
+        assert "fill: Stripes [wave] filters=brightness,invert" in result
+
     def test_format_file_tree_nested_group(self):
         layer = _make_layer(caption="Inner")
         group = _make_group(caption="Outer", children=[layer])
@@ -165,8 +175,21 @@ class TestCliInfo:
         assert result["dpi"] == 150
         assert result["layers"] == 1
         assert result["fills"] == 1
+        assert result["image_filters"] == 0
         assert result["has_source_image"] is True
         assert result["has_preview_image"] is False
+
+    def test_info_counts_image_filters(self):
+        fill = _make_fill()
+        fill.image_filters = [
+            ImageFilterEntry(type_id=0, name="brightness"),
+            ImageFilterEntry(type_id=6, name="invert"),
+        ]
+        doc = LinesDocument(groups=[_make_layer(fills=[fill])])
+        with patch("vexy_lines_cli.__main__.parse_lines", return_value=doc):
+            cli = VexyLinesCLI()
+            result = cli.info("fake.lines")
+        assert result["image_filters"] == 2
 
     def test_info_returns_error_on_failure(self):
         with patch("vexy_lines_cli.__main__.parse_lines", side_effect=FileNotFoundError("nope")):
@@ -302,6 +325,49 @@ class TestCliBatchConvert:
         cli = VexyLinesCLI()
         result = cli.batch_convert(input_dir=str(tmp_path))
         assert result == {"error": "no .lines files found"}
+
+
+# ---------------------------------------------------------------------------
+# VexyLinesCLI image-filter MCP tests
+# ---------------------------------------------------------------------------
+
+
+class TestCliImageFilters:
+    def test_get_image_filters_calls_client(self):
+        with patch("vexy_lines_cli.__main__.MCPClient") as client_cls:
+            client = client_cls.return_value.__enter__.return_value
+            client.get_image_filters.return_value = {"count": 0, "filters": []}
+            result = VexyLinesCLI().get_image_filters(42)
+        client.get_image_filters.assert_called_once_with(42)
+        assert result == {"count": 0, "filters": []}
+
+    def test_set_image_filters_parses_json_chain(self):
+        with patch("vexy_lines_cli.__main__.MCPClient") as client_cls:
+            client = client_cls.return_value.__enter__.return_value
+            client.set_image_filters.return_value = {"status": "ok"}
+            result = VexyLinesCLI().set_image_filters(42, '[{"type":"brightness","params":{"value":25}}]')
+        client.set_image_filters.assert_called_once_with(42, [{"type": "brightness", "params": {"value": 25}}])
+        assert result == {"status": "ok"}
+
+    def test_add_image_filter_parses_json_params(self):
+        with patch("vexy_lines_cli.__main__.MCPClient") as client_cls:
+            client = client_cls.return_value.__enter__.return_value
+            client.add_image_filter.return_value = {"status": "ok"}
+            result = VexyLinesCLI().add_image_filter(42, "levels", params='{"left":10,"right":240}', index=0)
+        client.add_image_filter.assert_called_once_with(42, "levels", {"left": 10, "right": 240}, index=0)
+        assert result == {"status": "ok"}
+
+    def test_remove_image_filter_calls_client(self):
+        with patch("vexy_lines_cli.__main__.MCPClient") as client_cls:
+            client = client_cls.return_value.__enter__.return_value
+            client.remove_image_filter.return_value = {"status": "ok", "count": 0}
+            result = VexyLinesCLI().remove_image_filter(42, 0)
+        client.remove_image_filter.assert_called_once_with(42, 0)
+        assert result == {"status": "ok", "count": 0}
+
+    def test_set_image_filters_returns_error_for_non_list_json(self):
+        result = VexyLinesCLI().set_image_filters(42, '{"type":"brightness"}')
+        assert "filters must be a JSON array of objects" in result["error"]
 
 
 # ---------------------------------------------------------------------------

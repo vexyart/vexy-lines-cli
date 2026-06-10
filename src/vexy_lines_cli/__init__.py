@@ -15,7 +15,9 @@ Three capability groups, all under the ``vexy-lines-cli`` command:
   ``style-transfer``, ``style-video`` — apply a ``.lines`` style to
   images or video via the MCP API.
   ``mcp-status``, ``tree``, ``new-document``, ``open``, ``add-fill``,
-  ``render`` — direct JSON-RPC calls to the embedded server.
+  ``get-image-filters``, ``set-image-filters``, ``add-image-filter``,
+  ``remove-image-filter``, ``render`` — direct JSON-RPC calls to the
+  embedded server.
 
 All parser commands accept ``--json-output`` for machine-readable output.
 All style commands create a crash-safe job folder; re-running resumes
