@@ -175,7 +175,7 @@ class VexyLinesExporter:
                 logger.warning(f"{name} click_menu_item failed on attempt {attempt}")
                 continue
 
-            if self._wait_for_export_quick(expected):
+            if self._wait_for_export_quick(expected, self.config.scale_timeout(EXPORT_CHECK_TIMEOUT)):
                 logger.info(f"Exported {name} on attempt {attempt}")
                 return True
 
@@ -183,9 +183,9 @@ class VexyLinesExporter:
 
         return False
 
-    def _wait_for_export_quick(self, path: Path) -> bool:
+    def _wait_for_export_quick(self, path: Path, timeout: float = EXPORT_CHECK_TIMEOUT) -> bool:
         """Short wait for an export file to appear and stabilize."""
-        deadline = time.monotonic() + EXPORT_CHECK_TIMEOUT
+        deadline = time.monotonic() + timeout
         last_size = -1
         stable_count = 0
 

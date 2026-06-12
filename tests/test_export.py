@@ -25,8 +25,10 @@ from vexy_lines_cli.export.errors import (
 from vexy_lines_cli.export.stats import ExportStats
 from vexy_lines_cli.utils.file_utils import (
     find_lines_files,
+    validate_export,
     validate_lines_file,
     validate_pdf,
+    validate_png,
     validate_svg,
 )
 from vexy_lines_cli.utils.interrupt import InterruptHandler
@@ -48,6 +50,10 @@ class TestExportConfig:
     def test_svg_format_accepted(self):
         config = ExportConfig(format="svg")
         assert config.format == "svg"
+
+    def test_png_format_accepted(self):
+        config = ExportConfig(format="png")
+        assert config.format == "png"
 
     def test_format_lowercased(self):
         config = ExportConfig(format="PDF")
@@ -112,6 +118,14 @@ class TestExportConfig:
     def test_export_extension_svg(self):
         config = ExportConfig(format="svg")
         assert config.export_extension == ".svg"
+
+    def test_export_menu_item_png(self):
+        config = ExportConfig(format="png")
+        assert config.export_menu_item == "Export PNG File"
+
+    def test_export_extension_png(self):
+        config = ExportConfig(format="png")
+        assert config.export_extension == ".png"
 
     def test_scale_timeout(self):
         config = ExportConfig(timeout_multiplier=2.0)
@@ -354,6 +368,34 @@ class TestFileUtils:
         f = tmp_path / "good2.svg"
         f.write_text('<svg xmlns="http://www.w3.org/2000/svg"></svg>')
         assert validate_svg(f) is True
+
+    def test_validate_png_missing(self, tmp_path):
+        assert validate_png(tmp_path / "nope.png") is False
+
+    def test_validate_png_empty(self, tmp_path):
+        f = tmp_path / "empty.png"
+        f.write_bytes(b"")
+        assert validate_png(f) is False
+
+    def test_validate_png_bad_signature(self, tmp_path):
+        f = tmp_path / "bad.png"
+        f.write_bytes(b"NOT_A_PNG" + b"\x00" * 100)
+        assert validate_png(f) is False
+
+    def test_validate_png_valid(self, tmp_path):
+        f = tmp_path / "good.png"
+        f.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 100)
+        assert validate_png(f) is True
+
+    def test_validate_export_png_dispatch(self, tmp_path):
+        f = tmp_path / "good.png"
+        f.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 100)
+        assert validate_export(f, "png") is True
+
+    def test_validate_export_unknown_format(self, tmp_path):
+        f = tmp_path / "f.bmp"
+        f.write_bytes(b"BM" + b"\x00" * 100)
+        assert validate_export(f, "bmp") is False
 
 
 # ===========================================================================

@@ -22,7 +22,7 @@ from vexy_lines import (
 from vexy_lines import (
     parse as parse_lines,
 )
-from vexy_lines_api import MCPClient, MCPError
+from vexy_lines_api import MCPClient, MCPError, export_bundle
 from vexy_lines_api.export import ExportFormat, ExportRequest, process_export
 from vexy_lines_cli.export.config import ExportConfig
 from vexy_lines_cli.export.exporter import VexyLinesExporter
@@ -677,7 +677,7 @@ class VexyLinesCLI:
         timeout_multiplier: float = 1.0,
         max_retries: int = 3,
     ) -> dict[str, object]:
-        """Export .lines documents to PDF or SVG without save dialogs.
+        """Export .lines documents to PDF, SVG, or PNG without save dialogs.
 
         Quits the app, injects export preferences into macOS defaults, relaunches
         the app, opens each file, triggers File > Export, then restores the
@@ -693,7 +693,7 @@ class VexyLinesCLI:
             input: A single ``.lines`` file or directory to search recursively.
             output: Destination file (single input) or directory (multiple
                 inputs). Defaults to the same folder as each source file.
-            format: Export format: ``pdf`` (default) or ``svg``.
+            format: Export format: ``pdf`` (default), ``svg``, or ``png``.
             verbose: Enable debug logging.
             dry_run: List files that would be exported without exporting them.
             force: Re-export files even if the output already exists.
@@ -732,6 +732,85 @@ class VexyLinesCLI:
             speak(stats.human_summary())
 
         return stats.as_dict()
+
+    def export_bundle(
+        self,
+        input: str,  # noqa: A002
+        *,
+        output: str | None = None,
+        formats: str | tuple[str, ...] = "pdf,svg,png",
+        source: bool = True,
+        dpi: int | None = None,
+        render_timeout: float = 600.0,
+        verbose: bool = False,
+    ) -> dict[str, object]:
+        """Export .lines files to multiple formats plus the embedded source image.
+
+        For each input file, exports every requested format (via the app's MCP
+        API; the app is auto-launched) and extracts the embedded source raster
+        as ``<stem>-src.jpg`` (no app needed). PNG output is rasterized locally
+        from the exported SVG.
+
+        Examples::
+
+            vexy-lines-cli export-bundle artwork.lines
+            vexy-lines-cli export-bundle ./my-art/ --output ./exports/
+            vexy-lines-cli export-bundle artwork.lines --formats pdf,svg --source=False
+
+        Args:
+            input: A single ``.lines`` file or a directory searched recursively.
+            output: Destination directory. Defaults to each source file's folder.
+            formats: Comma-separated formats: any of ``pdf``, ``svg``, ``png``.
+            source: Also extract the embedded source image as ``<stem>-src.jpg``.
+            dpi: Override document DPI for exports.
+            render_timeout: Maximum seconds to wait for each document render.
+                Large documents can take 10+ minutes.
+            verbose: Enable debug logging.
+
+        Returns:
+            Dict with keys: total, successes, failures (list of [file, error]),
+            and outputs (mapping of file to written paths).
+        """
+        if verbose:
+            logger.enable("vexy_lines_cli")
+
+        input_path = Path(input)
+        files = (
+            sorted(input_path.rglob("*.lines"))
+            if input_path.is_dir()
+            else [input_path]
+        )
+        if not files:
+            return {"error": f"no .lines files found at {input}"}
+
+        # Fire may parse "pdf,svg,png" into a tuple already
+        fmt_items = formats.split(",") if isinstance(formats, str) else formats
+        fmt_tuple = tuple(f.strip().lower() for f in fmt_items if f.strip())
+        outputs: dict[str, dict[str, str]] = {}
+        failures: list[list[str]] = []
+
+        with MCPClient() as client:
+            for f in files:
+                try:
+                    result = export_bundle(
+                        f,
+                        output,
+                        fmt_tuple,
+                        source=source,
+                        dpi=dpi,
+                        render_timeout=render_timeout,
+                        client=client,
+                    )
+                    outputs[str(f)] = {kind: str(p) for kind, p in result.items()}
+                except (MCPError, ValueError, FileNotFoundError, TimeoutError) as exc:
+                    failures.append([str(f), str(exc)])
+
+        return {
+            "total": len(files),
+            "successes": len(outputs),
+            "failures": failures,
+            "outputs": outputs,
+        }
 
     # -- MCP subcommands --------------------------------------------------
 

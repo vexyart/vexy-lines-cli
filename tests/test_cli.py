@@ -383,3 +383,42 @@ class _noop:
 
     def __exit__(self, *args):
         pass
+
+
+# ---------------------------------------------------------------------------
+# export_bundle command tests
+# ---------------------------------------------------------------------------
+
+
+class TestExportBundleCommand:
+    def test_export_bundle_when_no_files_then_error(self, tmp_path):
+        cli = VexyLinesCLI()
+        result = cli.export_bundle(str(tmp_path))
+        assert result == {"error": f"no .lines files found at {tmp_path}"}
+
+    def test_export_bundle_when_formats_tuple_then_accepted(self, tmp_path):
+        """Fire parses --formats pdf,svg into a tuple; the command must cope."""
+        f = tmp_path / "a.lines"
+        f.write_bytes(b"x")
+        cli = VexyLinesCLI()
+        with (
+            patch("vexy_lines_cli.__main__.MCPClient") as client_cls,
+            patch("vexy_lines_cli.__main__.export_bundle", return_value={"pdf": tmp_path / "a.pdf"}) as bundle,
+        ):
+            client_cls.return_value.__enter__.return_value = MagicMock()
+            result = cli.export_bundle(str(f), formats=("pdf", "svg"))
+        assert result["successes"] == 1
+        assert bundle.call_args.args[2] == ("pdf", "svg")
+
+    def test_export_bundle_when_bundle_fails_then_failure_recorded(self, tmp_path):
+        f = tmp_path / "a.lines"
+        f.write_bytes(b"x")
+        cli = VexyLinesCLI()
+        with (
+            patch("vexy_lines_cli.__main__.MCPClient") as client_cls,
+            patch("vexy_lines_cli.__main__.export_bundle", side_effect=ValueError("boom")),
+        ):
+            client_cls.return_value.__enter__.return_value = MagicMock()
+            result = cli.export_bundle(str(f))
+        assert result["successes"] == 0
+        assert result["failures"] == [[str(f), "boom"]]

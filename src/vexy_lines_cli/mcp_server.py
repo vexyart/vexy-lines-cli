@@ -2,7 +2,9 @@
 """MCP passthrough server: stdio <-> TCP bridge for Vexy Lines.
 
 Bridges Claude Desktop / Cursor (which expect stdio-based MCP servers) to
-the Vexy Lines embedded TCP server on localhost:47384.
+the Vexy Lines embedded TCP server on localhost:47384. Adds one local tool
+on top of the app's own tools: ``export_bundle`` (multi-format export plus
+embedded source image extraction).
 
 Usage::
 
@@ -12,6 +14,7 @@ Usage::
 
 from __future__ import annotations
 
+import json
 import socket
 import sys
 import time
@@ -25,6 +28,78 @@ _CONNECT_TIMEOUT = 30.0
 _SOCKET_TIMEOUT = 120.0
 _RECONNECT_DELAY = 1.0
 _MAX_RECONNECT_ATTEMPTS = 3
+
+_BUNDLE_TOOL = {
+    "name": "export_bundle",
+    "description": (
+        "Export a .lines file to multiple formats (pdf, svg, png) and extract "
+        "its embedded source image as <stem>-src.jpg, in one call."
+    ),
+    "inputSchema": {
+        "type": "object",
+        "properties": {
+            "path": {"type": "string", "description": "Path to the .lines file"},
+            "output_dir": {
+                "type": "string",
+                "description": "Destination directory (default: the file's directory)",
+            },
+            "formats": {
+                "type": "array",
+                "items": {"type": "string", "enum": ["pdf", "svg", "png"]},
+                "description": "Formats to export (default: all three)",
+            },
+            "source": {
+                "type": "boolean",
+                "description": "Also extract the embedded source image (default: true)",
+            },
+        },
+        "required": ["path"],
+    },
+}
+
+
+def _handle_bundle_call(request: dict[str, object]) -> dict[str, object]:
+    """Run the local export_bundle tool and build a JSON-RPC response."""
+    from vexy_lines_api.bundle import export_bundle  # noqa: PLC0415
+
+    params = request.get("params")
+    args = params.get("arguments", {}) if isinstance(params, dict) else {}
+    request_id = request.get("id")
+    try:
+        results = export_bundle(
+            str(args["path"]),
+            args.get("output_dir"),
+            tuple(args.get("formats", ("pdf", "svg", "png"))),
+            source=bool(args.get("source", True)),
+        )
+        payload = {kind: str(path) for kind, path in results.items()}
+        return {
+            "jsonrpc": "2.0",
+            "id": request_id,
+            "result": {"content": [{"type": "text", "text": json.dumps(payload)}]},
+        }
+    except Exception as exc:
+        return {
+            "jsonrpc": "2.0",
+            "id": request_id,
+            "result": {
+                "content": [{"type": "text", "text": f"export_bundle failed: {exc}"}],
+                "isError": True,
+            },
+        }
+
+
+def _augment_tools_list(response_line: str) -> str:
+    """Append the local export_bundle tool to a tools/list response."""
+    try:
+        response = json.loads(response_line)
+        tools = response.get("result", {}).get("tools")
+        if isinstance(tools, list):
+            tools.append(_BUNDLE_TOOL)
+            return json.dumps(response)
+    except (ValueError, AttributeError):
+        pass
+    return response_line
 
 
 def _connect(host: str, port: int, timeout: float = _CONNECT_TIMEOUT) -> socket.socket:
@@ -107,6 +182,22 @@ def serve(
             if not line:
                 continue
 
+            # Intercept local tool calls; everything else passes through
+            method = ""
+            try:
+                request = json.loads(line)
+                method = str(request.get("method", ""))
+            except ValueError:
+                request = {}
+            if (
+                method == "tools/call"
+                and isinstance(request.get("params"), dict)
+                and request["params"].get("name") == "export_bundle"
+            ):
+                stdout.write(json.dumps(_handle_bundle_call(request)) + "\n")
+                stdout.flush()
+                continue
+
             # Forward stdin message to TCP
             try:
                 sock.sendall((line + "\n").encode("utf-8"))
@@ -138,6 +229,8 @@ def serve(
 
             # Forward TCP response to stdout
             if response_line is not None:
+                if method == "tools/list":
+                    response_line = _augment_tools_list(response_line)
                 stdout.write(response_line + "\n")
                 stdout.flush()
 

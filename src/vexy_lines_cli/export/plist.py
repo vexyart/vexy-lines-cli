@@ -23,6 +23,7 @@ APP_DOMAIN = "com.fontlab.vexy-lines"
 FORMAT_CODES: dict[str, str] = {
     "pdf": "pdf",
     "svg": "svg",
+    "png": "png",
 }
 
 EXPORT_PREFERENCES: dict[str, int] = {

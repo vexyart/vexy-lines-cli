@@ -9,11 +9,12 @@ MIN_TIMEOUT_MULTIPLIER = 0.1
 MAX_TIMEOUT_MULTIPLIER = 10.0
 MIN_RETRIES = 0
 MAX_RETRIES = 10
-VALID_FORMATS = ("pdf", "svg")
+VALID_FORMATS = ("pdf", "svg", "png")
 
 MENU_ITEMS: dict[str, str] = {
     "pdf": "Export PDF File",
     "svg": "Export SVG File",
+    "png": "Export PNG File",
 }
 
 
@@ -23,7 +24,7 @@ class ExportConfig:
 
     Attributes:
         app_name: Name of the Vexy Lines application.
-        format: Export format ('pdf' or 'svg').
+        format: Export format ('pdf', 'svg', or 'png').
         poll_interval: Seconds between window-title polls.
         wait_for_app: Seconds to wait for the app to launch.
         wait_for_file: Seconds to wait for the file window to appear.

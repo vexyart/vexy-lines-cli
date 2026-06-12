@@ -126,12 +126,46 @@ def validate_svg(path: Path) -> bool:
         return False
 
 
+def validate_png(path: Path) -> bool:
+    """Check that a file is a valid PNG (exists, has PNG signature).
+
+    Args:
+        path: Path to the PNG file.
+
+    Returns:
+        True if the file passes all checks.
+    """
+    if not path.exists():
+        logger.error(f"PNG does not exist: {path}")
+        return False
+    if not path.is_file():
+        logger.error(f"PNG path is not a file: {path}")
+        return False
+    try:
+        size = path.stat().st_size
+        if size == 0:
+            logger.error(f"PNG is empty: {path}")
+            return False
+        if size > MAX_FILE_SIZE:
+            logger.warning(f"PNG unusually large ({size // (1024 * 1024)} MB): {path}")
+        with path.open("rb") as f:
+            header = f.read(8)
+            if header != b"\x89PNG\r\n\x1a\n":
+                logger.error(f"Invalid PNG signature (got {header!r}): {path}")
+                return False
+        logger.debug(f"PNG validation passed for {path.name} ({size} bytes)")
+        return True
+    except OSError as e:
+        logger.error(f"Cannot access PNG {path}: {e}")
+        return False
+
+
 def validate_export(path: Path, fmt: str) -> bool:
     """Validate an exported file based on its format.
 
     Args:
         path: Path to the exported file.
-        fmt: Export format ('pdf' or 'svg').
+        fmt: Export format ('pdf', 'svg', or 'png').
 
     Returns:
         True if the file passes validation for the given format.
@@ -140,6 +174,8 @@ def validate_export(path: Path, fmt: str) -> bool:
         return validate_pdf(path)
     if fmt == "svg":
         return validate_svg(path)
+    if fmt == "png":
+        return validate_png(path)
     return False
 
 
