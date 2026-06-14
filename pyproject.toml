@@ -42,6 +42,12 @@ dependencies = [
     "loguru>=0.7.2",
 ]
 
+[project.optional-dependencies]
+# AI-assisted rename (`vexy-lines-cli ai-rename`): pulls the apy VLM extras.
+ai = [
+    "vexy-lines-apy[ai]>=1.0.20",
+]
+
 [[project.authors]]
 name = "Fontlab Ltd."
 email = "opensource@vexy.art"

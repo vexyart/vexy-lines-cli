@@ -27,6 +27,7 @@ Parse `.lines` files, batch export to PDF/SVG, apply styles to images and video,
 - Interpolate between two styles across an image sequence
 - Process video frame-by-frame with style transfer
 - Export `.lines` files to PDF/SVG without dialog interaction
+- AI-rename a file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) with a vision model (`vexy-lines-cli[ai]`)
 - Query and manipulate the live document tree
 
 **For AI assistants:**

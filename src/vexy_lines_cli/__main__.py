@@ -1057,6 +1057,96 @@ class VexyLinesCLI:
         except MCPError as exc:
             return {"error": str(exc)}
 
+    # -- AI-assisted rename ------------------------------------------------
+
+    def ai_rename(
+        self,
+        input: str,  # noqa: A002
+        output: str | None = None,
+        *,
+        dpi: int = 72,
+        llm_api_url: str | None = None,
+        llm_api_key: str | None = None,
+        llm_model_vision: str | None = None,
+        llm_model: str | None = None,
+        workdir: str | None = None,
+        dry_run: bool = False,
+        host: str = "127.0.0.1",
+        port: int = 47384,
+        json_output: bool = False,
+    ) -> dict[str, object]:
+        """Rename a .lines file's layers and fills using an LLM.
+
+        Renders each fill in isolation, builds an inspection image that frames
+        the fill over the faint full artwork, asks a vision model what it is, and
+        writes a renamed copy of the file. Per-fill and inspection images plus a
+        ``rename-plan.json`` are saved in the work directory.
+
+        The endpoint is an OpenAI-compatible ``/v1`` server, configured from the
+        environment (``VEXY_LINES_LLM_API_URL``, ``VEXY_LINES_LLM_API_KEY``,
+        ``VEXY_LINES_LLM_MODEL_VISION`` for vision, ``VEXY_LINES_VLM_MODEL`` for
+        text) and overridable with the flags below.
+
+        Args:
+            input: Path to the .lines file.
+            output: Destination .lines path. Defaults to ``<stem>-renamed.lines``.
+            dpi: Render DPI (lower is faster; default 72).
+            llm_api_url: OpenAI-compatible base URL (overrides the environment).
+            llm_api_key: API key for the endpoint.
+            llm_model_vision: Vision model used to describe each fill.
+            llm_model: Text model used to name each layer.
+            workdir: Directory for artifacts (default ``<stem>-rename`` beside input).
+            dry_run: Compute names but do not write the renamed file.
+            host: MCP server address.
+            port: MCP server port.
+            json_output: Print the full rename plan as JSON.
+
+        Returns:
+            A summary dict with the per-object renames, or ``{"error": ...}``.
+        """
+        from vexy_lines_api.rename import config_with_overrides, rename_lines  # noqa: PLC0415
+
+        config = config_with_overrides(
+            llm_api_url=llm_api_url,
+            llm_api_key=llm_api_key,
+            llm_model_vision=llm_model_vision,
+            llm_model=llm_model,
+        )
+
+        in_path = Path(input)
+        out_path = Path(output) if output is not None else in_path.with_name(f"{in_path.stem}-renamed.lines")
+
+        try:
+            with MCPClient(host=host, port=port) as client:
+                plan = rename_lines(
+                    in_path,
+                    None if dry_run else out_path,
+                    client=client,
+                    config=config,
+                    dpi=dpi,
+                    work_dir=workdir,
+                    dry_run=dry_run,
+                )
+        except MCPError as exc:
+            return {"error": str(exc)}
+        except (FileNotFoundError, ValueError, RuntimeError) as exc:
+            return {"error": str(exc)}
+
+        result = plan.to_dict()
+        result["output"] = None if dry_run else str(out_path)
+        result["dry_run"] = dry_run
+
+        if json_output:
+            print(_json.dumps(result, indent=2))  # noqa: T201
+        else:
+            for fill in plan.fills:
+                print(f"fill  {fill.object_id}: {fill.old_caption!r} -> {fill.new_caption!r}  ({fill.description})")  # noqa: T201
+            for layer in plan.layers:
+                print(f"layer {layer.object_id}: {layer.old_caption!r} -> {layer.new_caption!r}")  # noqa: T201
+            print(f"\n{'(dry run, no file written)' if dry_run else 'wrote ' + str(out_path)}")  # noqa: T201
+
+        return result
+
     # -- MCP bridge --------------------------------------------------------
 
     def mcp_serve(

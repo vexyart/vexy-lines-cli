@@ -118,6 +118,38 @@ $ vexy-lines-cli style-video \
     --input clip.mp4 --output morphing.mp4
 ```
 
+## AI rename layers & fills
+
+Preview the names without writing anything:
+
+```bash
+$ vexy-lines-cli ai-rename road-12.lines --dry-run
+fill 31: 'Linear' -> 'foreground-road-surface'  (foreground road surface)
+fill 32: 'Blended' -> 'car-on-road'  (red car on road)
+fill 40: 'Layer 2' -> 'top-sky-bridge'  (distant bridge in sky)
+layer 12: 'Layer' -> 'road-and-car'
+layer 18: 'Layer 2' -> 'sky-and-bridge'
+(dry run -- nothing written)
+```
+
+Run for real (writes `road-12-renamed.lines` beside the input):
+
+```bash
+$ vexy-lines-cli ai-rename road-12.lines
+...
+output: road-12-renamed.lines
+```
+
+Point at a specific endpoint/models and write to a chosen path:
+
+```bash
+$ vexy-lines-cli ai-rename road-12.lines road-12-named.lines \
+    --llm-api-url http://127.0.0.1:1234/v1 \
+    --llm-model-vision my-vision-model --llm-model my-text-model
+```
+
+The command auto-launches the app and talks to an OpenAI-compatible `/v1` endpoint, configured from the environment (`VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION`, `VEXY_LINES_VLM_MODEL`) or via the `--llm-*` flags. See the [full guide](https://vexy.dev/vexy-lines-apy/ai-rename/) and the [Layers Panel](https://help.vexy.art/lines/articles/layers-panel/) help article.
+
 ## MCP status check
 
 ```bash

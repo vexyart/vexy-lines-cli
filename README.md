@@ -124,6 +124,22 @@ All MCP commands accept `--host` and `--port` (defaults: `127.0.0.1:47384`).
 |---|---|
 | `mcp-serve` | Start the stdio-to-TCP bridge (same as running `vexy-lines-mcp`) |
 
+### AI rename — auto-launches app + needs a vision model
+
+Rename a `.lines` file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) with a vision-language model. Each fill is rendered in isolation, boxed over a faint copy of the full artwork, and given a short descriptive caption; layers are named from their fills. Only captions change — every fill parameter and embedded image is preserved.
+
+```bash
+pip install "vexy-lines-cli[ai]"          # openai + pathvalidate + python-slugify
+
+vexy-lines-cli ai-rename road-12.lines              # -> road-12-renamed.lines
+vexy-lines-cli ai-rename road-12.lines --dry-run    # preview names, write nothing
+vexy-lines-cli ai-rename road-12.lines --json-output
+vexy-lines-cli ai-rename road-12.lines \
+    --llm-api-url http://127.0.0.1:1234/v1 --llm-model-vision my-vision-model
+```
+
+The endpoint is an OpenAI-compatible `/v1` server, configured from the environment — `VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION` (vision), `VEXY_LINES_VLM_MODEL` (text) — and overridable with `--llm-api-url`, `--llm-api-key`, `--llm-model-vision`, `--llm-model`. See the [full AI rename guide](https://vexy.dev/vexy-lines-apy/ai-rename/).
+
 ## MCP server setup
 
 `vexy-lines-mcp` bridges Claude Desktop and Cursor to the Vexy Lines TCP server. It reads newline-delimited JSON-RPC from stdin, forwards over TCP, and writes responses to stdout.

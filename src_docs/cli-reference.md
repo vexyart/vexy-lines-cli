@@ -155,6 +155,50 @@ Options:
 | `--force` | `bool` | `False` | Delete existing job folder and start fresh |
 | `--cleanup` | `bool` | `False` | Delete job folder after export completes |
 
+## AI rename (auto-launches app + needs a vision model)
+
+### `ai-rename`
+
+Rename a `.lines` file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) using a vision-language model (VLM). Each fill is rendered in isolation, shown to the model inside a red box over a faint copy of the full artwork, and given a short descriptive caption (e.g. `car-on-road`, `top-sky-bridge`); each layer is then named from the fills it contains. Only the `caption` attributes change -- every fill parameter, mask, mesh, and embedded image is preserved.
+
+```bash
+vexy-lines-cli ai-rename road-12.lines
+vexy-lines-cli ai-rename road-12.lines road-12-named.lines
+vexy-lines-cli ai-rename road-12.lines --dry-run
+vexy-lines-cli ai-rename road-12.lines --json-output
+vexy-lines-cli ai-rename road-12.lines \
+    --llm-api-url http://127.0.0.1:1234/v1 --llm-model-vision my-vision-model
+```
+
+`INPUT` is required; `OUTPUT` defaults to `<stem>-renamed.lines`. The command needs both the Vexy Lines app (auto-launched) and an OpenAI-compatible `/v1` endpoint. The endpoint is configured from the environment -- `VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION` (vision), and `VEXY_LINES_VLM_MODEL` (text) -- and the `--llm-*` flags below override whatever the environment resolves.
+
+Options:
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--dpi` | `72` | Render DPI (lower is faster) |
+| `--llm-api-url` | `$VEXY_LINES_LLM_API_URL` | OpenAI-compatible base URL |
+| `--llm-api-key` | `$VEXY_LINES_LLM_API_KEY` | API key |
+| `--llm-model-vision` | `$VEXY_LINES_LLM_MODEL_VISION` | Vision model (describes each fill) |
+| `--llm-model` | `$VEXY_LINES_VLM_MODEL` | Text model (names each layer) |
+| `--workdir` | `<stem>-rename/` | Directory for render artifacts |
+| `--dry-run` | `False` | Compute names but write nothing |
+| `--json-output` | `False` | Print the full plan as JSON |
+| `--host` | `127.0.0.1` | MCP server address |
+| `--port` | `47384` | MCP server port |
+
+By default the command prints one line per fill (`fill <id>: 'old' -> 'new'  (description)`), one per layer, and the output path. With `--json-output` it prints the full plan dict (keys: `lines_path`, `fills[]`, `layers[]`, `output`, `dry_run`).
+
+Artifacts land in the work dir: `_full.png` (all-fills render), `fill_<id>_single.png` (each fill in isolation), `fill_<id>_inspect.png` (each red-boxed inspection image), and `rename-plan.json`.
+
+Requires the AI extras:
+
+```bash
+pip install "vexy-lines-cli[ai]"   # openai + pathvalidate + python-slugify
+```
+
+See the [full AI rename guide](https://vexy.dev/vexy-lines-apy/ai-rename/) for how it works and how to choose a model. Vexy Lines help: [Layers Panel](https://help.vexy.art/lines/articles/layers-panel/) · [Fill Properties](https://help.vexy.art/lines/articles/fill-properties-1/).
+
 ## MCP commands (app must be running)
 
 ### `mcp-status`
