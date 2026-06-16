@@ -18,11 +18,19 @@ from vexy_lines import (
     LinesDocument,
     extract_preview_image,
     extract_source_image,
+    extract_source_images,
 )
 from vexy_lines import (
     parse as parse_lines,
 )
-from vexy_lines_api import MCPClient, MCPError, export_bundle
+from vexy_lines_api import (
+    MCPClient,
+    MCPError,
+    export_bundle,
+    interpolate_lines,
+    record_interpolation_screen,
+    render_interpolation_video,
+)
 from vexy_lines_api.export import ExportFormat, ExportRequest, process_export
 from vexy_lines_cli.export.config import ExportConfig
 from vexy_lines_cli.export.exporter import VexyLinesExporter
@@ -321,6 +329,120 @@ class VexyLinesCLI:
             stem_suffix="preview",
             extractor=extract_preview_image,
         )
+
+    def extract_sources(
+        self,
+        input: str,  # noqa: A002
+        *,
+        output_dir: str | None = None,
+    ) -> dict[str, object]:
+        """Extract every embedded source image from a .lines file.
+
+        Includes the document-level source image plus source images attached
+        to groups. Does not require the Vexy Lines app.
+        """
+        input_path = Path(input)
+        out_dir = Path(output_dir) if output_dir is not None else input_path.with_name(f"{input_path.stem}-sources")
+        try:
+            outputs = extract_source_images(input_path, out_dir)
+        except (FileNotFoundError, ValueError) as exc:
+            return {"error": str(exc)}
+        return {"status": "ok", "count": len(outputs), "outputs": [str(path) for path in outputs]}
+
+    def interpolate(
+        self,
+        start: str,
+        end: str,
+        *,
+        t: float = 0.5,
+        output: str | None = None,
+    ) -> dict[str, object]:
+        """Generate one interpolated .lines file between two compatible .lines files."""
+        start_path = Path(start)
+        end_path = Path(end)
+        output_path = (
+            Path(output) if output is not None else start_path.with_name(f"{start_path.stem}-interp-{t:g}.lines")
+        )
+        try:
+            result = interpolate_lines(start_path, end_path, output_path, t=t)
+        except (FileNotFoundError, ValueError) as exc:
+            return {"error": str(exc)}
+        return {"status": "ok", "output": str(result), "t": t}
+
+    def interpolate_video(
+        self,
+        start: str,
+        end: str,
+        *,
+        output: str = "interpolation.mp4",
+        frames: int = 60,
+        fps: float = 24.0,
+        work_dir: str | None = None,
+        keep_work: bool = False,
+        render_timeout: float = 300.0,
+    ) -> dict[str, object]:
+        """Render a video of the full interpolation between two .lines files."""
+        try:
+            result = render_interpolation_video(
+                Path(start),
+                Path(end),
+                Path(output),
+                frames=frames,
+                fps=fps,
+                work_dir=Path(work_dir) if work_dir is not None else None,
+                keep_work=keep_work,
+                render_timeout=render_timeout,
+            )
+        except (FileNotFoundError, ValueError, RuntimeError, TimeoutError, MCPError) as exc:
+            return {"error": str(exc)}
+        return {
+            "status": "ok",
+            "output": str(result.output_path),
+            "frames": frames,
+            "retained_frames": len(result.frame_paths),
+            "retained_lines": len(result.lines_paths),
+            "fps": fps,
+        }
+
+    def record_interpolation_screen(
+        self,
+        start: str,
+        end: str,
+        *,
+        output: str = "interpolation-screens",
+        frames: int = 60,
+        fps: float = 24.0,
+        zoom_steps: int = 0,
+        video: str | None = None,
+        work_dir: str | None = None,
+        keep_work: bool = False,
+        render_timeout: float = 300.0,
+    ) -> dict[str, object]:
+        """Capture the Vexy Lines app while stepping through a .lines interpolation."""
+        try:
+            result = record_interpolation_screen(
+                Path(start),
+                Path(end),
+                Path(output),
+                frames=frames,
+                fps=fps,
+                zoom_steps=zoom_steps,
+                video_path=Path(video) if video is not None else None,
+                work_dir=Path(work_dir) if work_dir is not None else None,
+                keep_work=keep_work,
+                render_timeout=render_timeout,
+            )
+        except (FileNotFoundError, ValueError, RuntimeError, TimeoutError, MCPError) as exc:
+            return {"error": str(exc)}
+        return {
+            "status": "ok",
+            "output": str(result.output_path),
+            "video": str(result.video_path) if result.video_path is not None else None,
+            "frames": frames,
+            "retained_frames": len(result.frame_paths),
+            "retained_lines": len(result.lines_paths),
+            "fps": fps,
+        }
 
     # -- Style subcommands (require MCP for apply) -------------------------
 

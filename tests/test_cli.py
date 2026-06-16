@@ -282,6 +282,127 @@ class TestCliExtract:
             result = cli.extract_preview("missing.lines")
         assert "error" in result
 
+    def test_extract_sources_calls_all_source_extractor(self, tmp_path):
+        outputs = [tmp_path / "art-source-001-document.jpg", tmp_path / "art-source-002-group-a.jpg"]
+        with patch("vexy_lines_cli.__main__.extract_source_images", return_value=outputs) as extractor:
+            cli = VexyLinesCLI()
+            result = cli.extract_sources(str(tmp_path / "art.lines"), output_dir=str(tmp_path / "sources"))
+
+        assert result == {"status": "ok", "count": 2, "outputs": [str(path) for path in outputs]}
+        extractor.assert_called_once_with(tmp_path / "art.lines", tmp_path / "sources")
+
+    def test_extract_sources_returns_error(self, tmp_path):
+        with patch("vexy_lines_cli.__main__.extract_source_images", side_effect=ValueError("no source")):
+            cli = VexyLinesCLI()
+            result = cli.extract_sources(str(tmp_path / "art.lines"))
+
+        assert result == {"error": "no source"}
+
+
+class TestCliInterpolation:
+    def test_interpolate_lines_calls_api_with_default_output(self, tmp_path):
+        expected = tmp_path / "start-interp-0.25.lines"
+        with patch("vexy_lines_cli.__main__.interpolate_lines", return_value=expected) as interpolate:
+            cli = VexyLinesCLI()
+            result = cli.interpolate(str(tmp_path / "start.lines"), str(tmp_path / "end.lines"), t=0.25)
+
+        assert result == {"status": "ok", "output": str(expected), "t": 0.25}
+        interpolate.assert_called_once_with(tmp_path / "start.lines", tmp_path / "end.lines", expected, t=0.25)
+
+    def test_interpolate_video_passes_frames_and_fps(self, tmp_path):
+        fake_result = MagicMock(output_path=tmp_path / "out.mp4", frame_paths=[tmp_path / "f1.png"], lines_paths=[])
+        with patch("vexy_lines_cli.__main__.render_interpolation_video", return_value=fake_result) as render:
+            cli = VexyLinesCLI()
+            result = cli.interpolate_video(
+                str(tmp_path / "start.lines"),
+                str(tmp_path / "end.lines"),
+                output=str(tmp_path / "out.mp4"),
+                frames=12,
+                fps=30.0,
+            )
+
+        assert result == {
+            "status": "ok",
+            "output": str(tmp_path / "out.mp4"),
+            "frames": 12,
+            "retained_frames": 1,
+            "retained_lines": 0,
+            "fps": 30.0,
+        }
+        render.assert_called_once_with(
+            tmp_path / "start.lines",
+            tmp_path / "end.lines",
+            tmp_path / "out.mp4",
+            frames=12,
+            fps=30.0,
+            work_dir=None,
+            keep_work=False,
+            render_timeout=300.0,
+        )
+
+    def test_interpolate_video_returns_error_on_render_timeout(self, tmp_path):
+        with patch("vexy_lines_cli.__main__.render_interpolation_video", side_effect=TimeoutError("render slow")):
+            cli = VexyLinesCLI()
+            result = cli.interpolate_video(
+                str(tmp_path / "start.lines"),
+                str(tmp_path / "end.lines"),
+                output=str(tmp_path / "out.mp4"),
+            )
+
+        assert result == {"error": "render slow"}
+
+    def test_record_interpolation_screen_passes_zoom_and_video_options(self, tmp_path):
+        fake_result = MagicMock(
+            output_path=tmp_path / "screens",
+            frame_paths=[tmp_path / "screen-001.png", tmp_path / "screen-002.png"],
+            lines_paths=[],
+            video_path=tmp_path / "screen.mp4",
+        )
+        with patch("vexy_lines_cli.__main__.record_interpolation_screen", return_value=fake_result) as record:
+            cli = VexyLinesCLI()
+            result = cli.record_interpolation_screen(
+                str(tmp_path / "start.lines"),
+                str(tmp_path / "end.lines"),
+                output=str(tmp_path / "screens"),
+                frames=2,
+                fps=10.0,
+                zoom_steps=-1,
+                video=str(tmp_path / "screen.mp4"),
+            )
+
+        assert result == {
+            "status": "ok",
+            "output": str(tmp_path / "screens"),
+            "video": str(tmp_path / "screen.mp4"),
+            "frames": 2,
+            "retained_frames": 2,
+            "retained_lines": 0,
+            "fps": 10.0,
+        }
+        record.assert_called_once_with(
+            tmp_path / "start.lines",
+            tmp_path / "end.lines",
+            tmp_path / "screens",
+            frames=2,
+            fps=10.0,
+            zoom_steps=-1,
+            video_path=tmp_path / "screen.mp4",
+            work_dir=None,
+            keep_work=False,
+            render_timeout=300.0,
+        )
+
+    def test_record_interpolation_screen_returns_error_on_render_timeout(self, tmp_path):
+        with patch("vexy_lines_cli.__main__.record_interpolation_screen", side_effect=TimeoutError("render slow")):
+            cli = VexyLinesCLI()
+            result = cli.record_interpolation_screen(
+                str(tmp_path / "start.lines"),
+                str(tmp_path / "end.lines"),
+                output=str(tmp_path / "screens"),
+            )
+
+        assert result == {"error": "render slow"}
+
 
 # ---------------------------------------------------------------------------
 # VexyLinesCLI.export argument validation tests

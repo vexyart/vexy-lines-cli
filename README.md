@@ -42,6 +42,7 @@ vexy-lines-cli mcp-status
 | `info <file>` | Show caption, DPI, dimensions, layer/fill/filter counts |
 | `file-tree <file>` | Print the layer/group/fill hierarchy, including image filters |
 | `extract-source <file>` | Save the embedded source image to disk |
+| `extract-sources <file>` | Save the document source plus all group source images |
 | `extract-preview <file>` | Save the embedded preview image to disk |
 | `batch-convert` | Extract preview or source images from a directory of `.lines` files |
 
@@ -49,6 +50,7 @@ All parser commands accept `--json-output` for machine-readable output.
 
 ```bash
 vexy-lines-cli info artwork.lines --json-output
+vexy-lines-cli extract-sources artwork.lines --output-dir ./sources/
 vexy-lines-cli batch-convert --input-dir ./art/ --output-dir ./thumbs/ --what preview --format jpg
 ```
 
@@ -88,6 +90,24 @@ vexy-lines-cli style-transfer --style look.lines --input-dir ./frames/ --cleanup
 ```
 
 All style commands create a **job folder** (`{output}-vljob/`) that stores intermediate `.lines`, `.svg`, and raster files. If the process is interrupted, re-running the same command skips already-completed items. Use `--force` to start fresh or `--cleanup` to remove the job folder after completion.
+
+### Interpolation
+
+```bash
+# One explicit intermediate .lines file, no app required
+vexy-lines-cli interpolate start.lines end.lines --t 0.5 --output mid.lines
+
+# Render the full interpolation timeline through the app
+vexy-lines-cli interpolate-video start.lines end.lines \
+    --output blend.mp4 --frames 120 --fps 30
+
+# Capture the Vexy Lines GUI while stepping through the interpolation
+vexy-lines-cli record-interpolation-screen start.lines end.lines \
+    --output ./screen-frames --frames 120 --fps 30 --zoom-steps 2 \
+    --video screen-recording.mp4
+```
+
+`interpolate` writes a real `.lines` document between two files with the same group/layer/fill structure, blending matching numeric XML attributes and native `.lines` colours while preserving IDs, captions, flags, and enum-like modes. `interpolate-video` renders generated intermediate `.lines` documents via MCP, rasterizes app-exported SVG frames locally, and assembles MP4. `record-interpolation-screen` opens the start document in the GUI, applies optional macOS zoom keystrokes, captures the Vexy Lines window once per interpolation frame, and can assemble those screenshots into a video. The JSON result reports requested `frames` separately from retained temporary artifacts; use `--keep-work` or `--work-dir` when you need intermediate paths.
 
 ### MCP — app must be running
 
