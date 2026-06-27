@@ -51,7 +51,11 @@ Apply a style to video frames. Requires `vexy-lines-run`.
 
 #### `export(input, output=None, format="pdf", ...) -> dict`
 
-Export `.lines` files to PDF/SVG via the plist injection pipeline.
+Export `.lines` files to PDF/SVG/PNG via the plist injection pipeline.
+
+#### `export_bundle(input, output=None, formats="pdf,svg,png", ...) -> dict`
+
+Export `.lines` files to multiple formats through MCP and optionally extract embedded source images.
 
 ### MCP methods
 
@@ -100,7 +104,7 @@ config = ExportConfig(format="pdf", timeout_multiplier=1.5, max_retries=3)
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `app_name` | `str` | `"Vexy Lines"` | Application name |
-| `format` | `str` | `"pdf"` | `"pdf"` or `"svg"` |
+| `format` | `str` | `"pdf"` | `"pdf"`, `"svg"`, or `"png"` |
 | `poll_interval` | `float` | `0.2` | Seconds between polls |
 | `wait_for_app` | `float` | `20.0` | App launch timeout |
 | `wait_for_file` | `float` | `20.0` | File window timeout |

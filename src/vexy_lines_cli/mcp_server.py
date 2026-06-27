@@ -9,7 +9,7 @@ embedded source image extraction).
 Usage::
 
     vexy-lines-mcp          # as installed script
-    vexy-lines mcp-serve    # as CLI subcommand
+    vexy-lines-cli mcp-serve    # as CLI subcommand
 """
 
 from __future__ import annotations
@@ -177,8 +177,8 @@ def serve(
                 raise
 
         # Main message loop
-        for line in stdin:
-            line = line.strip()
+        for raw_line in stdin:
+            line = raw_line.strip()
             if not line:
                 continue
 
@@ -217,7 +217,7 @@ def serve(
                     break
                 try:
                     chunk = sock.recv(4096)
-                except socket.timeout:
+                except TimeoutError:
                     logger.error("Timeout waiting for TCP response")
                     break
                 if not chunk:

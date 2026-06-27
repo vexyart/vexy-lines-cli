@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import json as _json
-from collections.abc import Callable
 from dataclasses import asdict
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -37,6 +36,8 @@ from vexy_lines_cli.export.exporter import VexyLinesExporter
 from vexy_lines_cli.utils.system import speak
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from vexy_lines_api import LayerNode
 
 
@@ -118,10 +119,7 @@ def _count_image_filters(nodes: list[GroupInfo | LayerInfo]) -> int:
 
 def _parse_json_list_arg(value: str | list[dict[str, object]], name: str) -> list[dict[str, object]]:
     """Parse a CLI JSON-list argument into a list of dicts."""
-    if isinstance(value, list):
-        parsed = value
-    else:
-        parsed = _json.loads(value)
+    parsed = value if isinstance(value, list) else _json.loads(value)
     if not isinstance(parsed, list) or any(not isinstance(item, dict) for item in parsed):
         msg = f"{name} must be a JSON array of objects"
         raise ValueError(msg)
@@ -236,8 +234,9 @@ class VexyLinesCLI:
         doc, error = _parse_lines_document(input)
         if error is not None:
             return {"error": error}
+        if doc is None:
+            return {"error": "failed to parse document"}
 
-        assert doc is not None
         result = _build_info_result(doc)
 
         if json_output:
@@ -261,8 +260,9 @@ class VexyLinesCLI:
         doc, error = _parse_lines_document(input)
         if error is not None:
             return _json.dumps({"error": error}) if json_output else error
-
-        assert doc is not None
+        if doc is None:
+            error = "failed to parse document"
+            return _json.dumps({"error": error}) if json_output else error
 
         if json_output:
             tree_data = [asdict(group) for group in doc.groups]
@@ -476,9 +476,9 @@ class VexyLinesCLI:
 
         Examples::
 
-            vexy-lines style-transfer --style art.lines --input-dir ./photos/
-            vexy-lines style-transfer --style a.lines --end-style b.lines --images 1.jpg 2.jpg
-            vexy-lines style-transfer --style art.lines --relative-style --input-dir ./photos/
+            vexy-lines-cli style-transfer --style art.lines --input-dir ./photos/
+            vexy-lines-cli style-transfer --style a.lines --end-style b.lines --images 1.jpg 2.jpg
+            vexy-lines-cli style-transfer --style art.lines --relative-style --input-dir ./photos/
 
         Args:
             style: Path to the source style .lines file.
@@ -533,9 +533,8 @@ class VexyLinesCLI:
         valid_formats_lines = {"SVG", "PNG", "JPG", "LINES"}
         valid_formats_images = {"SVG", "PNG", "JPG", "LINES"}
         valid = valid_formats_lines if mode == "lines" else valid_formats_images
-        if export_format not in valid:
+        if export_format is None or export_format not in valid:
             return {"error": f"Unsupported format: {format}. Use one of: {', '.join(sorted(valid))}"}
-        assert export_format is not None
 
         request = ExportRequest(
             mode=mode,
@@ -652,9 +651,8 @@ class VexyLinesCLI:
         _ = (dpi, host, port)
 
         output_format = self._normalize_export_format(Path(output).suffix.lstrip(".") or "mp4")
-        if output_format not in ("MP4", "PNG", "JPG"):
+        if output_format is None or output_format not in ("MP4", "PNG", "JPG"):
             return {"error": f"unsupported output format for style_video: {Path(output).suffix or output}"}
-        assert output_format is not None
 
         if end_frame is not None and end_frame < start_frame:
             return {"error": "end_frame must be greater than or equal to start_frame"}
@@ -807,9 +805,9 @@ class VexyLinesCLI:
 
         Examples::
 
-            vexy-lines export artwork.lines
-            vexy-lines export ./my-art/ --format svg --output ./exports/
-            vexy-lines export artwork.lines --dry-run
+            vexy-lines-cli export artwork.lines
+            vexy-lines-cli export ./my-art/ --format svg --output ./exports/
+            vexy-lines-cli export artwork.lines --dry-run
 
         Args:
             input: A single ``.lines`` file or directory to search recursively.
@@ -821,8 +819,8 @@ class VexyLinesCLI:
             force: Re-export files even if the output already exists.
             say_summary: Announce the result via macOS text-to-speech.
             timeout_multiplier: Scale all internal timeouts (e.g. 2.0 = double).
-                Range: 0.1–10.
-            max_retries: Retry attempts per file on transient failures. Range: 0–10.
+                Range: 0.1-10.
+            max_retries: Retry attempts per file on transient failures. Range: 0-10.
 
         Returns:
             Dict with keys: processed, success, skipped, failed, failures,
@@ -897,11 +895,7 @@ class VexyLinesCLI:
             logger.enable("vexy_lines_cli")
 
         input_path = Path(input)
-        files = (
-            sorted(input_path.rglob("*.lines"))
-            if input_path.is_dir()
-            else [input_path]
-        )
+        files = sorted(input_path.rglob("*.lines")) if input_path.is_dir() else [input_path]
         if not files:
             return {"error": f"no .lines files found at {input}"}
 

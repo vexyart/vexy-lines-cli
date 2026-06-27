@@ -73,7 +73,7 @@ Options:
 
 ### `export`
 
-Export `.lines` files to PDF or SVG without save dialogs. Works on a single file or a directory (recursive).
+Export `.lines` files to PDF, SVG, or PNG without save dialogs. Works on a single file or a directory (recursive).
 
 ```bash
 vexy-lines-cli export artwork.lines
@@ -88,13 +88,34 @@ Options:
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `--format` | `pdf` | `pdf` or `svg` |
+| `--format` | `pdf` | `pdf`, `svg`, or `png` |
 | `--output` | same folder | Destination file or directory |
 | `--dry-run` | `False` | List files without exporting |
 | `--force` | `False` | Re-export even if output exists |
 | `--timeout-multiplier` | `1.0` | Scale all timeouts (range 0.1--10) |
 | `--max-retries` | `3` | Retry attempts per file (range 0--10) |
 | `--say-summary` | `False` | Announce result via macOS text-to-speech |
+| `--verbose` | `False` | Enable debug logging |
+
+### `export-bundle`
+
+Export one file or a recursive directory to multiple formats and optionally extract each embedded source image.
+
+```bash
+vexy-lines-cli export-bundle artwork.lines
+vexy-lines-cli export-bundle ./my-art/ --output ./exports/
+vexy-lines-cli export-bundle artwork.lines --formats pdf,svg --source=False
+```
+
+Options:
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--formats` | `pdf,svg,png` | Comma-separated export formats |
+| `--source` | `True` | Also extract `<stem>-src.jpg` |
+| `--dpi` | current document DPI | Override export DPI |
+| `--render-timeout` | `600.0` | Maximum render wait per document |
+| `--output` | source folder | Destination directory |
 | `--verbose` | `False` | Enable debug logging |
 
 ## Style commands (app must be running)

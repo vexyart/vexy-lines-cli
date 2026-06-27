@@ -1,6 +1,6 @@
 # Export Pipeline
 
-The `vexy-lines-cli export` command exports `.lines` files to PDF or SVG without interacting with save dialogs. This page explains how it works under the hood.
+The `vexy-lines-cli export` command exports `.lines` files to PDF, SVG, or PNG without interacting with save dialogs. This page explains how it works under the hood.
 
 ## The problem
 
@@ -37,7 +37,7 @@ For each `.lines` file:
 
 1. Open the file via AppleScript (`open` command)
 2. Wait for the file window to appear (polls window title)
-3. Trigger File > Export via the menu item name (`"Export PDF File"` or `"Export SVG File"`)
+3. Trigger File > Export via the menu item name (`"Export PDF File"`, `"Export SVG File"`, or `"Export PNG File"`)
 4. Wait for the export to complete
 5. Optionally validate the output file exists and has non-zero size
 

@@ -1,5 +1,5 @@
 # this_file: vexy-lines-cli/src/vexy_lines_cli/export/__init__.py
-"""Export pipeline for batch .lines to PDF/SVG conversion."""
+"""Export pipeline for batch .lines to PDF/SVG/PNG conversion."""
 
 from __future__ import annotations
 

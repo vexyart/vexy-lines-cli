@@ -2,7 +2,7 @@
 
 Command-line interface and MCP passthrough server for [Vexy Lines](https://vexy.art) — the macOS vector art app.
 
-Parse `.lines` files, batch export to PDF/SVG, apply styles to images and video, and connect Claude Desktop or Cursor directly to the Vexy Lines MCP API.
+Parse `.lines` files, batch export to PDF/SVG/PNG, apply styles to images and video, and connect Claude Desktop or Cursor directly to the Vexy Lines MCP API.
 
 ## Install
 
@@ -64,7 +64,19 @@ vexy-lines-cli export artwork.lines --format pdf --dry-run   # preview without e
 vexy-lines-cli export ./art/ --force --timeout-multiplier 2
 ```
 
-Options: `--format` (`pdf`/`svg`), `--force`, `--dry-run`, `--timeout-multiplier` (0.1–10.0), `--max-retries` (0–10), `--say-summary`.
+Options: `--format` (`pdf`/`svg`/`png`), `--force`, `--dry-run`, `--timeout-multiplier` (0.1–10.0), `--max-retries` (0–10), `--say-summary`.
+
+### Export bundle - auto-launches app
+
+Export one file or a directory to several formats in one pass and optionally extract the embedded source image.
+
+```bash
+vexy-lines-cli export-bundle artwork.lines
+vexy-lines-cli export-bundle ./art/ --output ./bundle-out/
+vexy-lines-cli export-bundle artwork.lines --formats pdf,svg --source=False
+```
+
+Options: `--formats` (`pdf,svg,png` by default), `--source`, `--dpi`, `--render-timeout`.
 
 ### Style — app must be running
 

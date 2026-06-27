@@ -5,18 +5,19 @@ Three capability groups, all under the ``vexy-lines-cli`` command:
 
 **Parser** (no app required)
   ``info``, ``file-tree``, ``extract-source``, ``extract-preview``,
-  ``batch-convert`` — read ``.lines`` files on any platform.
+  ``batch-convert`` - read ``.lines`` files on any platform.
 
 **Export** (auto-launches the macOS app)
-  ``export`` — inject prefs, trigger ``File > Export``, collect PDF/SVG.
+  ``export`` - inject prefs, trigger ``File > Export``, collect PDF/SVG/PNG.
+  ``export-bundle`` - export multiple formats and optional source images.
   Uses dialog-less plist injection; no GUI interaction needed.
 
 **Style & MCP** (app must be running)
-  ``style-transfer``, ``style-video`` — apply a ``.lines`` style to
+  ``style-transfer``, ``style-video`` - apply a ``.lines`` style to
   images or video via the MCP API.
   ``mcp-status``, ``tree``, ``new-document``, ``open``, ``add-fill``,
   ``get-image-filters``, ``set-image-filters``, ``add-image-filter``,
-  ``remove-image-filter``, ``render`` — direct JSON-RPC calls to the
+  ``remove-image-filter``, ``render`` - direct JSON-RPC calls to the
   embedded server.
 
 All parser commands accept ``--json-output`` for machine-readable output.
