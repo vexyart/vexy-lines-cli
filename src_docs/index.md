@@ -59,6 +59,7 @@ Run `vexy-lines-cli --help` to see all available subcommands.
 
 - [Installation](installation.md) -- install options and extras
 - [CLI Reference](cli-reference.md) -- every subcommand with examples
+- [MCP Bridge](mcp-bridge.md) -- connect Claude Desktop / Cursor to the app
 - [Export Pipeline](export-pipeline.md) -- how dialog-less export works
 - [API Reference](api-reference.md) -- Python API for programmatic use
 - [Examples](examples.md) -- real-world workflows

@@ -34,6 +34,7 @@ nav:
   - Overview: index.md
   - Installation: installation.md
   - CLI Reference: cli-reference.md
+  - MCP Bridge: mcp-bridge.md
   - Export Pipeline: export-pipeline.md
   - API Reference: api-reference.md
   - Examples: examples.md

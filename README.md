@@ -201,6 +201,11 @@ vexy-lines-cli mcp-serve --host 127.0.0.1 --port 47384
 
 [Read the docs](https://vexyart.github.io/vexy-lines/vexy-lines-cli/) for the complete CLI reference, export pipeline internals, and more examples.
 
+- [CLI Reference](https://vexyart.github.io/vexy-lines/vexy-lines-cli/cli-reference/) — every subcommand
+- [MCP Bridge](https://vexyart.github.io/vexy-lines/vexy-lines-cli/mcp-bridge/) — Claude Desktop / Cursor setup
+- [Export Pipeline](https://vexyart.github.io/vexy-lines/vexy-lines-cli/export-pipeline/) — dialog-less export internals
+- [CHANGELOG](CHANGELOG.md) — release history
+
 ## License
 
 MIT

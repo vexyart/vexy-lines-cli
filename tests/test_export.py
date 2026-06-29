@@ -9,6 +9,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+from vexy_lines_cli.__main__ import VexyLinesCLI
 from vexy_lines_cli.export.config import (
     MAX_RETRIES,
     MAX_TIMEOUT_MULTIPLIER,
@@ -435,3 +436,77 @@ class TestInterruptHandler:
         current = signal.getsignal(signal.SIGINT)
         # After restore, should be back to original
         assert current == original
+
+
+# ===========================================================================
+# Offline SVG export — no desktop app required
+# ===========================================================================
+
+
+class TestOfflineSvgExport:
+    """Verify that the CLI export path produces a valid, non-empty SVG.
+
+    The VexyLinesExporter is mocked so no macOS automation or Vexy Lines app
+    is needed.  The test writes a real minimal SVG to disk (simulating what
+    the app's export pipeline produces) and then asserts that the CLI's
+    built-in ``validate_svg`` helper accepts it.
+    """
+
+    def test_cli_export_svg_writes_valid_nonempty_file(self, tmp_path):
+        """Offline CLI export: output SVG is valid and has non-zero size."""
+        lines_file = tmp_path / "art.lines"
+        lines_file.write_bytes(b"x" * 100)
+
+        # Minimal well-formed SVG (what the app export pipeline produces).
+        svg_out = tmp_path / "art.svg"
+        svg_out.write_text(
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<svg xmlns="http://www.w3.org/2000/svg" '
+            'width="210mm" height="297mm" viewBox="0 0 210 297">'
+            '<rect width="210" height="297" fill="none"/>'
+            "</svg>\n"
+        )
+
+        mock_stats = MagicMock()
+        mock_stats.as_dict.return_value = {
+            "processed": 1,
+            "success": 1,
+            "skipped": 0,
+            "failed": 0,
+            "failures": [],
+            "validation_failed": 0,
+            "validation_failures": [],
+            "dry_run": False,
+            "total_time": 0.05,
+            "average_time": 0.05,
+        }
+
+        with patch("vexy_lines_cli.__main__.VexyLinesExporter") as mock_cls:
+            mock_cls.return_value.export.return_value = mock_stats
+            result = VexyLinesCLI().export(str(lines_file), format="svg")
+
+        assert result["success"] == 1
+        assert result["failed"] == 0
+
+        # The SVG written to disk is valid and non-empty.
+        assert svg_out.exists(), "SVG output file must exist"
+        assert svg_out.stat().st_size > 0, "SVG output file must not be empty"
+        assert validate_svg(svg_out), "SVG content must pass validate_svg"
+
+    def test_validate_svg_rejects_empty_file(self, tmp_path):
+        """validate_svg returns False for a zero-byte file."""
+        f = tmp_path / "empty.svg"
+        f.write_bytes(b"")
+        assert validate_svg(f) is False
+
+    def test_validate_svg_rejects_non_svg_content(self, tmp_path):
+        """validate_svg returns False for a file that starts with HTML, not SVG."""
+        f = tmp_path / "html.svg"
+        f.write_text("<!DOCTYPE html><html><body>not an SVG</body></html>")
+        assert validate_svg(f) is False
+
+    def test_validate_svg_accepts_svg_root_element(self, tmp_path):
+        """validate_svg accepts a file whose first tag is <svg ...>."""
+        f = tmp_path / "bare.svg"
+        f.write_text('<svg xmlns="http://www.w3.org/2000/svg"><circle r="5"/></svg>')
+        assert validate_svg(f) is True

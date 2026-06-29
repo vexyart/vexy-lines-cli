@@ -8,4 +8,6 @@
 
 ## Previous releases
 
-See [GitHub releases](https://github.com/vexyart/vexy-lines-cli/releases) for earlier versions.
+See the root [CHANGELOG.md](https://github.com/vexyart/vexy-lines/blob/main/vexy-lines-cli/CHANGELOG.md)
+for complete release history, or the
+[GitHub releases](https://github.com/vexyart/vexy-lines-cli/releases) page for download links.
