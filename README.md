@@ -1,6 +1,6 @@
 # vexy-lines-cli
 
-Command-line interface and MCP passthrough server for [Vexy Lines](https://vexy.art) — the macOS vector art app.
+Command-line interface and MCP passthrough server for [Vexy Lines](https://vexy.art), the macOS vector art app.
 
 Parse `.lines` files, batch export to PDF/SVG/PNG, apply styles to images and video, and connect Claude Desktop or Cursor directly to the Vexy Lines MCP API.
 
@@ -56,7 +56,7 @@ vexy-lines-cli batch-convert --input-dir ./art/ --output-dir ./thumbs/ --what pr
 
 ### Export — auto-launches app
 
-Uses dialog-less export: injects settings into macOS preferences, triggers `File > Export`, then restores original prefs. Input can be a single file or a directory.
+The command injects export settings into macOS preferences, triggers `File > Export`, then restores the original preferences. No save dialog appears. Input can be a single file or a directory.
 
 ```bash
 vexy-lines-cli export ./art/ --format svg --output ./svg-out/
@@ -158,7 +158,7 @@ All MCP commands accept `--host` and `--port` (defaults: `127.0.0.1:47384`).
 
 ### AI rename — auto-launches app + needs a vision model
 
-Rename a `.lines` file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) with a vision-language model. Each fill is rendered in isolation, boxed over a faint copy of the full artwork, and given a short descriptive caption; layers are named from their fills. Only captions change — every fill parameter and embedded image is preserved.
+Rename a `.lines` file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) with a vision-language model. Each fill is rendered in isolation, boxed over a faint copy of the full artwork, and given a short descriptive caption; layers are named from their fills. Only captions change: every fill parameter and embedded image is preserved.
 
 ```bash
 pip install "vexy-lines-cli[ai]"          # openai + pathvalidate + python-slugify
@@ -170,7 +170,7 @@ vexy-lines-cli ai-rename road-12.lines \
     --llm-api-url http://127.0.0.1:1234/v1 --llm-model-vision my-vision-model
 ```
 
-The endpoint is an OpenAI-compatible `/v1` server, configured from the environment — `VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION` (vision), `VEXY_LINES_VLM_MODEL` (text) — and overridable with `--llm-api-url`, `--llm-api-key`, `--llm-model-vision`, `--llm-model`. See the [full AI rename guide](https://vexy.dev/vexy-lines-apy/ai-rename/).
+The endpoint is an OpenAI-compatible `/v1` server, configured from the environment (`VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION` for vision, `VEXY_LINES_VLM_MODEL` for text) and overridable with `--llm-api-url`, `--llm-api-key`, `--llm-model-vision`, `--llm-model`. See the [full AI rename guide](https://vexy.dev/vexy-lines-apy/ai-rename/).
 
 ## MCP server setup
 
@@ -201,10 +201,10 @@ vexy-lines-cli mcp-serve --host 127.0.0.1 --port 47384
 
 [Read the docs](https://vexyart.github.io/vexy-lines/vexy-lines-cli/) for the complete CLI reference, export pipeline internals, and more examples.
 
-- [CLI Reference](https://vexyart.github.io/vexy-lines/vexy-lines-cli/cli-reference/) — every subcommand
-- [MCP Bridge](https://vexyart.github.io/vexy-lines/vexy-lines-cli/mcp-bridge/) — Claude Desktop / Cursor setup
-- [Export Pipeline](https://vexyart.github.io/vexy-lines/vexy-lines-cli/export-pipeline/) — dialog-less export internals
-- [CHANGELOG](CHANGELOG.md) — release history
+- [CLI Reference](https://vexyart.github.io/vexy-lines/vexy-lines-cli/cli-reference/): every subcommand
+- [MCP Bridge](https://vexyart.github.io/vexy-lines/vexy-lines-cli/mcp-bridge/): Claude Desktop and Cursor setup
+- [Export Pipeline](https://vexyart.github.io/vexy-lines/vexy-lines-cli/export-pipeline/): dialog-less export internals
+- [CHANGELOG](CHANGELOG.md): release history
 
 ## License
 

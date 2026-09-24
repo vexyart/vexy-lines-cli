@@ -28,7 +28,7 @@ Claude Desktop  ──stdio──►  vexy-lines-mcp  ──TCP──►  Vexy L
    `Vexy Lines.app` and waits up to 30 seconds for the TCP server to become
    available. Pass `--no-launch` to disable this behaviour.
 5. The bridge injects one **local tool** on top of the app's own tool list:
-   `export_bundle` — multi-format export plus embedded source image extraction,
+   `export_bundle`: multi-format export plus embedded source image extraction,
    handled entirely by the bridge without round-tripping to the app.
 
 ## Claude Desktop setup

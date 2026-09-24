@@ -1,14 +1,14 @@
 # Export Pipeline
 
-The `vexy-lines-cli export` command exports `.lines` files to PDF, SVG, or PNG without interacting with save dialogs. This page explains how it works under the hood.
+The `vexy-lines-cli export` command exports `.lines` files to PDF, SVG, or PNG without interacting with save dialogs. This page explains how the command works.
 
 ## The problem
 
-Vexy Lines has no headless export mode. Exporting normally requires: open file, click File > Export, choose format, pick destination, click Save. That's fine for one file. For a hundred, you need automation.
+Vexy Lines has no headless export mode. Exporting normally means opening the file, choosing File > Export, picking a format and destination, and clicking Save. That's fine for one file. For a hundred, you need automation.
 
 ## The solution: plist injection
 
-Instead of automating dialog clicks (fragile, slow), the CLI injects export settings directly into the macOS preferences domain (`com.fontlab.vexy-lines`) using `defaults write`, then triggers the menu item via AppleScript.
+Instead of automating dialog clicks (fragile and slow), the CLI injects export settings directly into the macOS preferences domain (`com.fontlab.vexy-lines`) using `defaults write`, then triggers the menu item via AppleScript.
 
 ## Five-stage pipeline
 
@@ -120,7 +120,7 @@ Video exports first extract all requested raw frames into the job folder, then s
 
 ### Resume
 
-Re-running the same command skips items whose final output already exists in the job folder. This makes long video jobs crash-safe — a 4-hour render that fails at frame 147/192 resumes from frame 148.
+Re-running the same command skips items whose final output already exists in the job folder. Long video jobs therefore survive interruptions: a 4-hour render that fails at frame 147/192 resumes from frame 148.
 
 ### Flags
 

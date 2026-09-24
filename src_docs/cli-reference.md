@@ -4,7 +4,7 @@ All commands use `vexy-lines-cli <subcommand>`. Add `--help` to any subcommand f
 
 ## Parser commands (no app required)
 
-These work offline -- they parse `.lines` XML directly.
+These work offline: they parse the `.lines` XML directly.
 
 ### `info`
 
@@ -82,7 +82,7 @@ vexy-lines-cli export artwork.lines --dry-run
 vexy-lines-cli export ./art/ --force --timeout-multiplier 2
 ```
 
-The pipeline: quits the app, injects export preferences into macOS defaults, relaunches, opens each file, triggers File > Export, restores original preferences.
+The pipeline quits the app, injects export preferences into macOS defaults, relaunches, opens each file, triggers File > Export, then restores the original preferences.
 
 Options:
 
@@ -180,7 +180,7 @@ Options:
 
 ### `ai-rename`
 
-Rename a `.lines` file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) using a vision-language model (VLM). Each fill is rendered in isolation, shown to the model inside a red box over a faint copy of the full artwork, and given a short descriptive caption (e.g. `car-on-road`, `top-sky-bridge`); each layer is then named from the fills it contains. Only the `caption` attributes change -- every fill parameter, mask, mesh, and embedded image is preserved.
+Rename a `.lines` file's [layers and fills](https://help.vexy.art/lines/articles/layers-panel/) using a vision-language model (VLM). Each fill is rendered in isolation, shown to the model inside a red box over a faint copy of the full artwork, and given a short descriptive caption (e.g. `car-on-road`, `top-sky-bridge`); each layer is then named from the fills it contains. Only the `caption` attributes change: every fill parameter, mask, mesh, and embedded image is preserved.
 
 ```bash
 vexy-lines-cli ai-rename road-12.lines
@@ -191,7 +191,7 @@ vexy-lines-cli ai-rename road-12.lines \
     --llm-api-url http://127.0.0.1:1234/v1 --llm-model-vision my-vision-model
 ```
 
-`INPUT` is required; `OUTPUT` defaults to `<stem>-renamed.lines`. The command needs both the Vexy Lines app (auto-launched) and an OpenAI-compatible `/v1` endpoint. The endpoint is configured from the environment -- `VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION` (vision), and `VEXY_LINES_VLM_MODEL` (text) -- and the `--llm-*` flags below override whatever the environment resolves.
+`INPUT` is required; `OUTPUT` defaults to `<stem>-renamed.lines`. The command needs both the Vexy Lines app (auto-launched) and an OpenAI-compatible `/v1` endpoint. The endpoint is configured from the environment (`VEXY_LINES_LLM_API_URL`, `VEXY_LINES_LLM_API_KEY`, `VEXY_LINES_LLM_MODEL_VISION` for vision, and `VEXY_LINES_VLM_MODEL` for text), and the `--llm-*` flags below override whatever the environment resolves.
 
 Options:
 

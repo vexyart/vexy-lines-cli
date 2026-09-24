@@ -5,6 +5,12 @@ All notable changes to `vexy-lines-cli` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions are managed by [hatch-vcs](https://github.com/ofek/hatch-vcs) from git tags.
 
+## [Unreleased]
+
+### Changed
+- Line-edited `README.md` and `src_docs/` in the house style (dash repairs,
+  active voice). No command, flag, or code changes. Rebuilt tracked `docs/`.
+
 ## [1.0.35] — 2026-06-28
 
 ### Added
