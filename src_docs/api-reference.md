@@ -1,3 +1,8 @@
+---
+this_file: src_docs/api-reference.md
+tags: [API]
+---
+
 # API Reference
 
 The CLI is built on Python Fire, so every public method on `VexyLinesCLI` is also callable from Python.

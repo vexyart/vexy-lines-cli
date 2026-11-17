@@ -1,9 +1,12 @@
+# this_file: mkdocs.yml
 site_name: "vexy-lines-cli"
 site_description: "CLI tool and MCP passthrough server for Vexy Lines"
 theme:
   custom_dir: overrides
   name: materialx
   features:
+    - navigation.path
+    - toc.follow
     - content.code.copy
     - navigation.sections
   palette:
@@ -30,12 +33,12 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
-nav:
-  - Overview: index.md
-  - Installation: installation.md
-  - CLI Reference: cli-reference.md
-  - MCP Bridge: mcp-bridge.md
-  - Export Pipeline: export-pipeline.md
-  - API Reference: api-reference.md
-  - Examples: examples.md
-  - Changelog: changelog.md
+
+plugins:
+  - materialx/search
+  - materialx/meta
+  - materialx/tags
+  - awesome-nav
+  - print-site:
+      add_to_navigation: true
+      print_page_title: Print this guide
