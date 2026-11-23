@@ -1,9 +1,10 @@
 # this_file: mkdocs.yml
 site_name: "vexy-lines-cli"
+site_url: https://vexy.dev/vexy-lines-cli/
 site_description: "CLI tool and MCP passthrough server for Vexy Lines"
 theme:
+  name: fly-january
   custom_dir: overrides
-  name: materialx
   features:
     - navigation.path
     - toc.follow
@@ -22,6 +23,11 @@ theme:
         name: Dark mode
 docs_dir: src_docs
 site_dir: docs
+extra:
+  fly:
+    chrome: vexy
+    chrome_options:
+      site-label: Vexy Lines CLI
 markdown_extensions:
   - pymdownx.highlight:
       auto_title: true
@@ -35,10 +41,12 @@ markdown_extensions:
       permalink: true
 
 plugins:
-  - materialx/search
-  - materialx/meta
-  - materialx/tags
+  - fly
+  - search
+  - meta
+  - tags:
+      filters:
+        exclude: [print_page.md]
   - awesome-nav
-  - print-site:
-      add_to_navigation: true
-      print_page_title: Print this guide
+hooks:
+  - print_guide.py

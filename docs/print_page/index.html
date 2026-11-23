@@ -1,0 +1,2929 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="CLI tool and MCP passthrough server for Vexy Lines">
+      
+      
+      
+        <link rel="canonical" href="https://vexy.dev/vexy-lines-cli/print_page/">
+      
+      
+        <link rel="prev" href="../topics/">
+      
+      
+      
+        
+      
+      
+      
+      
+        
+        
+        
+          <link rel="icon" href="../assets/images/favicon.png">
+        
+      
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-materialx-10.1.8">
+    
+    
+      
+        <title>Print this guide - vexy-lines-cli</title>
+      
+    
+    
+  
+  
+      <link rel="stylesheet" href="../assets/stylesheets/main.314bbef5.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a45159b5.min.css">
+      
+    
+  <link rel="stylesheet" data-fly-photoswipe href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css"
+      integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/fly/fly.css?v=24c03d88bb">
+
+  <link rel="stylesheet" href="../css/print-site.css">
+  <link rel="stylesheet" href="../css/print-site-materialx.css">
+  <style media="print">
+    vexy-menu, vexy-footer { display: none !important; }
+    .print-guide-toc { break-after: page; }
+  </style>
+
+    
+
+    
+
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script>try{if(sessionStorage.getItem("fly-l2")==="in"){document.documentElement.dataset.flyL2="in";sessionStorage.removeItem("fly-l2")}}catch(e){}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=arrow_back,arrow_forward,dark_mode,light_mode&display=block">
+  <script>try{document.fonts.load('20px "Material Symbols Outlined"',"arrow_backarrow_forwarddark_modelight_mode").then(function(f){if(f.length)document.documentElement.classList.add("fly-msym")})}catch(e){}</script>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/cmv5add.css" data-fly-font>
+  <link rel="stylesheet" href="https://use.typekit.net/cna4jfp.css" data-fly-font>
+  <link rel="stylesheet" href="https://use.typekit.net/wck5koo.css" data-fly-font>
+  <script src="https://i.vexy.art/menu/vexy.js" defer></script>
+
+  </head>
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" data-mx-topbar="glass" class="fly-margin-left fly-chrome-vexy">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="toc" type="checkbox" id="__toc" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <label class="md-overlay" for="__toc"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#index" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  <vexy-menu mode="dark" site-label="Vexy Lines CLI" site-url="https://vexy.dev/vexy-lines-cli/" mobile-menu="materialx" mobile-search="materialx"></vexy-menu>
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vexy-lines-cli" class="md-header__button md-logo" aria-label="vexy-lines-cli" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vexy-lines-cli
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Print this guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vexy-lines-cli" class="md-nav__button md-logo" aria-label="vexy-lines-cli" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    vexy-lines-cli
+  </label>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Overview">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Installation">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="CLI Reference">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp-bridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="MCP Bridge">
+    
+  
+    MCP Bridge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../export-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Export Pipeline">
+    
+  
+    Export Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="API Reference">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Examples">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Changelog">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Topics">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis" title="Print this guide">
+    
+  
+    Print this guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis" title="Print this guide">
+    
+  
+    Print this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Print this guide
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 CLI Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 MCP Bridge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Export Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 API Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8 Changelog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Print this guide
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2 Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3 CLI Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4 MCP Bridge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 Export Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 API Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8 Changelog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 Topics
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+  <h1>Print this guide</h1>
+  <nav class="print-guide-toc" aria-label="Table of contents">
+    <h2>Table of Contents</h2>
+    <ul>
+      
+        <li><a href="#index">1 Overview</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#index-what-you-can-do">What you can do</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#index-quick-start">Quick start</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#index-next-steps">Next steps</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#installation">2 Installation</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#installation-requirements">Requirements</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#installation-install-from-pypi">Install from PyPI</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#installation-additional-packages">Additional packages</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#installation-installed-commands">Installed commands</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#installation-runtime-dependencies">Runtime dependencies</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#installation-verify-the-install">Verify the install</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#installation-development-install">Development install</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#cli-reference">3 CLI Reference</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#cli-reference-parser-commands-no-app-required">Parser commands (no app required)</a>
+                    <ul>
+                
+                  <li><a href="#cli-reference-info">info</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-file-tree">file-tree</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-extract-source">extract-source</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-extract-preview">extract-preview</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-batch-convert">batch-convert</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-export-command-auto-launches-app">Export command (auto-launches app)</a>
+                    <ul>
+                
+                  <li><a href="#cli-reference-export">export</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-export-bundle">export-bundle</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-style-commands-app-must-be-running">Style commands (app must be running)</a>
+                    <ul>
+                
+                  <li><a href="#cli-reference-style-transfer">style-transfer</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-style-video">style-video</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-ai-rename-auto-launches-app-needs-a-vision-model">AI rename (auto-launches app + needs a vision model)</a>
+                    <ul>
+                
+                  <li><a href="#cli-reference-ai-rename">ai-rename</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-mcp-commands-app-must-be-running">MCP commands (app must be running)</a>
+                    <ul>
+                
+                  <li><a href="#cli-reference-mcp-status">mcp-status</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-tree">tree</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-new-document">new-document</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-open">open</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-add-fill">add-fill</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-render">render</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-bridge">Bridge</a>
+                    <ul>
+                
+                  <li><a href="#cli-reference-mcp-serve">mcp-serve</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#cli-reference-global-flags">Global flags</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#mcp-bridge">4 MCP Bridge</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#mcp-bridge-how-it-works">How it works</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#mcp-bridge-claude-desktop-setup">Claude Desktop setup</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#mcp-bridge-cursor-setup">Cursor setup</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#mcp-bridge-advanced-options">Advanced options</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#mcp-bridge-tools-exposed-to-the-ai">Tools exposed to the AI</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#mcp-bridge-troubleshooting">Troubleshooting</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#export-pipeline">5 Export Pipeline</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#export-pipeline-the-problem">The problem</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-the-solution-plist-injection">The solution: plist injection</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-five-stage-pipeline">Five-stage pipeline</a>
+                    <ul>
+                
+                  <li><a href="#export-pipeline-1-discovery">1. Discovery</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-2-plist-injection">2. Plist injection</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-3-app-activation">3. App activation</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-4-per-file-export-loop">4. Per-file export loop</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-5-cleanup">5. Cleanup</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-timeout-control">Timeout control</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-window-watcher">Window watcher</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-error-handling">Error handling</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-stats">Stats</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-macos-only">macOS only</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-style-export-pipeline-job-folders">Style export pipeline (job folders)</a>
+                    <ul>
+                
+                  <li><a href="#export-pipeline-job-folder">Job folder</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-resume">Resume</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-flags">Flags</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#export-pipeline-environment">Environment</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#api-reference">6 API Reference</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#api-reference-vexylinescli">VexyLinesCLI</a>
+                    <ul>
+                
+                  <li><a href="#api-reference-parser-methods">Parser methods</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-style-methods">Style methods</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-export-methods">Export methods</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-mcp-methods">MCP methods</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-bridge">Bridge</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-export-module">Export module</a>
+                    <ul>
+                
+                  <li><a href="#api-reference-exportconfig">ExportConfig</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-vexylinesexporter">VexyLinesExporter</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-exportstats">ExportStats</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-automation-module">Automation module</a>
+                    <ul>
+                
+                  <li><a href="#api-reference-applescriptbridge">AppleScriptBridge</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-windowwatcher">WindowWatcher</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-mcp-server">MCP server</a>
+                    <ul>
+                
+                  <li><a href="#api-reference-servehost-port-stdin-stdout-auto_launch-none">serve(host, port, stdin, stdout, auto_launch) -&gt; None</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-utility-functions">Utility functions</a>
+                    <ul>
+                
+                  <li><a href="#api-reference-speaktext-none">speak(text) -&gt; None</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-discover_lines_filespath-listpath">discover_lines_files(path) -&gt; list[Path]</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#api-reference-interrupthandler">InterruptHandler</a>
+                    
+                  </li>
+                
+              </ul>
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#examples">7 Examples</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#examples-inspect-a-lines-file">Inspect a .lines file</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-browse-the-layer-tree">Browse the layer tree</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-extract-embedded-images">Extract embedded images</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-batch-extract-previews">Batch extract previews</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-export-to-pdf">Export to PDF</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-style-transfer">Style transfer</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-style-video">Style video</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-ai-rename-layers-fills">AI rename layers &amp; fills</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-mcp-status-check">MCP status check</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-mcp-bridge-for-claude-desktop">MCP bridge for Claude Desktop</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#examples-python-scripting">Python scripting</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#changelog">8 Changelog</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#changelog-2026-04-01-job-folder-system-issue-617">2026-04-01 — Job Folder System (Issue #617)</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#changelog-previous-releases">Previous releases</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+        <li><a href="#topics">9 Topics</a>
+          
+            <ul>
+              
+                
+                
+                  <li><a href="#topics-tag:api">API</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#topics-tag:installation">Installation</a>
+                    
+                  </li>
+                
+              
+                
+                  <li><a href="#topics-tag:user-manual">User manual</a>
+                    
+                  </li>
+                
+              
+                
+              
+            </ul>
+          
+          
+        </li>
+      
+    </ul>
+  </nav>
+  <div id="print-site-page" class="print-site-enumerate-headings print-site-enumerate-figures"><section class="print-page" id="index" heading-number="1"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<p><a href="https://vexy.art/lines/">Vexy Lines for Mac &amp; Windows</a> | <a href="https://www.vexy.art/lines/#buy">Download</a> | <a href="https://www.vexy.art/lines/#buy">Buy</a> | <a href="https://vexy.dev/vexy-lines-run/">Batch GUI</a> | <strong>CLI/MCP</strong> | <a href="https://vexy.dev/vexy-lines-apy/">API</a> | <a href="https://vexy.dev/vexy-lines-py/">.lines format</a></p>
+<p><a href="https://www.vexy.art/lines/"><img alt="Vexy Lines" src="https://i.vexy.art/vl/websiteart/vexy-lines-hero-poster.png" /></a></p>
+<h1 id="index-vexy-lines-cli">vexy-lines-cli<a aria-label="Permanent link" class="headerlink" href="#index-vexy-lines-cli" title="Permanent link">&para;</a></h1>
+<p>Command-line interface and MCP bridge for <a href="https://vexy.art">Vexy Lines</a>.</p>
+<p>Parse <code>.lines</code> files, batch export to PDF/SVG/PNG, apply styles to images and video, and connect Claude Desktop or Cursor directly to the Vexy Lines MCP API, all from the terminal.</p>
+<ul>
+<li><a href="https://github.com/vexyart/vexy-lines-cli">On Github</a></li>
+<li><a href="https://pypi.org/project/vexy-lines-cli/">On PyPI</a></li>
+</ul>
+<h2 id="index-what-you-can-do">What you can do<a aria-label="Permanent link" class="headerlink" href="#index-what-you-can-do" title="Permanent link">&para;</a></h2>
+<p><strong>Without the app running:</strong></p>
+<ul>
+<li>Inspect <code>.lines</code> file metadata (caption, DPI, dimensions, layer counts)</li>
+<li>Print the full layer/group/fill hierarchy</li>
+<li>Extract embedded source and preview images</li>
+<li>Batch extract from entire directories</li>
+</ul>
+<p><strong>With the app running:</strong></p>
+<ul>
+<li>Apply <code>.lines</code> styles to images via MCP</li>
+<li>Interpolate between two styles across an image sequence</li>
+<li>Process video frame-by-frame with style transfer</li>
+<li>Export <code>.lines</code> files to PDF/SVG/PNG without dialog interaction</li>
+<li>AI-rename a file's <a href="https://help.vexy.art/lines/articles/layers-panel/">layers and fills</a> with a vision model (<code>vexy-lines-cli[ai]</code>)</li>
+<li>Query and manipulate the live document tree</li>
+</ul>
+<p><strong>For AI assistants:</strong></p>
+<ul>
+<li>Bridge Claude Desktop and Cursor to the Vexy Lines MCP server via stdio</li>
+</ul>
+<h2 id="index-quick-start">Quick start<a aria-label="Permanent link" class="headerlink" href="#index-quick-start" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Inspect a file (no app needed)</span>
+vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines
+
+<span class="c1"># Show the layer tree</span>
+vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
+
+<span class="c1"># Export a folder to PDF (auto-launches the app)</span>
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./my-art/<span class="w"> </span>--format<span class="w"> </span>pdf
+
+<span class="c1"># Apply a style to photos</span>
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>template.lines<span class="w"> </span>--input-dir<span class="w"> </span>./photos/
+
+<span class="c1"># Check MCP connectivity</span>
+vexy-lines-cli<span class="w"> </span>mcp-status
+</code></pre></div>
+<p>Run <code>vexy-lines-cli --help</code> to see all available subcommands.</p>
+<h2 id="index-next-steps">Next steps<a aria-label="Permanent link" class="headerlink" href="#index-next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#installation">Installation</a>: install options and extras</li>
+<li><a href="#cli-reference">CLI Reference</a>: every subcommand with examples</li>
+<li><a href="#mcp-bridge">MCP Bridge</a>: connect Claude Desktop or Cursor to the app</li>
+<li><a href="#export-pipeline">Export Pipeline</a>: how dialog-less export works</li>
+<li><a href="#api-reference">API Reference</a>: Python API for programmatic use</li>
+<li><a href="#examples">Examples</a>: real-world workflows</li>
+</ul></section><section class="print-page" id="installation" heading-number="2"><nav class='md-tags'><span class='md-tag'>User manual</span><span class='md-tag'>Installation</span></nav>
+<h1 id="installation-installation">Installation<a aria-label="Permanent link" class="headerlink" href="#installation-installation" title="Permanent link">&para;</a></h1>
+<h2 id="installation-requirements">Requirements<a aria-label="Permanent link" class="headerlink" href="#installation-requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Python 3.11 or newer</li>
+<li>The <a href="https://vexy.art">Vexy Lines</a> desktop app for MCP and export commands</li>
+<li>macOS for the dialog-less export pipeline (uses AppleScript and <code>defaults write</code>)</li>
+</ul>
+<h2 id="installation-install-from-pypi">Install from PyPI<a aria-label="Permanent link" class="headerlink" href="#installation-install-from-pypi" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>vexy-lines-cli
+</code></pre></div>
+<p>This pulls in <code>vexy-lines-apy</code> (MCP client, style engine) and <code>vexy-lines-py</code> (parser) automatically.</p>
+<p>Or with <code>uv</code>:</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>add<span class="w"> </span>vexy-lines-cli
+</code></pre></div>
+<h2 id="installation-additional-packages">Additional packages<a aria-label="Permanent link" class="headerlink" href="#installation-additional-packages" title="Permanent link">&para;</a></h2>
+<p>For video processing and the GUI, install the companion app:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>vexy-lines-run
+</code></pre></div>
+<p>Video dependencies (PyAV, OpenCV, resvg-py) are included in the base <code>vexy-lines-run</code> install.</p>
+<h2 id="installation-installed-commands">Installed commands<a aria-label="Permanent link" class="headerlink" href="#installation-installed-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vexy-lines-cli</code></td>
+<td>CLI interface</td>
+</tr>
+<tr>
+<td><code>vexy-lines-mcp</code></td>
+<td>MCP stdio-to-TCP bridge server</td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation-runtime-dependencies">Runtime dependencies<a aria-label="Permanent link" class="headerlink" href="#installation-runtime-dependencies" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vexy-lines-apy</code></td>
+<td>MCP client and style engine</td>
+</tr>
+<tr>
+<td><code>fire</code></td>
+<td>CLI framework (subcommand dispatch)</td>
+</tr>
+<tr>
+<td><code>loguru</code></td>
+<td>Structured debug logging</td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation-verify-the-install">Verify the install<a aria-label="Permanent link" class="headerlink" href="#installation-verify-the-install" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>--help
+</code></pre></div>
+<h2 id="installation-development-install">Development install<a aria-label="Permanent link" class="headerlink" href="#installation-development-install" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/vexyart/vexy-lines.git
+<span class="nb">cd</span><span class="w"> </span>vexy-lines/vexy-lines-cli
+uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[dev]"</span>
+</code></pre></div>
+<p>Run tests:</p>
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>hatch<span class="w"> </span><span class="nb">test</span>
+</code></pre></div></section><section class="print-page" id="cli-reference" heading-number="3"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<h1 id="cli-reference-cli-reference">CLI Reference<a aria-label="Permanent link" class="headerlink" href="#cli-reference-cli-reference" title="Permanent link">&para;</a></h1>
+<p>All commands use <code>vexy-lines-cli &lt;subcommand&gt;</code>. Add <code>--help</code> to any subcommand for usage details.</p>
+<h2 id="cli-reference-parser-commands-no-app-required">Parser commands (no app required)<a aria-label="Permanent link" class="headerlink" href="#cli-reference-parser-commands-no-app-required" title="Permanent link">&para;</a></h2>
+<p>These work offline: they parse the <code>.lines</code> XML directly.</p>
+<h3 id="cli-reference-info"><code>info</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-info" title="Permanent link">&para;</a></h3>
+<p>Show metadata for a <code>.lines</code> file.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
+</code></pre></div>
+<p>Returns: caption, version, DPI, dimensions, group/layer/fill counts, embedded image flags.</p>
+<h3 id="cli-reference-file-tree"><code>file-tree</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-file-tree" title="Permanent link">&para;</a></h3>
+<p>Print the layer/group/fill hierarchy.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
+</code></pre></div>
+<p>Output shows nesting with indentation. Hidden layers are marked <code>[hidden]</code>. Fills show their algorithm in brackets.</p>
+<h3 id="cli-reference-extract-source"><code>extract-source</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-extract-source" title="Permanent link">&para;</a></h3>
+<p>Save the embedded JPEG source image to disk.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines<span class="w"> </span>--output<span class="w"> </span>photo.jpg
+vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines<span class="w"> </span>--format<span class="w"> </span>.png
+</code></pre></div>
+<p>Default output: <code>&lt;stem&gt;-src.jpg</code> in the same directory.</p>
+<h3 id="cli-reference-extract-preview"><code>extract-preview</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-extract-preview" title="Permanent link">&para;</a></h3>
+<p>Save the embedded PNG preview image to disk.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines<span class="w"> </span>--output<span class="w"> </span>thumb.png
+</code></pre></div>
+<p>Default output: <code>&lt;stem&gt;-preview.png</code> in the same directory.</p>
+<h3 id="cli-reference-batch-convert"><code>batch-convert</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-batch-convert" title="Permanent link">&para;</a></h3>
+<p>Extract preview or source images from all <code>.lines</code> files in a directory.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./art/<span class="w"> </span>--output-dir<span class="w"> </span>./thumbs/
+vexy-lines-cli<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./art/<span class="w"> </span>--what<span class="w"> </span><span class="nb">source</span><span class="w"> </span>--format<span class="w"> </span>jpg
+</code></pre></div>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--input-dir</code></td>
+<td>(required)</td>
+<td>Directory containing <code>.lines</code> files</td>
+</tr>
+<tr>
+<td><code>--output-dir</code></td>
+<td><code>./output</code></td>
+<td>Where to write images</td>
+</tr>
+<tr>
+<td><code>--what</code></td>
+<td><code>preview</code></td>
+<td><code>preview</code> or <code>source</code></td>
+</tr>
+<tr>
+<td><code>--format</code></td>
+<td><code>png</code></td>
+<td>Output image format</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cli-reference-export-command-auto-launches-app">Export command (auto-launches app)<a aria-label="Permanent link" class="headerlink" href="#cli-reference-export-command-auto-launches-app" title="Permanent link">&para;</a></h2>
+<h3 id="cli-reference-export"><code>export</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-export" title="Permanent link">&para;</a></h3>
+<p>Export <code>.lines</code> files to PDF, SVG, or PNG without save dialogs. Works on a single file or a directory (recursive).</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./my-art/<span class="w"> </span>--format<span class="w"> </span>svg<span class="w"> </span>--output<span class="w"> </span>./exports/
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines<span class="w"> </span>--dry-run
+vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./art/<span class="w"> </span>--force<span class="w"> </span>--timeout-multiplier<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+<p>The pipeline quits the app, injects export preferences into macOS defaults, relaunches, opens each file, triggers File &gt; Export, then restores the original preferences.</p>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--format</code></td>
+<td><code>pdf</code></td>
+<td><code>pdf</code>, <code>svg</code>, or <code>png</code></td>
+</tr>
+<tr>
+<td><code>--output</code></td>
+<td>same folder</td>
+<td>Destination file or directory</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td><code>False</code></td>
+<td>List files without exporting</td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td><code>False</code></td>
+<td>Re-export even if output exists</td>
+</tr>
+<tr>
+<td><code>--timeout-multiplier</code></td>
+<td><code>1.0</code></td>
+<td>Scale all timeouts (range 0.1--10)</td>
+</tr>
+<tr>
+<td><code>--max-retries</code></td>
+<td><code>3</code></td>
+<td>Retry attempts per file (range 0--10)</td>
+</tr>
+<tr>
+<td><code>--say-summary</code></td>
+<td><code>False</code></td>
+<td>Announce result via macOS text-to-speech</td>
+</tr>
+<tr>
+<td><code>--verbose</code></td>
+<td><code>False</code></td>
+<td>Enable debug logging</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cli-reference-export-bundle"><code>export-bundle</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-export-bundle" title="Permanent link">&para;</a></h3>
+<p>Export one file or a recursive directory to multiple formats and optionally extract each embedded source image.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>export-bundle<span class="w"> </span>artwork.lines
+vexy-lines-cli<span class="w"> </span>export-bundle<span class="w"> </span>./my-art/<span class="w"> </span>--output<span class="w"> </span>./exports/
+vexy-lines-cli<span class="w"> </span>export-bundle<span class="w"> </span>artwork.lines<span class="w"> </span>--formats<span class="w"> </span>pdf,svg<span class="w"> </span>--source<span class="o">=</span>False
+</code></pre></div>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--formats</code></td>
+<td><code>pdf,svg,png</code></td>
+<td>Comma-separated export formats</td>
+</tr>
+<tr>
+<td><code>--source</code></td>
+<td><code>True</code></td>
+<td>Also extract <code>&lt;stem&gt;-src.jpg</code></td>
+</tr>
+<tr>
+<td><code>--dpi</code></td>
+<td>current document DPI</td>
+<td>Override export DPI</td>
+</tr>
+<tr>
+<td><code>--render-timeout</code></td>
+<td><code>600.0</code></td>
+<td>Maximum render wait per document</td>
+</tr>
+<tr>
+<td><code>--output</code></td>
+<td>source folder</td>
+<td>Destination directory</td>
+</tr>
+<tr>
+<td><code>--verbose</code></td>
+<td><code>False</code></td>
+<td>Enable debug logging</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cli-reference-style-commands-app-must-be-running">Style commands (app must be running)<a aria-label="Permanent link" class="headerlink" href="#cli-reference-style-commands-app-must-be-running" title="Permanent link">&para;</a></h2>
+<h3 id="cli-reference-style-transfer"><code>style-transfer</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-style-transfer" title="Permanent link">&para;</a></h3>
+<p>Apply a <code>.lines</code> style to images.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Single style across all images</span>
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--input-dir<span class="w"> </span>./frames/
+
+<span class="c1"># Interpolate between two styles</span>
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-dir<span class="w"> </span>./frames/<span class="w"> </span>--output-dir<span class="w"> </span>./out/
+
+<span class="c1"># Explicit image list</span>
+vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--images<span class="w"> </span>a.jpg<span class="w"> </span>b.jpg<span class="w"> </span>c.jpg
+</code></pre></div>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--style</code></td>
+<td>(required)</td>
+<td>Source style <code>.lines</code> file</td>
+</tr>
+<tr>
+<td><code>--end-style</code></td>
+<td>(none)</td>
+<td>End style for interpolation</td>
+</tr>
+<tr>
+<td><code>--images</code></td>
+<td>(none)</td>
+<td>Explicit list of image paths</td>
+</tr>
+<tr>
+<td><code>--input-dir</code></td>
+<td>(none)</td>
+<td>Directory of images (jpg, jpeg, png)</td>
+</tr>
+<tr>
+<td><code>--output-dir</code></td>
+<td><code>./output</code></td>
+<td>Where to write output</td>
+</tr>
+<tr>
+<td><code>--format</code></td>
+<td><code>svg</code></td>
+<td><code>svg</code>, <code>png</code>, or <code>jpg</code></td>
+</tr>
+<tr>
+<td><code>--dpi</code></td>
+<td><code>72</code></td>
+<td>Document DPI for rendering</td>
+</tr>
+<tr>
+<td><code>--host</code></td>
+<td><code>127.0.0.1</code></td>
+<td>MCP server address</td>
+</tr>
+<tr>
+<td><code>--port</code></td>
+<td><code>47384</code></td>
+<td>MCP server port</td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td><code>False</code></td>
+<td>Delete existing job folder and start fresh</td>
+</tr>
+<tr>
+<td><code>--cleanup</code></td>
+<td><code>False</code></td>
+<td>Delete job folder after export completes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cli-reference-style-video"><code>style-video</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-style-video" title="Permanent link">&para;</a></h3>
+<p>Apply a style to every frame of a video.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>look.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>result.mp4
+vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4
+</code></pre></div>
+<p>Requires <code>vexy-lines-run</code> (includes PyAV, OpenCV, and resvg).</p>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--style</code></td>
+<td><code>str</code></td>
+<td>(required)</td>
+<td>Source style <code>.lines</code> file</td>
+</tr>
+<tr>
+<td><code>--end-style</code></td>
+<td><code>str</code></td>
+<td>(none)</td>
+<td>End style for interpolation</td>
+</tr>
+<tr>
+<td><code>--input</code></td>
+<td><code>str</code></td>
+<td>(required)</td>
+<td>Input video path</td>
+</tr>
+<tr>
+<td><code>--output</code></td>
+<td><code>str</code></td>
+<td>(none)</td>
+<td>Output video path</td>
+</tr>
+<tr>
+<td><code>--host</code></td>
+<td><code>str</code></td>
+<td><code>127.0.0.1</code></td>
+<td>MCP server address</td>
+</tr>
+<tr>
+<td><code>--port</code></td>
+<td><code>int</code></td>
+<td><code>47384</code></td>
+<td>MCP server port</td>
+</tr>
+<tr>
+<td><code>--force</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td>Delete existing job folder and start fresh</td>
+</tr>
+<tr>
+<td><code>--cleanup</code></td>
+<td><code>bool</code></td>
+<td><code>False</code></td>
+<td>Delete job folder after export completes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cli-reference-ai-rename-auto-launches-app-needs-a-vision-model">AI rename (auto-launches app + needs a vision model)<a aria-label="Permanent link" class="headerlink" href="#cli-reference-ai-rename-auto-launches-app-needs-a-vision-model" title="Permanent link">&para;</a></h2>
+<h3 id="cli-reference-ai-rename"><code>ai-rename</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-ai-rename" title="Permanent link">&para;</a></h3>
+<p>Rename a <code>.lines</code> file's <a href="https://help.vexy.art/lines/articles/layers-panel/">layers and fills</a> using a vision-language model (VLM). Each fill is rendered in isolation, shown to the model inside a red box over a faint copy of the full artwork, and given a short descriptive caption (e.g. <code>car-on-road</code>, <code>top-sky-bridge</code>); each layer is then named from the fills it contains. Only the <code>caption</code> attributes change: every fill parameter, mask, mesh, and embedded image is preserved.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines
+vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines<span class="w"> </span>road-12-named.lines
+vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines<span class="w"> </span>--dry-run
+vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines<span class="w"> </span>--json-output
+vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--llm-api-url<span class="w"> </span>http://127.0.0.1:1234/v1<span class="w"> </span>--llm-model-vision<span class="w"> </span>my-vision-model
+</code></pre></div>
+<p><code>INPUT</code> is required; <code>OUTPUT</code> defaults to <code>&lt;stem&gt;-renamed.lines</code>. The command needs both the Vexy Lines app (auto-launched) and an OpenAI-compatible <code>/v1</code> endpoint. The endpoint is configured from the environment (<code>VEXY_LINES_LLM_API_URL</code>, <code>VEXY_LINES_LLM_API_KEY</code>, <code>VEXY_LINES_LLM_MODEL_VISION</code> for vision, and <code>VEXY_LINES_VLM_MODEL</code> for text), and the <code>--llm-*</code> flags below override whatever the environment resolves.</p>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--dpi</code></td>
+<td><code>72</code></td>
+<td>Render DPI (lower is faster)</td>
+</tr>
+<tr>
+<td><code>--llm-api-url</code></td>
+<td><code>$VEXY_LINES_LLM_API_URL</code></td>
+<td>OpenAI-compatible base URL</td>
+</tr>
+<tr>
+<td><code>--llm-api-key</code></td>
+<td><code>$VEXY_LINES_LLM_API_KEY</code></td>
+<td>API key</td>
+</tr>
+<tr>
+<td><code>--llm-model-vision</code></td>
+<td><code>$VEXY_LINES_LLM_MODEL_VISION</code></td>
+<td>Vision model (describes each fill)</td>
+</tr>
+<tr>
+<td><code>--llm-model</code></td>
+<td><code>$VEXY_LINES_VLM_MODEL</code></td>
+<td>Text model (names each layer)</td>
+</tr>
+<tr>
+<td><code>--workdir</code></td>
+<td><code>&lt;stem&gt;-rename/</code></td>
+<td>Directory for render artifacts</td>
+</tr>
+<tr>
+<td><code>--dry-run</code></td>
+<td><code>False</code></td>
+<td>Compute names but write nothing</td>
+</tr>
+<tr>
+<td><code>--json-output</code></td>
+<td><code>False</code></td>
+<td>Print the full plan as JSON</td>
+</tr>
+<tr>
+<td><code>--host</code></td>
+<td><code>127.0.0.1</code></td>
+<td>MCP server address</td>
+</tr>
+<tr>
+<td><code>--port</code></td>
+<td><code>47384</code></td>
+<td>MCP server port</td>
+</tr>
+</tbody>
+</table>
+<p>By default the command prints one line per fill (<code>fill &lt;id&gt;: 'old' -&gt; 'new'  (description)</code>), one per layer, and the output path. With <code>--json-output</code> it prints the full plan dict (keys: <code>lines_path</code>, <code>fills[]</code>, <code>layers[]</code>, <code>output</code>, <code>dry_run</code>).</p>
+<p>Artifacts land in the work dir: <code>_full.png</code> (all-fills render), <code>fill_&lt;id&gt;_single.png</code> (each fill in isolation), <code>fill_&lt;id&gt;_inspect.png</code> (each red-boxed inspection image), and <code>rename-plan.json</code>.</p>
+<p>Requires the AI extras:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"vexy-lines-cli[ai]"</span><span class="w">   </span><span class="c1"># openai + pathvalidate + python-slugify</span>
+</code></pre></div>
+<p>See the <a href="https://vexy.dev/vexy-lines-apy/ai-rename/">full AI rename guide</a> for how it works and how to choose a model. Vexy Lines help: <a href="https://help.vexy.art/lines/articles/layers-panel/">Layers Panel</a> · <a href="https://help.vexy.art/lines/articles/fill-properties-1/">Fill Properties</a>.</p>
+<h2 id="cli-reference-mcp-commands-app-must-be-running">MCP commands (app must be running)<a aria-label="Permanent link" class="headerlink" href="#cli-reference-mcp-commands-app-must-be-running" title="Permanent link">&para;</a></h2>
+<h3 id="cli-reference-mcp-status"><code>mcp-status</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-mcp-status" title="Permanent link">&para;</a></h3>
+<p>Check MCP server connectivity.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>mcp-status
+vexy-lines-cli<span class="w"> </span>mcp-status<span class="w"> </span>--host<span class="w"> </span><span class="m">192</span>.168.1.10<span class="w"> </span>--port<span class="w"> </span><span class="m">47384</span>
+</code></pre></div>
+<h3 id="cli-reference-tree"><code>tree</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-tree" title="Permanent link">&para;</a></h3>
+<p>Print the live document layer tree.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>tree
+vexy-lines-cli<span class="w"> </span>tree<span class="w"> </span>--json-output
+</code></pre></div>
+<h3 id="cli-reference-new-document"><code>new-document</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-new-document" title="Permanent link">&para;</a></h3>
+<p>Create a new document.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>new-document<span class="w"> </span>--width<span class="w"> </span><span class="m">210</span><span class="w"> </span>--height<span class="w"> </span><span class="m">297</span><span class="w"> </span>--dpi<span class="w"> </span><span class="m">300</span>
+vexy-lines-cli<span class="w"> </span>new-document<span class="w"> </span>--source-image<span class="w"> </span>photo.jpg
+</code></pre></div>
+<h3 id="cli-reference-open"><code>open</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-open" title="Permanent link">&para;</a></h3>
+<p>Open a <code>.lines</code> file.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>open<span class="w"> </span>artwork.lines
+</code></pre></div>
+<h3 id="cli-reference-add-fill"><code>add-fill</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-add-fill" title="Permanent link">&para;</a></h3>
+<p>Add a fill to a layer.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>add-fill<span class="w"> </span><span class="m">42</span><span class="w"> </span>linear<span class="w"> </span>--color<span class="w"> </span><span class="s2">"#ff0000"</span>
+</code></pre></div>
+<h3 id="cli-reference-render"><code>render</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-render" title="Permanent link">&para;</a></h3>
+<p>Trigger a full render.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>render
+</code></pre></div>
+<p>All MCP commands accept <code>--host</code> and <code>--port</code> (defaults: <code>127.0.0.1:47384</code>).</p>
+<h2 id="cli-reference-bridge">Bridge<a aria-label="Permanent link" class="headerlink" href="#cli-reference-bridge" title="Permanent link">&para;</a></h2>
+<h3 id="cli-reference-mcp-serve"><code>mcp-serve</code><a aria-label="Permanent link" class="headerlink" href="#cli-reference-mcp-serve" title="Permanent link">&para;</a></h3>
+<p>Start the stdio-to-TCP bridge for Claude Desktop / Cursor.</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-cli<span class="w"> </span>mcp-serve
+vexy-lines-cli<span class="w"> </span>mcp-serve<span class="w"> </span>--no-launch
+vexy-lines-mcp<span class="w">   </span><span class="c1"># same thing, as an installed script</span>
+</code></pre></div>
+<h2 id="cli-reference-global-flags">Global flags<a aria-label="Permanent link" class="headerlink" href="#cli-reference-global-flags" title="Permanent link">&para;</a></h2>
+<p>All commands support <code>--verbose</code> for debug logging.</p></section><section class="print-page" id="mcp-bridge" heading-number="4"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<h1 id="mcp-bridge-mcp-bridge">MCP Bridge<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-mcp-bridge" title="Permanent link">&para;</a></h1>
+<p><code>vexy-lines-cli</code> ships a built-in <strong>stdio-to-TCP bridge</strong> that lets Claude
+Desktop, Cursor, and any other MCP-aware AI client talk directly to the Vexy
+Lines app running on your machine.</p>
+<p>The bridge is exposed as two equivalent entry points:</p>
+<div class="highlight"><pre><span></span><code>vexy-lines-mcp<span class="w">          </span><span class="c1"># installed script — use this in config files</span>
+vexy-lines-cli<span class="w"> </span>mcp-serve<span class="w">    </span><span class="c1"># same thing, as a CLI subcommand</span>
+</code></pre></div>
+<h2 id="mcp-bridge-how-it-works">How it works<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-how-it-works" title="Permanent link">&para;</a></h2>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>Claude Desktop  ──stdio──►  vexy-lines-mcp  ──TCP──►  Vexy Lines app
+                                                         (localhost:47384)
+</code></pre></div>
+<ol>
+<li>The AI client starts <code>vexy-lines-mcp</code> as a child process and communicates
+   over its stdin/stdout using newline-delimited JSON-RPC (the MCP stdio
+   protocol).</li>
+<li>The bridge forwards every message to the Vexy Lines TCP MCP server on
+   <code>localhost:47384</code>.</li>
+<li>Responses from the app flow back the same way.</li>
+<li>If the app is not running when the bridge starts, it automatically launches
+   <code>Vexy Lines.app</code> and waits up to 30 seconds for the TCP server to become
+   available. Pass <code>--no-launch</code> to disable this behaviour.</li>
+<li>The bridge injects one <strong>local tool</strong> on top of the app's own tool list:
+   <code>export_bundle</code>: multi-format export plus embedded source image extraction,
+   handled entirely by the bridge without round-tripping to the app.</li>
+</ol>
+<h2 id="mcp-bridge-claude-desktop-setup">Claude Desktop setup<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-claude-desktop-setup" title="Permanent link">&para;</a></h2>
+<p>Add an entry to <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"vexy-lines"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vexy-lines-mcp"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>If <code>vexy-lines-mcp</code> is not on Claude Desktop's <code>PATH</code> (common when installed
+in a virtualenv), use the full path instead:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"vexy-lines"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/your/venv/bin/vexy-lines-mcp"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Find the full path with:</p>
+<div class="highlight"><pre><span></span><code>which<span class="w"> </span>vexy-lines-mcp
+<span class="c1"># e.g. /Users/you/.local/bin/vexy-lines-mcp</span>
+</code></pre></div>
+<p>Restart Claude Desktop after editing the config. The Vexy Lines tools appear
+in the tool picker the next time you start a conversation.</p>
+<h2 id="mcp-bridge-cursor-setup">Cursor setup<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-cursor-setup" title="Permanent link">&para;</a></h2>
+<p>In Cursor's MCP settings (<code>.cursor/mcp.json</code> in your project or
+<code>~/.cursor/mcp.json</code> globally):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"vexy-lines"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vexy-lines-mcp"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="mcp-bridge-advanced-options">Advanced options<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-advanced-options" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>vexy-lines-mcp<span class="w"> </span>--host<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>--port<span class="w"> </span><span class="m">47384</span><span class="w">   </span><span class="c1"># defaults; change if app uses a different port</span>
+vexy-lines-mcp<span class="w"> </span>--no-launch<span class="w">                       </span><span class="c1"># skip auto-launch on connection failure</span>
+</code></pre></div>
+<p>Pass flags after <code>--</code> when configuring through a JSON config:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"vexy-lines"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vexy-lines-mcp"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"--no-launch"</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="mcp-bridge-tools-exposed-to-the-ai">Tools exposed to the AI<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-tools-exposed-to-the-ai" title="Permanent link">&para;</a></h2>
+<p>The bridge exposes all tools that the Vexy Lines app registers over its TCP
+MCP server, plus one bridge-local tool:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Where it runs</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>open_document</code></td>
+<td>app</td>
+<td>Open a <code>.lines</code> file</td>
+</tr>
+<tr>
+<td><code>get_document_info</code></td>
+<td>app</td>
+<td>Metadata for the current document</td>
+</tr>
+<tr>
+<td><code>get_layer_tree</code></td>
+<td>app</td>
+<td>Layer/group/fill hierarchy</td>
+</tr>
+<tr>
+<td><code>add_fill</code></td>
+<td>app</td>
+<td>Add a fill to a layer</td>
+</tr>
+<tr>
+<td><code>set_fill_params</code></td>
+<td>app</td>
+<td>Update fill parameters</td>
+</tr>
+<tr>
+<td><code>get_image_filters</code></td>
+<td>app</td>
+<td>Read the image-filter chain</td>
+</tr>
+<tr>
+<td><code>set_image_filters</code></td>
+<td>app</td>
+<td>Replace the image-filter chain</td>
+</tr>
+<tr>
+<td><code>add_image_filter</code></td>
+<td>app</td>
+<td>Append one filter to a chain</td>
+</tr>
+<tr>
+<td><code>remove_image_filter</code></td>
+<td>app</td>
+<td>Remove a filter by index</td>
+</tr>
+<tr>
+<td><code>render_all</code></td>
+<td>app</td>
+<td>Trigger a full render</td>
+</tr>
+<tr>
+<td><code>export_svg</code></td>
+<td>app</td>
+<td>Export the current document as SVG</td>
+</tr>
+<tr>
+<td><code>export_pdf</code></td>
+<td>app</td>
+<td>Export the current document as PDF</td>
+</tr>
+<tr>
+<td><code>export_bundle</code></td>
+<td><strong>bridge</strong></td>
+<td>Multi-format export + source image (no app dialog)</td>
+</tr>
+</tbody>
+</table>
+<p><code>export_bundle</code> input schema:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/absolute/path/to/artwork.lines"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"output_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/optional/destination/"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"formats"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"pdf"</span><span class="p">,</span><span class="w"> </span><span class="s2">"svg"</span><span class="p">,</span><span class="w"> </span><span class="s2">"png"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="mcp-bridge-troubleshooting">Troubleshooting<a aria-label="Permanent link" class="headerlink" href="#mcp-bridge-troubleshooting" title="Permanent link">&para;</a></h2>
+<p><strong>"Cannot connect to Vexy Lines at 127.0.0.1:47384"</strong>
+: The app is not running. Start Vexy Lines manually, or remove <code>--no-launch</code>
+  so the bridge auto-launches it.</p>
+<p><strong>Tools not appearing in Claude Desktop</strong>
+: Restart Claude Desktop after editing <code>claude_desktop_config.json</code>. Check
+  the Claude Desktop log at <code>~/Library/Logs/Claude/</code> for connection errors.</p>
+<p><strong>Bridge exits immediately</strong>
+: Run <code>vexy-lines-mcp</code> in a terminal to see the error output. Common causes
+  are a wrong path to the binary or the Vexy Lines TCP server being bound to
+  a different port.</p></section><section class="print-page" id="export-pipeline" heading-number="5"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<h1 id="export-pipeline-export-pipeline">Export Pipeline<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-export-pipeline" title="Permanent link">&para;</a></h1>
+<p>The <code>vexy-lines-cli export</code> command exports <code>.lines</code> files to PDF, SVG, or PNG without interacting with save dialogs. This page explains how the command works.</p>
+<h2 id="export-pipeline-the-problem">The problem<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-the-problem" title="Permanent link">&para;</a></h2>
+<p>Vexy Lines has no headless export mode. Exporting normally means opening the file, choosing File &gt; Export, picking a format and destination, and clicking Save. That's fine for one file. For a hundred, you need automation.</p>
+<h2 id="export-pipeline-the-solution-plist-injection">The solution: plist injection<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-the-solution-plist-injection" title="Permanent link">&para;</a></h2>
+<p>Instead of automating dialog clicks (fragile and slow), the CLI injects export settings directly into the macOS preferences domain (<code>com.fontlab.vexy-lines</code>) using <code>defaults write</code>, then triggers the menu item via AppleScript.</p>
+<h2 id="export-pipeline-five-stage-pipeline">Five-stage pipeline<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-five-stage-pipeline" title="Permanent link">&para;</a></h2>
+<h3 id="export-pipeline-1-discovery">1. Discovery<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-1-discovery" title="Permanent link">&para;</a></h3>
+<p>Find all <code>.lines</code> files to export. Input can be a single file or a directory (searched recursively). Files with existing outputs are skipped unless <code>--force</code> is set.</p>
+<h3 id="export-pipeline-2-plist-injection">2. Plist injection<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-2-plist-injection" title="Permanent link">&para;</a></h3>
+<p><code>PlistManager</code> is a context manager that:</p>
+<ol>
+<li>Reads the current preferences via <code>defaults read</code></li>
+<li>Saves a snapshot of the original values</li>
+<li>Writes the export format and destination path via <code>defaults write</code></li>
+<li>On exit (success or failure), restores the original preferences</li>
+</ol>
+<p>This ensures the app's preferences are never permanently modified.</p>
+<h3 id="export-pipeline-3-app-activation">3. App activation<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-3-app-activation" title="Permanent link">&para;</a></h3>
+<p>The pipeline quits the running app (if any), waits for it to fully close, then relaunches with the injected preferences. <code>AppleScriptBridge</code> handles the quit/launch/wait cycle.</p>
+<h3 id="export-pipeline-4-per-file-export-loop">4. Per-file export loop<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-4-per-file-export-loop" title="Permanent link">&para;</a></h3>
+<p>For each <code>.lines</code> file:</p>
+<ol>
+<li>Open the file via AppleScript (<code>open</code> command)</li>
+<li>Wait for the file window to appear (polls window title)</li>
+<li>Trigger File &gt; Export via the menu item name (<code>"Export PDF File"</code>, <code>"Export SVG File"</code>, or <code>"Export PNG File"</code>)</li>
+<li>Wait for the export to complete</li>
+<li>Optionally validate the output file exists and has non-zero size</li>
+</ol>
+<p>Failed files are retried up to <code>--max-retries</code> times (default 3).</p>
+<h3 id="export-pipeline-5-cleanup">5. Cleanup<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-5-cleanup" title="Permanent link">&para;</a></h3>
+<p><code>PlistManager.__exit__</code> restores the original preferences. The app is left running with its original settings.</p>
+<h2 id="export-pipeline-timeout-control">Timeout control<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-timeout-control" title="Permanent link">&para;</a></h2>
+<p>All internal timeouts scale with <code>--timeout-multiplier</code>:</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Base timeout</th>
+<th>At 2.0x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App launch</td>
+<td>20s</td>
+<td>40s</td>
+</tr>
+<tr>
+<td>File window</td>
+<td>20s</td>
+<td>40s</td>
+</tr>
+<tr>
+<td>Post-action delay</td>
+<td>0.4s</td>
+<td>0.8s</td>
+</tr>
+<tr>
+<td>Poll interval</td>
+<td>0.2s</td>
+<td>0.4s</td>
+</tr>
+</tbody>
+</table>
+<p>Use higher multipliers on slower machines or when exporting complex files.</p>
+<h2 id="export-pipeline-window-watcher">Window watcher<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-window-watcher" title="Permanent link">&para;</a></h2>
+<p><code>WindowWatcher</code> polls the app's window titles via AppleScript to detect when a file has opened and when an export has completed. It uses a configurable poll interval and timeout.</p>
+<h2 id="export-pipeline-error-handling">Error handling<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-error-handling" title="Permanent link">&para;</a></h2>
+<p>Each file export is wrapped in retry logic:</p>
+<ul>
+<li>Transient failures (window didn't appear, menu item failed) are retried</li>
+<li>Persistent failures are logged and counted</li>
+<li>The pipeline continues to the next file on failure</li>
+<li>Final stats report: processed, succeeded, skipped, failed</li>
+</ul>
+<h2 id="export-pipeline-stats">Stats<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-stats" title="Permanent link">&para;</a></h2>
+<p>The <code>ExportStats</code> dataclass tracks timing and counts:</p>
+<div class="highlight"><pre><span></span><code><span class="n">stats</span> <span class="o">=</span> <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"./art/"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">human_summary</span><span class="p">())</span>
+<span class="c1"># "Exported 42 files (3 skipped, 1 failed) in 2m 15s"</span>
+</code></pre></div>
+<h2 id="export-pipeline-macos-only">macOS only<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-macos-only" title="Permanent link">&para;</a></h2>
+<p>The export pipeline depends on:</p>
+<ul>
+<li><code>defaults</code> command (macOS preferences system)</li>
+<li>AppleScript (<code>osascript</code>) for app automation</li>
+<li>The Vexy Lines macOS app</li>
+</ul>
+<p>It does not work on Windows or Linux. For cross-platform export, use the MCP API directly via <code>MCPClient.export_document()</code>.</p>
+<h2 id="export-pipeline-style-export-pipeline-job-folders">Style export pipeline (job folders)<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-style-export-pipeline-job-folders" title="Permanent link">&para;</a></h2>
+<p>The <code>style-transfer</code> and <code>style-video</code> commands use a different pipeline from <code>export</code>. Instead of plist injection, they use the MCP API to apply styles programmatically.</p>
+<h3 id="export-pipeline-job-folder">Job folder<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-job-folder" title="Permanent link">&para;</a></h3>
+<p>Every style export creates a persistent <strong>job folder</strong> alongside the output:</p>
+<table>
+<thead>
+<tr>
+<th>Output type</th>
+<th>Output path</th>
+<th>Job folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Video</td>
+<td><code>./06/styled.mp4</code></td>
+<td><code>./06/styled-vljob/</code></td>
+</tr>
+<tr>
+<td>Frames</td>
+<td><code>./output/</code></td>
+<td><code>./output-vljob/</code></td>
+</tr>
+<tr>
+<td>Images</td>
+<td><code>./results/</code></td>
+<td><code>./results-vljob/</code></td>
+</tr>
+</tbody>
+</table>
+<p>For video exports, the job folder stores the cached artifact chain used to render frames:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>File pattern</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>src/src--{stem}--{NNN}.png</code></td>
+<td>Raw decoded video frame (video only)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>{stem}--{NNN}.lines</code></td>
+<td>Styled <code>.lines</code> document from Vexy Lines</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>{stem}--{NNN}.svg</code></td>
+<td>SVG export</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>{stem}--{NNN}.png</code></td>
+<td>Rasterized output</td>
+</tr>
+</tbody>
+</table>
+<p>Video exports first extract all requested raw frames into the job folder, then style or assemble from that cached source set. Frame numbers are 1-based and zero-padded from the source video's total frame count. For MP4 output, the cached PNG frames are assembled into the requested output path after step 4 rather than stored as <code>{stem}.mp4</code> inside the job folder.</p>
+<h3 id="export-pipeline-resume">Resume<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-resume" title="Permanent link">&para;</a></h3>
+<p>Re-running the same command skips items whose final output already exists in the job folder. Long video jobs therefore survive interruptions: a 4-hour render that fails at frame 147/192 resumes from frame 148.</p>
+<h3 id="export-pipeline-flags">Flags<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-flags" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>--force</code>: Delete the job folder and start from scratch.</li>
+<li><code>--cleanup</code>: Delete the job folder after the final output is copied to its destination.</li>
+</ul>
+<h3 id="export-pipeline-environment">Environment<a aria-label="Permanent link" class="headerlink" href="#export-pipeline-environment" title="Permanent link">&para;</a></h3>
+<p>Set <code>VEXY_LINES_JOB_FOLDER</code> to override the computed job folder path.</p></section><section class="print-page" id="api-reference" heading-number="6"><nav class='md-tags'><span class='md-tag'>User manual</span><span class='md-tag'>API</span></nav>
+<h1 id="api-reference-api-reference">API Reference<a aria-label="Permanent link" class="headerlink" href="#api-reference-api-reference" title="Permanent link">&para;</a></h1>
+<p>The CLI is built on Python Fire, so every public method on <code>VexyLinesCLI</code> is also callable from Python.</p>
+<h2 id="api-reference-vexylinescli">VexyLinesCLI<a aria-label="Permanent link" class="headerlink" href="#api-reference-vexylinescli" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_lines_cli</span><span class="w"> </span><span class="kn">import</span> <span class="n">VexyLinesCLI</span>
+
+<span class="n">cli</span> <span class="o">=</span> <span class="n">VexyLinesCLI</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="api-reference-parser-methods">Parser methods<a aria-label="Permanent link" class="headerlink" href="#api-reference-parser-methods" title="Permanent link">&para;</a></h3>
+<h4 id="api-reference-infoinput-json_outputfalse-dict"><code>info(input, json_output=False) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-infoinput-json_outputfalse-dict" title="Permanent link">&para;</a></h4>
+<p>Parse a <code>.lines</code> file and return metadata. No app needed.</p>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"artwork.lines"</span><span class="p">)</span>
+<span class="c1"># {"caption": "My Art", "version": "4.0", "dpi": 300, ...}</span>
+</code></pre></div>
+<h4 id="api-reference-file_treeinput-json_outputfalse-str"><code>file_tree(input, json_output=False) -&gt; str</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-file_treeinput-json_outputfalse-str" title="Permanent link">&para;</a></h4>
+<p>Print the layer/group/fill hierarchy. Returns indented text or JSON.</p>
+<h4 id="api-reference-extract_sourceinput-outputnone-formatjpg-dict"><code>extract_source(input, output=None, format=".jpg") -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-extract_sourceinput-outputnone-formatjpg-dict" title="Permanent link">&para;</a></h4>
+<p>Extract the embedded JPEG source image.</p>
+<h4 id="api-reference-extract_previewinput-outputnone-formatpng-dict"><code>extract_preview(input, output=None, format=".png") -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-extract_previewinput-outputnone-formatpng-dict" title="Permanent link">&para;</a></h4>
+<p>Extract the embedded PNG preview image.</p>
+<h4 id="api-reference-batch_convertinput_dir-output_diroutput-formatpng-whatpreview-dict"><code>batch_convert(input_dir, output_dir="./output", format="png", what="preview") -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-batch_convertinput_dir-output_diroutput-formatpng-whatpreview-dict" title="Permanent link">&para;</a></h4>
+<p>Extract images from all <code>.lines</code> files in a directory.</p>
+<h3 id="api-reference-style-methods">Style methods<a aria-label="Permanent link" class="headerlink" href="#api-reference-style-methods" title="Permanent link">&para;</a></h3>
+<h4 id="api-reference-style_transferstyle-dict"><code>style_transfer(style, ...) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-style_transferstyle-dict" title="Permanent link">&para;</a></h4>
+<p>Apply a <code>.lines</code> style to images via MCP. See <a href="#cli-reference-style-transfer">CLI Reference</a> for all options.</p>
+<h4 id="api-reference-style_videostyle-input-outputoutputmp4-dict"><code>style_video(style, input, output="output.mp4", ...) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-style_videostyle-input-outputoutputmp4-dict" title="Permanent link">&para;</a></h4>
+<p>Apply a style to video frames. Requires <code>vexy-lines-run</code>.</p>
+<h3 id="api-reference-export-methods">Export methods<a aria-label="Permanent link" class="headerlink" href="#api-reference-export-methods" title="Permanent link">&para;</a></h3>
+<h4 id="api-reference-exportinput-outputnone-formatpdf-dict"><code>export(input, output=None, format="pdf", ...) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-exportinput-outputnone-formatpdf-dict" title="Permanent link">&para;</a></h4>
+<p>Export <code>.lines</code> files to PDF/SVG/PNG via the plist injection pipeline.</p>
+<h4 id="api-reference-export_bundleinput-outputnone-formatspdfsvgpng-dict"><code>export_bundle(input, output=None, formats="pdf,svg,png", ...) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-export_bundleinput-outputnone-formatspdfsvgpng-dict" title="Permanent link">&para;</a></h4>
+<p>Export <code>.lines</code> files to multiple formats through MCP and optionally extract embedded source images.</p>
+<h3 id="api-reference-mcp-methods">MCP methods<a aria-label="Permanent link" class="headerlink" href="#api-reference-mcp-methods" title="Permanent link">&para;</a></h3>
+<h4 id="api-reference-mcp_statushost-port-dict"><code>mcp_status(host, port) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-mcp_statushost-port-dict" title="Permanent link">&para;</a></h4>
+<p>Check MCP server connectivity.</p>
+<h4 id="api-reference-treehost-port-json_outputfalse-dict-str"><code>tree(host, port, json_output=False) -&gt; dict | str</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-treehost-port-json_outputfalse-dict-str" title="Permanent link">&para;</a></h4>
+<p>Get the live document layer tree.</p>
+<h4 id="api-reference-new_documentwidth-height-dpi-source_image-host-port-dict"><code>new_document(width, height, dpi, source_image, host, port) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-new_documentwidth-height-dpi-source_image-host-port-dict" title="Permanent link">&para;</a></h4>
+<p>Create a new document via MCP.</p>
+<h4 id="api-reference-openinput-host-port-dict"><code>open(input, host, port) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-openinput-host-port-dict" title="Permanent link">&para;</a></h4>
+<p>Open a <code>.lines</code> file via MCP.</p>
+<h4 id="api-reference-add_filllayer_id-fill_type-color-host-port-dict"><code>add_fill(layer_id, fill_type, color, host, port) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-add_filllayer_id-fill_type-color-host-port-dict" title="Permanent link">&para;</a></h4>
+<p>Add a fill to a layer via MCP.</p>
+<h4 id="api-reference-renderhost-port-dict"><code>render(host, port) -&gt; dict</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-renderhost-port-dict" title="Permanent link">&para;</a></h4>
+<p>Trigger a full render via MCP.</p>
+<h3 id="api-reference-bridge">Bridge<a aria-label="Permanent link" class="headerlink" href="#api-reference-bridge" title="Permanent link">&para;</a></h3>
+<h4 id="api-reference-mcp_servehost-port-no_launchfalse-none"><code>mcp_serve(host, port, no_launch=False) -&gt; None</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-mcp_servehost-port-no_launchfalse-none" title="Permanent link">&para;</a></h4>
+<p>Start the stdio-to-TCP MCP bridge.</p>
+<hr />
+<h2 id="api-reference-export-module">Export module<a aria-label="Permanent link" class="headerlink" href="#api-reference-export-module" title="Permanent link">&para;</a></h2>
+<h3 id="api-reference-exportconfig">ExportConfig<a aria-label="Permanent link" class="headerlink" href="#api-reference-exportconfig" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_lines_cli.export.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExportConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">ExportConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">"pdf"</span><span class="p">,</span> <span class="n">timeout_multiplier</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app_name</code></td>
+<td><code>str</code></td>
+<td><code>"Vexy Lines"</code></td>
+<td>Application name</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td><code>str</code></td>
+<td><code>"pdf"</code></td>
+<td><code>"pdf"</code>, <code>"svg"</code>, or <code>"png"</code></td>
+</tr>
+<tr>
+<td><code>poll_interval</code></td>
+<td><code>float</code></td>
+<td><code>0.2</code></td>
+<td>Seconds between polls</td>
+</tr>
+<tr>
+<td><code>wait_for_app</code></td>
+<td><code>float</code></td>
+<td><code>20.0</code></td>
+<td>App launch timeout</td>
+</tr>
+<tr>
+<td><code>wait_for_file</code></td>
+<td><code>float</code></td>
+<td><code>20.0</code></td>
+<td>File window timeout</td>
+</tr>
+<tr>
+<td><code>post_action_delay</code></td>
+<td><code>float</code></td>
+<td><code>0.4</code></td>
+<td>Pause after each action</td>
+</tr>
+<tr>
+<td><code>timeout_multiplier</code></td>
+<td><code>float</code></td>
+<td><code>1.0</code></td>
+<td>Scale all timeouts</td>
+</tr>
+<tr>
+<td><code>max_retries</code></td>
+<td><code>int</code></td>
+<td><code>3</code></td>
+<td>Retries per file</td>
+</tr>
+</tbody>
+</table>
+<h3 id="api-reference-vexylinesexporter">VexyLinesExporter<a aria-label="Permanent link" class="headerlink" href="#api-reference-vexylinesexporter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_lines_cli.export.exporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">VexyLinesExporter</span>
+
+<span class="n">exporter</span> <span class="o">=</span> <span class="n">VexyLinesExporter</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"./art/"</span><span class="p">),</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"./output/"</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="api-reference-exportstats">ExportStats<a aria-label="Permanent link" class="headerlink" href="#api-reference-exportstats" title="Permanent link">&para;</a></h3>
+<p>Tracks timing and file counts. Call <code>stats.as_dict()</code> for a serializable dict or <code>stats.human_summary()</code> for a readable string.</p>
+<hr />
+<h2 id="api-reference-automation-module">Automation module<a aria-label="Permanent link" class="headerlink" href="#api-reference-automation-module" title="Permanent link">&para;</a></h2>
+<h3 id="api-reference-applescriptbridge">AppleScriptBridge<a aria-label="Permanent link" class="headerlink" href="#api-reference-applescriptbridge" title="Permanent link">&para;</a></h3>
+<p>Wraps <code>osascript</code> calls for app control: quit, launch, activate, menu items, window title queries.</p>
+<h3 id="api-reference-windowwatcher">WindowWatcher<a aria-label="Permanent link" class="headerlink" href="#api-reference-windowwatcher" title="Permanent link">&para;</a></h3>
+<p>Polls window titles to detect file open and export completion.</p>
+<hr />
+<h2 id="api-reference-mcp-server">MCP server<a aria-label="Permanent link" class="headerlink" href="#api-reference-mcp-server" title="Permanent link">&para;</a></h2>
+<h3 id="api-reference-servehost-port-stdin-stdout-auto_launch-none"><code>serve(host, port, stdin, stdout, auto_launch) -&gt; None</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-servehost-port-stdin-stdout-auto_launch-none" title="Permanent link">&para;</a></h3>
+<p>Run the stdio-to-TCP bridge loop. Reads JSON-RPC from stdin, forwards to TCP, writes responses to stdout.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_lines_cli.mcp_server</span><span class="w"> </span><span class="kn">import</span> <span class="n">serve</span>
+
+<span class="n">serve</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">"127.0.0.1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">47384</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="api-reference-utility-functions">Utility functions<a aria-label="Permanent link" class="headerlink" href="#api-reference-utility-functions" title="Permanent link">&para;</a></h2>
+<h3 id="api-reference-speaktext-none"><code>speak(text) -&gt; None</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-speaktext-none" title="Permanent link">&para;</a></h3>
+<p>Announce text via macOS <code>say</code> command. No-op on other platforms.</p>
+<h3 id="api-reference-discover_lines_filespath-listpath"><code>discover_lines_files(path) -&gt; list[Path]</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-discover_lines_filespath-listpath" title="Permanent link">&para;</a></h3>
+<p>Find <code>.lines</code> files in a path (single file or recursive directory search).</p>
+<h3 id="api-reference-interrupthandler"><code>InterruptHandler</code><a aria-label="Permanent link" class="headerlink" href="#api-reference-interrupthandler" title="Permanent link">&para;</a></h3>
+<p>Context manager that catches <code>SIGINT</code> for graceful shutdown during batch operations.</p></section><section class="print-page" id="examples" heading-number="7"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<h1 id="examples-examples">Examples<a aria-label="Permanent link" class="headerlink" href="#examples-examples" title="Permanent link">&para;</a></h1>
+<h2 id="examples-inspect-a-lines-file">Inspect a .lines file<a aria-label="Permanent link" class="headerlink" href="#examples-inspect-a-lines-file" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines
+<span class="o">{</span><span class="s1">'caption'</span>:<span class="w"> </span><span class="s1">'Landscape'</span>,<span class="w"> </span><span class="s1">'version'</span>:<span class="w"> </span><span class="s1">'4.0'</span>,<span class="w"> </span><span class="s1">'dpi'</span>:<span class="w"> </span><span class="m">300</span>,
+<span class="w"> </span><span class="s1">'width_mm'</span>:<span class="w"> </span><span class="m">210</span>.0,<span class="w"> </span><span class="s1">'height_mm'</span>:<span class="w"> </span><span class="m">148</span>.0,
+<span class="w"> </span><span class="s1">'groups'</span>:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="s1">'layers'</span>:<span class="w"> </span><span class="m">5</span>,<span class="w"> </span><span class="s1">'fills'</span>:<span class="w"> </span><span class="m">8</span>,
+<span class="w"> </span><span class="s1">'has_source_image'</span>:<span class="w"> </span>True,<span class="w"> </span><span class="s1">'has_preview_image'</span>:<span class="w"> </span>True<span class="o">}</span>
+</code></pre></div>
+<p>JSON output for scripting:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>info<span class="w"> </span>artwork.lines<span class="w"> </span>--json-output
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">"caption"</span>:<span class="w"> </span><span class="s2">"Landscape"</span>,
+<span class="w">  </span><span class="s2">"version"</span>:<span class="w"> </span><span class="s2">"4.0"</span>,
+<span class="w">  </span><span class="s2">"dpi"</span>:<span class="w"> </span><span class="m">300</span>,
+<span class="w">  </span>...
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="examples-browse-the-layer-tree">Browse the layer tree<a aria-label="Permanent link" class="headerlink" href="#examples-browse-the-layer-tree" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>file-tree<span class="w"> </span>artwork.lines
+group:<span class="w"> </span>Background
+<span class="w">  </span>layer:<span class="w"> </span>Sky
+<span class="w">    </span>fill:<span class="w"> </span>Blue<span class="w"> </span>gradient<span class="w"> </span><span class="o">[</span>linear<span class="o">]</span>
+<span class="w">    </span>fill:<span class="w"> </span>Cloud<span class="w"> </span>texture<span class="w"> </span><span class="o">[</span>scribble<span class="o">]</span>
+<span class="w">  </span>layer:<span class="w"> </span>Ground
+<span class="w">    </span>fill:<span class="w"> </span>Grass<span class="w"> </span><span class="o">[</span>wave<span class="o">]</span>
+group:<span class="w"> </span>Foreground
+<span class="w">  </span>layer:<span class="w"> </span>Tree<span class="w"> </span><span class="o">[</span>hidden<span class="o">]</span>
+<span class="w">    </span>fill:<span class="w"> </span>Bark<span class="w"> </span><span class="o">[</span>handmade<span class="o">]</span>
+<span class="w">    </span>fill:<span class="w"> </span>Leaves<span class="w"> </span><span class="o">[</span>fractals<span class="o">]</span>
+</code></pre></div>
+<h2 id="examples-extract-embedded-images">Extract embedded images<a aria-label="Permanent link" class="headerlink" href="#examples-extract-embedded-images" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Source image (the original photo)</span>
+$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>extract-source<span class="w"> </span>artwork.lines
+<span class="o">{</span><span class="s1">'status'</span>:<span class="w"> </span><span class="s1">'ok'</span>,<span class="w"> </span><span class="s1">'output'</span>:<span class="w"> </span><span class="s1">'artwork-src.jpg'</span><span class="o">}</span>
+
+<span class="c1"># Preview image (the rendered thumbnail)</span>
+$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>extract-preview<span class="w"> </span>artwork.lines
+<span class="o">{</span><span class="s1">'status'</span>:<span class="w"> </span><span class="s1">'ok'</span>,<span class="w"> </span><span class="s1">'output'</span>:<span class="w"> </span><span class="s1">'artwork-preview.png'</span><span class="o">}</span>
+</code></pre></div>
+<h2 id="examples-batch-extract-previews">Batch extract previews<a aria-label="Permanent link" class="headerlink" href="#examples-batch-extract-previews" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>batch-convert<span class="w"> </span>--input-dir<span class="w"> </span>./artwork/<span class="w"> </span>--output-dir<span class="w"> </span>./thumbnails/<span class="w"> </span>--what<span class="w"> </span>preview<span class="w"> </span>--format<span class="w"> </span>jpg
+<span class="o">{</span><span class="s1">'total'</span>:<span class="w"> </span><span class="m">42</span>,<span class="w"> </span><span class="s1">'successes'</span>:<span class="w"> </span><span class="m">40</span>,<span class="w"> </span><span class="s1">'failures'</span>:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="s1">'output_dir'</span>:<span class="w"> </span><span class="s1">'./thumbnails/'</span><span class="o">}</span>
+</code></pre></div>
+<h2 id="examples-export-to-pdf">Export to PDF<a aria-label="Permanent link" class="headerlink" href="#examples-export-to-pdf" title="Permanent link">&para;</a></h2>
+<p>Single file:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>artwork.lines<span class="w"> </span>--format<span class="w"> </span>pdf
+</code></pre></div>
+<p>Entire directory:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--format<span class="w"> </span>svg<span class="w"> </span>--output<span class="w"> </span>./exports/
+</code></pre></div>
+<p>Preview without exporting:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--dry-run
+</code></pre></div>
+<p>Force re-export with longer timeouts:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span><span class="nb">export</span><span class="w"> </span>./artwork/<span class="w"> </span>--force<span class="w"> </span>--timeout-multiplier<span class="w"> </span><span class="m">2</span>.5
+</code></pre></div>
+<h2 id="examples-style-transfer">Style transfer<a aria-label="Permanent link" class="headerlink" href="#examples-style-transfer" title="Permanent link">&para;</a></h2>
+<p>Apply one style to a folder of photos:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span>--style<span class="w"> </span>watercolor.lines<span class="w"> </span>--input-dir<span class="w"> </span>./photos/<span class="w"> </span>--output-dir<span class="w"> </span>./styled/
+<span class="o">{</span><span class="s1">'total'</span>:<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="s1">'successes'</span>:<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="s1">'failures'</span>:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span><span class="s1">'output_dir'</span>:<span class="w"> </span><span class="s1">'./styled/'</span><span class="o">}</span>
+</code></pre></div>
+<p>Interpolate between two styles across the sequence:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-transfer<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--style<span class="w"> </span>soft.lines<span class="w"> </span>--end-style<span class="w"> </span>bold.lines<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-dir<span class="w"> </span>./frames/<span class="w"> </span>--output-dir<span class="w"> </span>./animated/
+</code></pre></div>
+<p>The first image gets <code>soft.lines</code>, the last gets <code>bold.lines</code>, and everything in between is a linear blend.</p>
+<h2 id="examples-style-video">Style video<a aria-label="Permanent link" class="headerlink" href="#examples-style-video" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span>--style<span class="w"> </span>sketch.lines<span class="w"> </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>styled.mp4
+<span class="o">{</span><span class="s1">'status'</span>:<span class="w"> </span><span class="s1">'ok'</span>,<span class="w"> </span><span class="s1">'input'</span>:<span class="w"> </span><span class="s1">'clip.mp4'</span>,<span class="w"> </span><span class="s1">'output'</span>:<span class="w"> </span><span class="s1">'styled.mp4'</span>,
+<span class="w"> </span><span class="s1">'width'</span>:<span class="w"> </span><span class="m">1920</span>,<span class="w"> </span><span class="s1">'height'</span>:<span class="w"> </span><span class="m">1080</span>,<span class="w"> </span><span class="s1">'fps'</span>:<span class="w"> </span><span class="m">30</span>.0,<span class="w"> </span><span class="s1">'total_frames'</span>:<span class="w"> </span><span class="m">150</span><span class="o">}</span>
+</code></pre></div>
+<p>With style interpolation across the video:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>style-video<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--style<span class="w"> </span>start.lines<span class="w"> </span>--end-style<span class="w"> </span>end.lines<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input<span class="w"> </span>clip.mp4<span class="w"> </span>--output<span class="w"> </span>morphing.mp4
+</code></pre></div>
+<h2 id="examples-ai-rename-layers-fills">AI rename layers &amp; fills<a aria-label="Permanent link" class="headerlink" href="#examples-ai-rename-layers-fills" title="Permanent link">&para;</a></h2>
+<p>Preview the names without writing anything:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines<span class="w"> </span>--dry-run
+fill<span class="w"> </span><span class="m">31</span>:<span class="w"> </span><span class="s1">'Linear'</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="s1">'foreground-road-surface'</span><span class="w">  </span><span class="o">(</span>foreground<span class="w"> </span>road<span class="w"> </span>surface<span class="o">)</span>
+fill<span class="w"> </span><span class="m">32</span>:<span class="w"> </span><span class="s1">'Blended'</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="s1">'car-on-road'</span><span class="w">  </span><span class="o">(</span>red<span class="w"> </span>car<span class="w"> </span>on<span class="w"> </span>road<span class="o">)</span>
+fill<span class="w"> </span><span class="m">40</span>:<span class="w"> </span><span class="s1">'Layer 2'</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="s1">'top-sky-bridge'</span><span class="w">  </span><span class="o">(</span>distant<span class="w"> </span>bridge<span class="w"> </span><span class="k">in</span><span class="w"> </span>sky<span class="o">)</span>
+layer<span class="w"> </span><span class="m">12</span>:<span class="w"> </span><span class="s1">'Layer'</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="s1">'road-and-car'</span>
+layer<span class="w"> </span><span class="m">18</span>:<span class="w"> </span><span class="s1">'Layer 2'</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="s1">'sky-and-bridge'</span>
+<span class="o">(</span>dry<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>nothing<span class="w"> </span>written<span class="o">)</span>
+</code></pre></div>
+<p>Run for real (writes <code>road-12-renamed.lines</code> beside the input):</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines
+...
+output:<span class="w"> </span>road-12-renamed.lines
+</code></pre></div>
+<p>Point at a specific endpoint/models and write to a chosen path:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>ai-rename<span class="w"> </span>road-12.lines<span class="w"> </span>road-12-named.lines<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--llm-api-url<span class="w"> </span>http://127.0.0.1:1234/v1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--llm-model-vision<span class="w"> </span>my-vision-model<span class="w"> </span>--llm-model<span class="w"> </span>my-text-model
+</code></pre></div>
+<p>The command auto-launches the app and talks to an OpenAI-compatible <code>/v1</code> endpoint, configured from the environment (<code>VEXY_LINES_LLM_API_URL</code>, <code>VEXY_LINES_LLM_API_KEY</code>, <code>VEXY_LINES_LLM_MODEL_VISION</code>, <code>VEXY_LINES_VLM_MODEL</code>) or via the <code>--llm-*</code> flags. See the <a href="https://vexy.dev/vexy-lines-apy/ai-rename/">full guide</a> and the <a href="https://help.vexy.art/lines/articles/layers-panel/">Layers Panel</a> help article.</p>
+<h2 id="examples-mcp-status-check">MCP status check<a aria-label="Permanent link" class="headerlink" href="#examples-mcp-status-check" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>vexy-lines-cli<span class="w"> </span>mcp-status
+<span class="o">{</span><span class="s1">'status'</span>:<span class="w"> </span><span class="s1">'ok'</span>,<span class="w"> </span><span class="s1">'server_info'</span>:<span class="w"> </span><span class="o">{</span><span class="s1">'width_mm'</span>:<span class="w"> </span><span class="m">210</span>.0,<span class="w"> </span>...<span class="o">}}</span>
+</code></pre></div>
+<h2 id="examples-mcp-bridge-for-claude-desktop">MCP bridge for Claude Desktop<a aria-label="Permanent link" class="headerlink" href="#examples-mcp-bridge-for-claude-desktop" title="Permanent link">&para;</a></h2>
+<p>Add to <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"vexy-lines-cli"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vexy-lines-mcp"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Now Claude can open, edit, render, and export Vexy Lines documents directly.</p>
+<h2 id="examples-python-scripting">Python scripting<a aria-label="Permanent link" class="headerlink" href="#examples-python-scripting" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">vexy_lines_cli</span><span class="w"> </span><span class="kn">import</span> <span class="n">VexyLinesCLI</span>
+
+<span class="n">cli</span> <span class="o">=</span> <span class="n">VexyLinesCLI</span><span class="p">()</span>
+
+<span class="c1"># Inspect</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"artwork.lines"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">'caption'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">'layers'</span><span class="p">]</span><span class="si">}</span><span class="s2"> layers, </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">'fills'</span><span class="p">]</span><span class="si">}</span><span class="s2"> fills"</span><span class="p">)</span>
+
+<span class="c1"># Export</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">"./artwork/"</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"pdf"</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exported </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">'success'</span><span class="p">]</span><span class="si">}</span><span class="s2"> files in </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">'total_time'</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
+</code></pre></div></section><section class="print-page" id="changelog" heading-number="8"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<h1 id="changelog-changelog">Changelog<a aria-label="Permanent link" class="headerlink" href="#changelog-changelog" title="Permanent link">&para;</a></h1>
+<h2 id="changelog-2026-04-01-job-folder-system-issue-617">2026-04-01 — Job Folder System (Issue #617)<a aria-label="Permanent link" class="headerlink" href="#changelog-2026-04-01-job-folder-system-issue-617" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>feat</strong>: <code>style-transfer</code> gains <code>--force</code> and <code>--cleanup</code> flags for job folder control.</li>
+<li><strong>feat</strong>: <code>style-video</code> gains <code>--force</code> and <code>--cleanup</code> flags for job folder control.</li>
+<li><strong>feat</strong>: All style exports now create a persistent job folder alongside the output, storing every intermediate artifact (<code>.lines</code>, <code>.svg</code>, raster). Interrupted jobs resume automatically.</li>
+</ul>
+<h2 id="changelog-previous-releases">Previous releases<a aria-label="Permanent link" class="headerlink" href="#changelog-previous-releases" title="Permanent link">&para;</a></h2>
+<p>See the root <a href="https://github.com/vexyart/vexy-lines/blob/main/vexy-lines-cli/CHANGELOG.md">CHANGELOG.md</a>
+for complete release history, or the
+<a href="https://github.com/vexyart/vexy-lines-cli/releases">GitHub releases</a> page for download links.</p></section><section class="print-page" id="topics" heading-number="9"><nav class='md-tags'><span class='md-tag'>User manual</span></nav>
+<h1 id="topics-topics">Topics<a aria-label="Permanent link" class="headerlink" href="#topics-topics" title="Permanent link">&para;</a></h1>
+<p>Find related pages by topic.</p>
+
+
+  <h2 id="topics-tag:api">
+
+
+<span class="md-tag md-tag-icon">API</span><a aria-label="Permanent link" class="headerlink" href="#topics-tag:api" title="Permanent link">&para;</a></h2>
+  <ul>
+    
+      <li>
+        <a href="#api-reference">
+          API Reference
+        </a>
+      </li>
+    
+    
+  </ul>
+
+
+
+  <h2 id="topics-tag:installation">
+
+
+<span class="md-tag md-tag-icon">Installation</span><a aria-label="Permanent link" class="headerlink" href="#topics-tag:installation" title="Permanent link">&para;</a></h2>
+  <ul>
+    
+      <li>
+        <a href="#installation">
+          Installation
+        </a>
+      </li>
+    
+    
+  </ul>
+
+
+
+  <h2 id="topics-tag:user-manual">
+
+
+<span class="md-tag md-tag-icon">User manual</span><a aria-label="Permanent link" class="headerlink" href="#topics-tag:user-manual" title="Permanent link">&para;</a></h2>
+  <ul>
+    
+      <li>
+        <a href="#api-reference">
+          API Reference
+        </a>
+      </li>
+    
+      <li>
+        <a href="#cli-reference">
+          CLI Reference
+        </a>
+      </li>
+    
+      <li>
+        <a href="#changelog">
+          Changelog
+        </a>
+      </li>
+    
+      <li>
+        <a href="#examples">
+          Examples
+        </a>
+      </li>
+    
+      <li>
+        <a href="#export-pipeline">
+          Export Pipeline
+        </a>
+      </li>
+    
+      <li>
+        <a href="#installation">
+          Installation
+        </a>
+      </li>
+    
+      <li>
+        <a href="#mcp-bridge">
+          MCP Bridge
+        </a>
+      </li>
+    
+      <li>
+        <a href="#index">
+          Overview
+        </a>
+      </li>
+    
+    
+  </ul>
+</section></div><style>.print-site-enumerate-headings #index > h1:before { content: '1 ' }
+
+                .print-site-enumerate-headings #index h2:before { content: '1.' counter(counter-index-2) ' ' }
+                .print-site-enumerate-headings #index h2 {  counter-reset: counter-index-3 ;  counter-increment: counter-index-2 }
+            
+                .print-site-enumerate-headings #index h3:before { content: '1.' counter(counter-index-2) '.' counter(counter-index-3) ' ' }
+                .print-site-enumerate-headings #index h3 {  counter-increment: counter-index-3 }
+            
+.print-site-enumerate-headings #installation > h1:before { content: '2 ' }
+
+                .print-site-enumerate-headings #installation h2:before { content: '2.' counter(counter-installation-2) ' ' }
+                .print-site-enumerate-headings #installation h2 {  counter-reset: counter-installation-3 ;  counter-increment: counter-installation-2 }
+            
+                .print-site-enumerate-headings #installation h3:before { content: '2.' counter(counter-installation-2) '.' counter(counter-installation-3) ' ' }
+                .print-site-enumerate-headings #installation h3 {  counter-increment: counter-installation-3 }
+            
+.print-site-enumerate-headings #cli-reference > h1:before { content: '3 ' }
+
+                .print-site-enumerate-headings #cli-reference h2:before { content: '3.' counter(counter-cli-reference-2) ' ' }
+                .print-site-enumerate-headings #cli-reference h2 {  counter-reset: counter-cli-reference-3 ;  counter-increment: counter-cli-reference-2 }
+            
+                .print-site-enumerate-headings #cli-reference h3:before { content: '3.' counter(counter-cli-reference-2) '.' counter(counter-cli-reference-3) ' ' }
+                .print-site-enumerate-headings #cli-reference h3 {  counter-increment: counter-cli-reference-3 }
+            
+.print-site-enumerate-headings #mcp-bridge > h1:before { content: '4 ' }
+
+                .print-site-enumerate-headings #mcp-bridge h2:before { content: '4.' counter(counter-mcp-bridge-2) ' ' }
+                .print-site-enumerate-headings #mcp-bridge h2 {  counter-reset: counter-mcp-bridge-3 ;  counter-increment: counter-mcp-bridge-2 }
+            
+                .print-site-enumerate-headings #mcp-bridge h3:before { content: '4.' counter(counter-mcp-bridge-2) '.' counter(counter-mcp-bridge-3) ' ' }
+                .print-site-enumerate-headings #mcp-bridge h3 {  counter-increment: counter-mcp-bridge-3 }
+            
+.print-site-enumerate-headings #export-pipeline > h1:before { content: '5 ' }
+
+                .print-site-enumerate-headings #export-pipeline h2:before { content: '5.' counter(counter-export-pipeline-2) ' ' }
+                .print-site-enumerate-headings #export-pipeline h2 {  counter-reset: counter-export-pipeline-3 ;  counter-increment: counter-export-pipeline-2 }
+            
+                .print-site-enumerate-headings #export-pipeline h3:before { content: '5.' counter(counter-export-pipeline-2) '.' counter(counter-export-pipeline-3) ' ' }
+                .print-site-enumerate-headings #export-pipeline h3 {  counter-increment: counter-export-pipeline-3 }
+            
+.print-site-enumerate-headings #api-reference > h1:before { content: '6 ' }
+
+                .print-site-enumerate-headings #api-reference h2:before { content: '6.' counter(counter-api-reference-2) ' ' }
+                .print-site-enumerate-headings #api-reference h2 {  counter-reset: counter-api-reference-3 ;  counter-increment: counter-api-reference-2 }
+            
+                .print-site-enumerate-headings #api-reference h3:before { content: '6.' counter(counter-api-reference-2) '.' counter(counter-api-reference-3) ' ' }
+                .print-site-enumerate-headings #api-reference h3 {  counter-increment: counter-api-reference-3 }
+            
+.print-site-enumerate-headings #examples > h1:before { content: '7 ' }
+
+                .print-site-enumerate-headings #examples h2:before { content: '7.' counter(counter-examples-2) ' ' }
+                .print-site-enumerate-headings #examples h2 {  counter-reset: counter-examples-3 ;  counter-increment: counter-examples-2 }
+            
+                .print-site-enumerate-headings #examples h3:before { content: '7.' counter(counter-examples-2) '.' counter(counter-examples-3) ' ' }
+                .print-site-enumerate-headings #examples h3 {  counter-increment: counter-examples-3 }
+            
+.print-site-enumerate-headings #changelog > h1:before { content: '8 ' }
+
+                .print-site-enumerate-headings #changelog h2:before { content: '8.' counter(counter-changelog-2) ' ' }
+                .print-site-enumerate-headings #changelog h2 {  counter-reset: counter-changelog-3 ;  counter-increment: counter-changelog-2 }
+            
+                .print-site-enumerate-headings #changelog h3:before { content: '8.' counter(counter-changelog-2) '.' counter(counter-changelog-3) ' ' }
+                .print-site-enumerate-headings #changelog h3 {  counter-increment: counter-changelog-3 }
+            
+.print-site-enumerate-headings #topics > h1:before { content: '9 ' }
+
+                .print-site-enumerate-headings #topics h2:before { content: '9.' counter(counter-topics-2) ' ' }
+                .print-site-enumerate-headings #topics h2 {  counter-reset: counter-topics-3 ;  counter-increment: counter-topics-2 }
+            
+                .print-site-enumerate-headings #topics h3:before { content: '9.' counter(counter-topics-2) '.' counter(counter-topics-3) ' ' }
+                .print-site-enumerate-headings #topics h3 {  counter-increment: counter-topics-3 }
+            </style>
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+          <div class="md-top" data-md-component="top" hidden>
+  <div class="md-top__center">
+    <button type="button" class="md-top__button md-top__button--main" data-md-action="top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+      <span>Back to top</span>
+    </button>
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--nav" for="__drawer" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+      </label>
+    
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--toc" for="__toc" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-right" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+      </label>
+    
+  </div>
+</div>
+      </main>
+      
+  
+        <footer class="md-footer">
+  
+  
+</footer>
+      
+  <vexy-footer mode="dark"></vexy-footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "code": null, "features": ["navigation.path", "toc.follow", "content.code.copy", "navigation.sections"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "code.collapse": "Collapse", "code.download": "Download", "code.expand": "Expand remaining # lines", "code.select": "Toggle line selection", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.fc193f93.min.js"></script>
+      
+    
+  <script src="../assets/fly/fly-bridge.js?v=86c9984233"></script>
+  <script type="module" src="../assets/fly/fly.js?v=f51ac22526"></script>
+
+  </body>
+</html>

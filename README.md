@@ -199,11 +199,13 @@ vexy-lines-cli mcp-serve --host 127.0.0.1 --port 47384
 
 ## Full documentation
 
-[Read the docs](https://vexyart.github.io/vexy-lines/vexy-lines-cli/) for the complete CLI reference, export pipeline internals, and more examples.
+Run `bash build.sh --docs --strict` to rebuild `docs/` from `src_docs/`. The build uses Python 3.13 and the fly-january 0.1.1 theme with the Vexy menu and footer.
 
-- [CLI Reference](https://vexyart.github.io/vexy-lines/vexy-lines-cli/cli-reference/): every subcommand
-- [MCP Bridge](https://vexyart.github.io/vexy-lines/vexy-lines-cli/mcp-bridge/): Claude Desktop and Cursor setup
-- [Export Pipeline](https://vexyart.github.io/vexy-lines/vexy-lines-cli/export-pipeline/): dialog-less export internals
+[Read the docs](https://vexy.dev/vexy-lines-cli/) for the complete CLI reference, export pipeline internals, and more examples.
+
+- [CLI Reference](https://vexy.dev/vexy-lines-cli/cli-reference/): every subcommand
+- [MCP Bridge](https://vexy.dev/vexy-lines-cli/mcp-bridge/): Claude Desktop and Cursor setup
+- [Export Pipeline](https://vexy.dev/vexy-lines-cli/export-pipeline/): dialog-less export internals
 - [CHANGELOG](CHANGELOG.md): release history
 
 ## License

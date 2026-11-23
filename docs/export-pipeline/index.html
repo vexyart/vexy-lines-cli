@@ -10,6 +10,8 @@
       
       
       
+        <link rel="canonical" href="https://vexy.dev/vexy-lines-cli/export-pipeline/">
+      
       
         <link rel="prev" href="../mcp-bridge/">
       
@@ -20,8 +22,15 @@
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      
+      
+        
+        
+        
+          <link rel="icon" href="../assets/images/favicon.png">
+        
+      
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-materialx-10.1.8">
     
     
       
@@ -29,15 +38,21 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+  
+      <link rel="stylesheet" href="../assets/stylesheets/main.314bbef5.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a45159b5.min.css">
       
-      
-
+    
+  <link rel="stylesheet" data-fly-photoswipe href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css"
+      integrity="sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/fly/fly.css?v=24c03d88bb">
 
     
+
+    
+
     
       
     
@@ -57,7 +72,23 @@
 
     
     
+  
+  <script>try{if(sessionStorage.getItem("fly-l2")==="in"){document.documentElement.dataset.flyL2="in";sessionStorage.removeItem("fly-l2")}}catch(e){}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=arrow_back,arrow_forward,dark_mode,light_mode&display=block">
+  <script>try{document.fonts.load('20px "Material Symbols Outlined"',"arrow_backarrow_forwarddark_modelight_mode").then(function(f){if(f.length)document.documentElement.classList.add("fly-msym")})}catch(e){}</script>
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/cmv5add.css" data-fly-font>
+  <link rel="stylesheet" href="https://use.typekit.net/cna4jfp.css" data-fly-font>
+  <link rel="stylesheet" href="https://use.typekit.net/wck5koo.css" data-fly-font>
+  <script src="https://i.vexy.art/menu/vexy.js" defer></script>
+
   </head>
+  
+  
   
   
     
@@ -67,12 +98,14 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" data-mx-topbar="glass" class="fly-margin-left fly-chrome-vexy">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="toc" type="checkbox" id="__toc" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
+    <label class="md-overlay" for="__toc"></label>
     <div data-md-component="skip">
       
         
@@ -86,11 +119,8 @@
     </div>
     
     
-<div class="vexy-top-nav" style="width: 100%;">
-  <script src="https://i.vexy.art/vl/webcode/vexy-lines-menu.js"></script>
-  <vexy-lines-menu></vexy-lines-menu>
-</div>
-
+  <vexy-menu mode="dark" site-label="Vexy Lines CLI" site-url="https://vexy.dev/vexy-lines-cli/" mobile-menu="materialx" mobile-search="materialx"></vexy-menu>
+  
       
 
   
@@ -155,6 +185,46 @@
     
     
     
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2M3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
     
   </nav>
   
@@ -191,10 +261,11 @@
     vexy-lines-cli
   </label>
   
-  <ul class="md-nav__list" data-md-scrollfix>
+  <ul class="md-nav__list">
     
       
       
+  
   
   
   
@@ -204,7 +275,7 @@
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="Overview">
     
   
     Overview
@@ -226,12 +297,13 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../installation/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="Installation">
     
   
     Installation
@@ -253,12 +325,13 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../cli-reference/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="CLI Reference">
     
   
     CLI Reference
@@ -280,12 +353,13 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../mcp-bridge/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="MCP Bridge">
     
   
     MCP Bridge
@@ -305,13 +379,13 @@
       
   
   
+  
     
   
   
   
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
@@ -321,7 +395,7 @@
           
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="Export Pipeline">
     
   
     Export Pipeline
@@ -339,7 +413,7 @@
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="Export Pipeline">
     
   
     Export Pipeline
@@ -358,14 +432,16 @@
   
   
   
+  
+    
     
   
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      Export Pipeline
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc">
       
         <li class="md-nav__item">
   <a href="#the-problem" class="md-nav__link">
@@ -591,12 +667,13 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-reference/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="API Reference">
     
   
     API Reference
@@ -618,12 +695,13 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../examples/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="Examples">
     
   
     Examples
@@ -645,15 +723,72 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../changelog/" class="md-nav__link">
         
   
   
-  <span class="md-ellipsis">
+  <span class="md-ellipsis" title="Changelog">
     
   
     Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Topics">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis" title="Print this guide">
+    
+  
+    Print this guide
   
 
     
@@ -683,14 +818,16 @@
   
   
   
+  
+    
     
   
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      Export Pipeline
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc">
       
         <li class="md-nav__item">
   <a href="#the-problem" class="md-nav__link">
@@ -913,22 +1050,28 @@
           
             <div class="md-content" data-md-component="content">
               
+                
+
+
+
+  
+
+
+              
               <article class="md-content__inner md-typeset">
                 
                   
 
-
-
-<h1 id="export-pipeline">Export Pipeline<a class="headerlink" href="#export-pipeline" title="Permanent link">&para;</a></h1>
+<h1 id="export-pipeline">Export Pipeline<a aria-label="Permanent link" class="headerlink" href="#export-pipeline" title="Permanent link">&para;</a></h1>
 <p>The <code>vexy-lines-cli export</code> command exports <code>.lines</code> files to PDF, SVG, or PNG without interacting with save dialogs. This page explains how the command works.</p>
-<h2 id="the-problem">The problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
+<h2 id="the-problem">The problem<a aria-label="Permanent link" class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p>Vexy Lines has no headless export mode. Exporting normally means opening the file, choosing File &gt; Export, picking a format and destination, and clicking Save. That's fine for one file. For a hundred, you need automation.</p>
-<h2 id="the-solution-plist-injection">The solution: plist injection<a class="headerlink" href="#the-solution-plist-injection" title="Permanent link">&para;</a></h2>
+<h2 id="the-solution-plist-injection">The solution: plist injection<a aria-label="Permanent link" class="headerlink" href="#the-solution-plist-injection" title="Permanent link">&para;</a></h2>
 <p>Instead of automating dialog clicks (fragile and slow), the CLI injects export settings directly into the macOS preferences domain (<code>com.fontlab.vexy-lines</code>) using <code>defaults write</code>, then triggers the menu item via AppleScript.</p>
-<h2 id="five-stage-pipeline">Five-stage pipeline<a class="headerlink" href="#five-stage-pipeline" title="Permanent link">&para;</a></h2>
-<h3 id="1-discovery">1. Discovery<a class="headerlink" href="#1-discovery" title="Permanent link">&para;</a></h3>
+<h2 id="five-stage-pipeline">Five-stage pipeline<a aria-label="Permanent link" class="headerlink" href="#five-stage-pipeline" title="Permanent link">&para;</a></h2>
+<h3 id="1-discovery">1. Discovery<a aria-label="Permanent link" class="headerlink" href="#1-discovery" title="Permanent link">&para;</a></h3>
 <p>Find all <code>.lines</code> files to export. Input can be a single file or a directory (searched recursively). Files with existing outputs are skipped unless <code>--force</code> is set.</p>
-<h3 id="2-plist-injection">2. Plist injection<a class="headerlink" href="#2-plist-injection" title="Permanent link">&para;</a></h3>
+<h3 id="2-plist-injection">2. Plist injection<a aria-label="Permanent link" class="headerlink" href="#2-plist-injection" title="Permanent link">&para;</a></h3>
 <p><code>PlistManager</code> is a context manager that:</p>
 <ol>
 <li>Reads the current preferences via <code>defaults read</code></li>
@@ -937,9 +1080,9 @@
 <li>On exit (success or failure), restores the original preferences</li>
 </ol>
 <p>This ensures the app's preferences are never permanently modified.</p>
-<h3 id="3-app-activation">3. App activation<a class="headerlink" href="#3-app-activation" title="Permanent link">&para;</a></h3>
+<h3 id="3-app-activation">3. App activation<a aria-label="Permanent link" class="headerlink" href="#3-app-activation" title="Permanent link">&para;</a></h3>
 <p>The pipeline quits the running app (if any), waits for it to fully close, then relaunches with the injected preferences. <code>AppleScriptBridge</code> handles the quit/launch/wait cycle.</p>
-<h3 id="4-per-file-export-loop">4. Per-file export loop<a class="headerlink" href="#4-per-file-export-loop" title="Permanent link">&para;</a></h3>
+<h3 id="4-per-file-export-loop">4. Per-file export loop<a aria-label="Permanent link" class="headerlink" href="#4-per-file-export-loop" title="Permanent link">&para;</a></h3>
 <p>For each <code>.lines</code> file:</p>
 <ol>
 <li>Open the file via AppleScript (<code>open</code> command)</li>
@@ -949,9 +1092,9 @@
 <li>Optionally validate the output file exists and has non-zero size</li>
 </ol>
 <p>Failed files are retried up to <code>--max-retries</code> times (default 3).</p>
-<h3 id="5-cleanup">5. Cleanup<a class="headerlink" href="#5-cleanup" title="Permanent link">&para;</a></h3>
+<h3 id="5-cleanup">5. Cleanup<a aria-label="Permanent link" class="headerlink" href="#5-cleanup" title="Permanent link">&para;</a></h3>
 <p><code>PlistManager.__exit__</code> restores the original preferences. The app is left running with its original settings.</p>
-<h2 id="timeout-control">Timeout control<a class="headerlink" href="#timeout-control" title="Permanent link">&para;</a></h2>
+<h2 id="timeout-control">Timeout control<a aria-label="Permanent link" class="headerlink" href="#timeout-control" title="Permanent link">&para;</a></h2>
 <p>All internal timeouts scale with <code>--timeout-multiplier</code>:</p>
 <table>
 <thead>
@@ -985,9 +1128,9 @@
 </tbody>
 </table>
 <p>Use higher multipliers on slower machines or when exporting complex files.</p>
-<h2 id="window-watcher">Window watcher<a class="headerlink" href="#window-watcher" title="Permanent link">&para;</a></h2>
+<h2 id="window-watcher">Window watcher<a aria-label="Permanent link" class="headerlink" href="#window-watcher" title="Permanent link">&para;</a></h2>
 <p><code>WindowWatcher</code> polls the app's window titles via AppleScript to detect when a file has opened and when an export has completed. It uses a configurable poll interval and timeout.</p>
-<h2 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<h2 id="error-handling">Error handling<a aria-label="Permanent link" class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <p>Each file export is wrapped in retry logic:</p>
 <ul>
 <li>Transient failures (window didn't appear, menu item failed) are retried</li>
@@ -995,13 +1138,13 @@
 <li>The pipeline continues to the next file on failure</li>
 <li>Final stats report: processed, succeeded, skipped, failed</li>
 </ul>
-<h2 id="stats">Stats<a class="headerlink" href="#stats" title="Permanent link">&para;</a></h2>
+<h2 id="stats">Stats<a aria-label="Permanent link" class="headerlink" href="#stats" title="Permanent link">&para;</a></h2>
 <p>The <code>ExportStats</code> dataclass tracks timing and counts:</p>
-<div class="highlight"><pre><span></span><code><span class="n">stats</span> <span class="o">=</span> <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./art/&quot;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="n">stats</span> <span class="o">=</span> <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"./art/"</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">human_summary</span><span class="p">())</span>
-<span class="c1"># &quot;Exported 42 files (3 skipped, 1 failed) in 2m 15s&quot;</span>
+<span class="c1"># "Exported 42 files (3 skipped, 1 failed) in 2m 15s"</span>
 </code></pre></div>
-<h2 id="macos-only">macOS only<a class="headerlink" href="#macos-only" title="Permanent link">&para;</a></h2>
+<h2 id="macos-only">macOS only<a aria-label="Permanent link" class="headerlink" href="#macos-only" title="Permanent link">&para;</a></h2>
 <p>The export pipeline depends on:</p>
 <ul>
 <li><code>defaults</code> command (macOS preferences system)</li>
@@ -1009,9 +1152,9 @@
 <li>The Vexy Lines macOS app</li>
 </ul>
 <p>It does not work on Windows or Linux. For cross-platform export, use the MCP API directly via <code>MCPClient.export_document()</code>.</p>
-<h2 id="style-export-pipeline-job-folders">Style export pipeline (job folders)<a class="headerlink" href="#style-export-pipeline-job-folders" title="Permanent link">&para;</a></h2>
+<h2 id="style-export-pipeline-job-folders">Style export pipeline (job folders)<a aria-label="Permanent link" class="headerlink" href="#style-export-pipeline-job-folders" title="Permanent link">&para;</a></h2>
 <p>The <code>style-transfer</code> and <code>style-video</code> commands use a different pipeline from <code>export</code>. Instead of plist injection, they use the MCP API to apply styles programmatically.</p>
-<h3 id="job-folder">Job folder<a class="headerlink" href="#job-folder" title="Permanent link">&para;</a></h3>
+<h3 id="job-folder">Job folder<a aria-label="Permanent link" class="headerlink" href="#job-folder" title="Permanent link">&para;</a></h3>
 <p>Every style export creates a persistent <strong>job folder</strong> alongside the output:</p>
 <table>
 <thead>
@@ -1072,14 +1215,14 @@
 </tbody>
 </table>
 <p>Video exports first extract all requested raw frames into the job folder, then style or assemble from that cached source set. Frame numbers are 1-based and zero-padded from the source video's total frame count. For MP4 output, the cached PNG frames are assembled into the requested output path after step 4 rather than stored as <code>{stem}.mp4</code> inside the job folder.</p>
-<h3 id="resume">Resume<a class="headerlink" href="#resume" title="Permanent link">&para;</a></h3>
+<h3 id="resume">Resume<a aria-label="Permanent link" class="headerlink" href="#resume" title="Permanent link">&para;</a></h3>
 <p>Re-running the same command skips items whose final output already exists in the job folder. Long video jobs therefore survive interruptions: a 4-hour render that fails at frame 147/192 resumes from frame 148.</p>
-<h3 id="flags">Flags<a class="headerlink" href="#flags" title="Permanent link">&para;</a></h3>
+<h3 id="flags">Flags<a aria-label="Permanent link" class="headerlink" href="#flags" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>--force</code>: Delete the job folder and start from scratch.</li>
 <li><code>--cleanup</code>: Delete the job folder after the final output is copied to its destination.</li>
 </ul>
-<h3 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h3>
+<h3 id="environment">Environment<a aria-label="Permanent link" class="headerlink" href="#environment" title="Permanent link">&para;</a></h3>
 <p>Set <code>VEXY_LINES_JOB_FOLDER</code> to override the computed job folder path.</p>
 
 
@@ -1088,6 +1231,17 @@
 
 
 
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../topics/#tag:user-manual" class="md-tag md-tag-icon">User manual</a>
+      
+    
+  </nav>
 
 
 
@@ -1100,27 +1254,39 @@
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
-        
+          <div class="md-top" data-md-component="top" hidden>
+  <div class="md-top__center">
+    <button type="button" class="md-top__button md-top__button--main" data-md-action="top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+      <span>Back to top</span>
+    </button>
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--nav" for="__drawer" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+      </label>
+    
+    
+      
+      
+      <label class="md-top__button md-top__side md-top__side--toc" for="__toc" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-right" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/></svg>
+      </label>
+    
+  </div>
+</div>
       </main>
       
+  
         <footer class="md-footer">
   
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
   
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
-    </div>
-  </div>
 </footer>
       
+  <vexy-footer mode="dark"></vexy-footer>
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
@@ -1130,11 +1296,15 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.sections"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "code": null, "features": ["navigation.path", "toc.follow", "content.code.copy", "navigation.sections"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "code.collapse": "Collapse", "code.download": "Download", "code.expand": "Expand remaining # lines", "code.select": "Toggle line selection", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+  
+      <script src="../assets/javascripts/bundle.fc193f93.min.js"></script>
       
     
+  <script src="../assets/fly/fly-bridge.js?v=86c9984233"></script>
+  <script type="module" src="../assets/fly/fly.js?v=f51ac22526"></script>
+
   </body>
 </html>
