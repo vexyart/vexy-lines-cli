@@ -199,7 +199,7 @@ vexy-lines-cli mcp-serve --host 127.0.0.1 --port 47384
 
 ## Full documentation
 
-Run `bash build.sh --docs --strict` to rebuild `docs/` from `src_docs/`. The build uses Python 3.13 and fly-january 0.3.0 or later with the Vexy menu and footer.
+Run `bash build.sh --docs --strict` to rebuild `docs/` from `src_docs/`. The build uses Python 3.13 and fly-january 0.4.0 or later (remote theme assets) with the Vexy menu and footer.
 
 [Read the docs](https://vexy.dev/vexy-lines-cli/) for the complete CLI reference, export pipeline internals, and more examples.
 

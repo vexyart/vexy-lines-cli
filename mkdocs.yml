@@ -3,7 +3,7 @@ site_name: "vexy-lines-cli"
 site_url: https://vexy.dev/vexy-lines-cli/
 site_description: "CLI tool and MCP passthrough server for Vexy Lines"
 theme:
-  name: fly-january
+  name: fly-january-remote
   custom_dir: overrides
   features:
     - navigation.path
