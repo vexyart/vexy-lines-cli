@@ -8,6 +8,7 @@ Versions are managed by [hatch-vcs](https://github.com/ofek/hatch-vcs) from git 
 ## [Unreleased]
 
 ### Changed
+- Documentation builds now use fly-january 0.3.0 or later.
 - PyPI releases use Trusted Publishing (`f0fd6e1`, verified by the 1.0.38 PyPI provenance). The owner must keep the trusted publisher configured for `vexyart/vexy-lines-cli`, workflow `release.yml`, and environment `pypi`.
 - Site now uses the fly-january 0.2.1 theme (chrome: vexy)
 - Line-edited `README.md` and `src_docs/` in the house style (dash repairs,
