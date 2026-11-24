@@ -7,7 +7,7 @@ if [[ "${1:-}" == --docs ]]; then
   cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
   export PYTHONPATH="$PWD${PYTHONPATH:+:$PYTHONPATH}"
   exec uvx --python 3.13 --from properdocs==1.6.7 \
-    --with fly-january==0.1.1 \
+    --with fly-january==0.2.1 \
     --with mkdocs==1.6.1 \
     --with mkdocs-materialx==10.1.8 \
     --with mkdocs-awesome-nav==3.3.0 \

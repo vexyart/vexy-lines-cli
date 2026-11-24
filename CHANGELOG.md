@@ -8,7 +8,7 @@ Versions are managed by [hatch-vcs](https://github.com/ofek/hatch-vcs) from git 
 ## [Unreleased]
 
 ### Changed
-- Site now uses the fly-january 0.1.1 theme (chrome: vexy)
+- Site now uses the fly-january 0.2.1 theme (chrome: vexy)
 - Line-edited `README.md` and `src_docs/` in the house style (dash repairs,
   active voice). No command, flag, or code changes. Rebuilt tracked `docs/`.
 
